@@ -6,17 +6,27 @@ package local.home.azav.java;
 import java.util.Scanner;
 public class Solution {
     public static void main(String[] args) {
+        Solution sol = new Solution();
         Scanner scanner = new Scanner(System.in);
 
         StringBuilder strin = new StringBuilder(scanner.next());
         int min_word = scanner.nextInt();
+        System.out.println(sol.sol2037(strin, min_word)) ;
+
+
+    }
+
+    public String sol2037(StringBuilder strin, int min_word) {
         if (min_word == 0) {
-            System.out.println(strin);
+            return strin.toString();
         } else {
             char ch;
             int posLeft = 0, posRight = 0;
             while (strin.charAt(posRight) == ',') {
                 posRight++;
+                if (posRight == strin.length()) {
+                    break;
+                }
             }
             strin.delete(posLeft,posRight);
             posLeft = 0;
@@ -42,7 +52,7 @@ public class Solution {
             if (length > 0 && strin.charAt(length-1) == ',') {
                 strin.delete(length-1,length);
             }
-            System.out.println(strin);
+            return strin.toString();
         }
     }
 }
