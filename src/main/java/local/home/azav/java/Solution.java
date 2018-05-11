@@ -12,8 +12,6 @@ public class Solution {
         StringBuilder strin = new StringBuilder(scanner.next());
         int min_word = scanner.nextInt();
         System.out.println(sol.sol2037(strin, min_word)) ;
-
-
     }
 
     public String sol2037(StringBuilder strin, int min_word) {
@@ -56,6 +54,53 @@ public class Solution {
         }
     }
 }
+
+
+//Задача N 2037. Строки. Слишком короткие слова. Версия 1.
+//import java.util.Scanner;
+//public class Solution_old {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//
+//        String strin = scanner.next();
+//        StringBuffer strout = new StringBuffer(1010);
+//        int min_word = scanner.nextInt();
+//        if (min_word == 0) {
+//            strout.append(strin);
+//        } else {
+//            int count = 0;
+//            int first = 0;
+//            char ch;
+//            StringBuffer ch_buf = new StringBuffer(1010);
+//            while (strin.charAt(first) == ',') {
+//                first++;
+//            }
+//            for (int i = first; i < strin.length();i++) {
+//                ch = strin.charAt(i);
+//                if (ch != ',') {
+//                    ch_buf.insert(count,ch);
+//                    count++;
+//                } else if ((ch == ',') & (count < min_word)) {
+//                    count = 0;
+//                } else if (ch == ',' & count >= min_word) {
+//                    if (strout.length() > 0) {
+//                        strout.append(',');
+//                    }
+//                    strout.append(ch_buf.substring(0,count));
+//                    count = 0;
+//                }
+//            }
+//            if (count > 0 & count >= min_word) {
+//                if (strout.length() > 0) {
+//                    strout.append(',');
+//                }
+//                strout.append(ch_buf.substring(0,count));
+//            }
+//        }
+//        System.out.println(strout);
+//    }
+//}
+
 
 //Задача N 2037. Строки. Слишком короткие слова
 //Дан текст, состоящий только из маленьких латинских букв и запятых.
