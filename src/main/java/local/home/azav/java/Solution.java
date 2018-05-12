@@ -6,53 +6,108 @@ package local.home.azav.java;
 import java.util.Scanner;
 public class Solution {
     public static void main(String[] args) {
-        Solution sol = new Solution();
-        Scanner scanner = new Scanner(System.in);
+//        Solution sol = new Solution();
+//        Scanner scanner = new Scanner(System.in);
+//
+//        StringBuilder strin = new StringBuilder(scanner.next());
+//        int min_word = scanner.nextInt();
+//        System.out.println(sol.sol2037(strin, min_word)) ;
+        Person pm1 = new Person(true,"Man1");
+        Person pw1 = new Person(false,"Woo1");
+        System.out.println("1 step");
+        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
 
-        StringBuilder strin = new StringBuilder(scanner.next());
-        int min_word = scanner.nextInt();
-        System.out.println(sol.sol2037(strin, min_word)) ;
-    }
-
-    public String sol2037(StringBuilder strin, int min_word) {
-        if (min_word == 0) {
-            return strin.toString();
+        System.out.println("2 step");
+        if (pm1.marry(pw1)) {
+            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
         } else {
-            char ch;
-            int posLeft = 0, posRight = 0;
-            while (strin.charAt(posRight) == ',') {
-                posRight++;
-                if (posRight == strin.length()) {
-                    break;
-                }
-            }
-            strin.delete(posLeft,posRight);
-            posLeft = 0;
-            posRight = 0;
-            int length = strin.length();
-            while (posRight < length) {
-                ch = strin.charAt(posRight);
-                if (ch != ',') {
-                    posRight++;
-                } else if (ch == ',' & (posRight - posLeft) >= min_word) {
-                    posRight++;
-                    posLeft = posRight;
-                } else if (ch == ',' & (posRight == posLeft)) {
-                    strin.delete(posLeft,posRight+1);
-                    length = strin.length();
-                } else if (ch == ',' & (posRight - posLeft) < min_word) {
-                    strin.delete(posLeft,posRight+1);
-                    length = strin.length();
-                    posRight = posLeft;
-                }
-            }
-            length = strin.length();
-            if (length > 0 && strin.charAt(length-1) == ',') {
-                strin.delete(length-1,length);
-            }
-            return strin.toString();
+            System.out.println("not marry");
+            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
         }
+
+        System.out.println("3 step");
+        if (pm1.marry(pw1)) {
+            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+        } else {
+            System.out.println("no");
+            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+        }
+
+        System.out.println("4 step");
+        Person pm2= new Person(true,"Man2");
+        Person pw2 = new Person(false,"Woo2");
+        System.out.println(pm2.marry(pm1));
+        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+
+        System.out.println("5 step");
+        System.out.println(pm2.marry(pw1));
+        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+
+        System.out.println("6 step");
+        System.out.println(pw2.marry(pm1));
+        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+
+        System.out.println("7 step");
+        System.out.println(pw2.marry(pm2));
+        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
     }
+
+//    public String sol2037(StringBuilder strin, int min_word) {
+//        if (min_word == 0) {
+//            return strin.toString();
+//        } else {
+//            char ch;
+//            int posLeft = 0, posRight = 0;
+//            while (strin.charAt(posRight) == ',') {
+//                posRight++;
+//                if (posRight == strin.length()) {
+//                    break;
+//                }
+//            }
+//            strin.delete(posLeft,posRight);
+//            posLeft = 0;
+//            posRight = 0;
+//            int length = strin.length();
+//            while (posRight < length) {
+//                ch = strin.charAt(posRight);
+//                if (ch != ',') {
+//                    posRight++;
+//                } else if (ch == ',' & (posRight - posLeft) >= min_word) {
+//                    posRight++;
+//                    posLeft = posRight;
+//                } else if (ch == ',' & (posRight == posLeft)) {
+//                    strin.delete(posLeft,posRight+1);
+//                    length = strin.length();
+//                } else if (ch == ',' & (posRight - posLeft) < min_word) {
+//                    strin.delete(posLeft,posRight+1);
+//                    length = strin.length();
+//                    posRight = posLeft;
+//                }
+//            }
+//            length = strin.length();
+//            if (length > 0 && strin.charAt(length-1) == ',') {
+//                strin.delete(length-1,length);
+//            }
+//            return strin.toString();
+//        }
+//    }
 }
 
 
