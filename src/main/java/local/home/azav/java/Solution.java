@@ -1,18 +1,295 @@
 package local.home.azav.java;
 
 
-
-//Задача N 2037. Строки. Слишком короткие слова. Версия 2.
-import java.util.Scanner;
+// Задача N 2056. Структуры данных. Самое популярное слово
+// Дан текст, ваша задача - найти слово, которое встречается в тексте наибольшее
+// количество раз. Текст состоит только из латинских букв, пробелов, переводов строк.
+//   Слово - это последовательность подряд идущих латинских букв,
+// регистр не имеет значения.
+// Если искомых слов несколько, ваша задача - найти все такие слова.
+//        Входные данные
+// Входные данные состоят только из латинских букв, пробелов и символов
+// перевода строки. Гарантируется, что хотя бы одно слово в текст присутствует.
+//        Выходные данные
+// Выведите все слова, которые встречаются наибольшее количество раз,
+// при их следут приводить к нижнему регистру, каждое слово выводите
+// на отдельной строке. Слова выводите в лексикографическом порядке.
+// Размер входного файла не превосходит 100 Кб.
+//        Пример(ы)
+//  Sebastian Vettel is a German Formula One racing driver currently driving for Red Bull Racing
+//    racing
+//
+//  a aa aaa aaaa
+//  a aa aaa bbbb
+//    a
+//    aa
+//    aaa
+import java.util.*;
 public class Solution {
     public static void main(String[] args) {
-//        Solution sol = new Solution();
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> arrayList = new ArrayList<>();
+        do {
+            String std = scanner.next();
+            arrayList.add(std.toLowerCase());
+        } while (scanner.hasNext());
+        Collections.sort(arrayList);
+        int sizeAr = arrayList.size();
+        int[] arrCount = new int[sizeAr];
+        for (int i = 0; i < sizeAr; i++) {
+            int indWord = arrayList.indexOf(arrayList.get(i));
+            arrCount[i] = indWord;
+        }
+        int cou = 0;
+        for (int i = sizeAr-1; i >= 0; i--) {
+            if (arrCount[i] == i && cou == 0) {
+                arrCount[i] = 1;
+            } else if (arrCount[i] != i) {
+                arrCount[i] = 0;
+                cou ++;
+            } else if (arrCount[i] == i && cou != 0) {
+                arrCount[i] = cou + 1;
+                cou = 0;
+            }
+        }
+        cou = 0;
+        for (int i = 0; i < sizeAr; i++) {
+            if (cou < arrCount[i]) {
+                cou = arrCount[i];
+            }
+        }
+        for (int i = 0; i < sizeAr; i++) {
+            if (arrCount[i] == cou) {
+                System.out.println(arrayList.get(i));
+            }
+        }
+    }
+}
+
+// Задача N 2056. Структуры данных. Самое популярное слово
+//import java.util.*;
+//public class Solution {
+//    public static void main(String[] args) {
 //        Scanner scanner = new Scanner(System.in);
+//        ArrayList<String> arrayList = new ArrayList<>();
+//        Iterator it;
+//        do {
+//            String std = scanner.next();
+//            // !!!  Убрать                    !!
+//            if (std.equals("quit")) {      // !!
+//                break;                     // !!
+//            }                              // !!
+//            // !!!  Убрать                    !!
+//            arrayList.add(std.toLowerCase());
+//        } while (scanner.hasNext());
+//        Collections.sort(arrayList);
+//        int sizeAr = arrayList.size();
+//        int[] arrCount = new int[sizeAr];
+//        for (int i = 0; i < sizeAr; i++) {
+//            int indWord = arrayList.indexOf(arrayList.get(i));
+//            arrCount[i] = indWord;
+//            System.out.println(arrayList.get(i) + " " + indWord);
+//        }
+//        System.out.println(Arrays.toString(arrCount));
+//        int cou = 0;
+//        for (int i = sizeAr-1; i >= 0; i--) {
+//            if (arrCount[i] == i && cou == 0) {
+//                arrCount[i] = 1;
+//            } else if (arrCount[i] != i) {
+//                arrCount[i] = 0;
+//                cou ++;
+//            } else if (arrCount[i] == i && cou != 0) {
+//                arrCount[i] = cou + 1;
+//                cou = 0;
+//            }
+//        }
+//        System.out.println(Arrays.toString(arrCount));
+//        cou = 0;
+//        for (int i = 0; i < sizeAr; i++) {
+//            if (cou < arrCount[i]) {
+//                cou = arrCount[i];
+//            }
+//        }
+//        for (int i = 0; i < sizeAr; i++) {
+//            if (arrCount[i] == cou) {
+//                System.out.println((String)arrayList.get(i));
+//            }
+//        }
+//        //it = arrayList.iterator();
+////        while (it.hasNext()) {
+////            System.out.println((String)it.next());
+////        }
+//    }
+//}
+
+
+
+//Задача N 2045. Строки. Пунктуация. Версия 1.
+//import java.util.Scanner;
+//public class Solution {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        scanner.useDelimiter("\n");
 //
 //        StringBuilder strin = new StringBuilder(scanner.next());
-//        int min_word = scanner.nextInt();
-//        System.out.println(sol.sol2037(strin, min_word)) ;
-        Person pm1 = new Person(true,"Man1");
+//        char ch;
+//        int posLeft = 0, posRight = 0;
+//        int length = strin.length();
+//        while (posRight < length) {
+//            ch = strin.charAt(posRight);
+//            if (ch != ',' & ch != ' ' & ch != '.' & ch != '!' & ch != '?') {
+//                posRight++;
+//            } else if (ch == ',' || ch == '.' || ch == '!' || ch == '?') {
+//                posRight++;
+//                strin.insert(posRight,' ');
+//                posLeft = posRight;
+//                length = strin.length();
+//            } else if (ch == ' ') {
+//                posLeft = posRight;
+//                posRight++;
+//                ch = strin.charAt(posRight);
+//                if (ch == ',' || ch == '.' || ch == '!' || ch == '?' || ch == ' ') {
+//                    strin.delete(posLeft, posRight);
+//                    posRight--;
+//                    length = strin.length();
+//                } else if (ch != ',' & ch != ' ' & ch != '.' & ch != '!' & ch != '?') {
+//                    posRight++;
+//                }
+//            }
+//        }
+//        System.out.println(strin.toString());
+//    }
+//}
+//Задача N 2045. Строки. Пунктуация
+//  Дан текст, состоящий из латинских букв, пробелов и знаков препинания
+// (точка, запятая, восклицательный и вопросительный знаки). Слово — это
+// последовательность подряд идущих латинских букв.
+//     Ваша задача — расставить пробелы по следующим правилам:
+//если между двумя словами нет знака препинания, тогда они должны разделяться ровно одним пробелом
+//перед каждым знаком препинания не должно быть пробелов
+//после каждого знака препинания должен быть ровно один пробел
+//
+//  Гарантируется, что между двумя знаками препинания содержится хотя бы одно слово.
+// Текст начинается и заканчивается латинской буквой.
+//        Входные данные
+// Входные данные состоят из единственной строки — текста, длиной не более 10000 символов.
+//        Выходные данные
+// Выведите отформатированный в соответствии с правилами текст.
+//   Пример(ы)
+//galileo galilei was an   italian physicist  ,mathematician,astronomer
+//                galileo galilei was an italian physicist, mathematician, astronomer
+//galileo  was  born  in  pisa
+//                galileo was born in pisa
+
+
+//Задача N 2037. Строки. Слишком короткие слова. Версия 2. c тестовым куском
+//import java.util.Scanner;
+//public class Solution {
+//
+//
+//    public static void main(String[] args) {
+//        Solution sol = new Solution();
+////        Scanner scanner = new Scanner(System.in);
+//
+//        StringBuilder strin = new StringBuilder(/*scanner.next()*/);
+//        int lenn;
+////        int min_word = scanner.nextInt();
+////        System.out.println(sol.sol2037(strin, min_word));
+//        strin.append("sdf,er,ertert,,,,h,,");
+//        System.out.println("sdf,er,ertert,,,,h,, " + ":3 > " + sol.sol2037(strin, 3));
+//        lenn = strin.length();
+//        if (lenn !=0) {strin.delete(0,lenn);}
+//
+//        strin.append(",d");
+//        System.out.println(",d " + ":1 > " + sol.sol2037(strin, 1));
+//        lenn = strin.length();
+//        if (lenn !=0) {strin.delete(0,lenn);}
+//
+//        strin.append(",sdf");
+//        System.out.println(",sdf " + ":3 > " + sol.sol2037(strin, 3));
+//        lenn = strin.length();
+//        if (lenn !=0) {strin.delete(0,lenn);}
+//
+//        strin.append(",sdf,");
+//        System.out.println(",sdf, " + ":3 > " + sol.sol2037(strin, 3));
+//        lenn = strin.length();
+//        if (lenn !=0) {strin.delete(0,lenn);}
+//
+//        strin.append("we,,,dd,d");
+//        System.out.println("we " + ":3 > " + sol.sol2037(strin, 3));
+//        lenn = strin.length();
+//        if (lenn !=0) {strin.delete(0,lenn);}
+//
+//        strin.append("sdf,dd");
+//        System.out.println("sdf,dd " + ":2 > " + sol.sol2037(strin, 2));
+//        lenn = strin.length();
+//        if (lenn !=0) {strin.delete(0,lenn);}
+//
+//        strin.append("d,d,");
+//        System.out.println("d,d, " + ":1 > " + sol.sol2037(strin, 1));
+//        lenn = strin.length();
+//        if (lenn !=0) {strin.delete(0,lenn);}
+//
+//        strin.append("d");
+//        System.out.println("d " + ":1 > " + sol.sol2037(strin, 1));
+//        lenn = strin.length();
+//        if (lenn !=0) {strin.delete(0,lenn);}
+//
+//        strin.append("d");
+//        System.out.println("d " + ":2 > " + sol.sol2037(strin, 2));
+//        lenn = strin.length();
+//        if (lenn !=0) {strin.delete(0,lenn);}
+//
+//    }
+//
+//    public String sol2037 (StringBuilder strin, int min_word) {
+//        if (min_word == 0) {
+//            return strin.toString();
+//        } else {
+//            char ch;
+//            int posLeft = 0, posRight = 0;
+//            while (strin.charAt(posRight) == ',') {
+//                posRight++;
+//                if (posRight == strin.length()) {
+//                    break;
+//                }
+//            }
+//            strin.delete(posLeft,posRight);
+//            posLeft = 0;
+//            posRight = 0;
+//            int length = strin.length();
+//            while (posRight < length) {
+//                ch = strin.charAt(posRight);
+//                if (ch != ',') {
+//                    posRight++;
+//                } else if (ch == ',' & (posRight - posLeft) >= min_word) {
+//                    posRight++;
+//                    posLeft = posRight;
+//                } else if (ch == ',' & (posRight == posLeft)) {
+//                    strin.delete(posLeft,posRight+1);
+//                    length = strin.length();
+//                } else if (ch == ',' & (posRight - posLeft) < min_word) {
+//                    strin.delete(posLeft,posRight+1);
+//                    length = strin.length();
+//                    posRight = posLeft;
+//                }
+//            }
+//            length = strin.length();
+//            if (length > 0 && strin.charAt(length-1) == ',') {
+//                strin.delete(length-1,length);
+//            } else if (length > 0 && length < min_word) {
+//                strin.delete(0,length);
+//            } else if (length > 0 && length > min_word && (posRight - posLeft) < min_word) {
+//                strin.delete(posLeft-1,posRight);
+//            }
+//            return strin.toString();
+//        }
+//    }
+//}
+
+
+// Для теста Person
+      /*  Person pm1 = new Person(true,"Man1");
         Person pw1 = new Person(false,"Woo1");
         System.out.println("1 step");
         System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
@@ -67,11 +344,20 @@ public class Solution {
         System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
         System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
         System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
-    }
+    }*/
 
-//    public String sol2037(StringBuilder strin, int min_word) {
+
+//Задача N 2037. Строки. Слишком короткие слова. Версия 2.
+//import java.util.Scanner;
+//public class Solution {
+//    public static void main(String[] args) {
+//        Solution sol = new Solution();
+//        Scanner scanner = new Scanner(System.in);
+//
+//        StringBuilder strin = new StringBuilder(scanner.next());
+//        int min_word = scanner.nextInt();
 //        if (min_word == 0) {
-//            return strin.toString();
+//            System.out.println(strin.toString());
 //        } else {
 //            char ch;
 //            int posLeft = 0, posRight = 0;
@@ -81,7 +367,7 @@ public class Solution {
 //                    break;
 //                }
 //            }
-//            strin.delete(posLeft,posRight);
+//            strin.delete(posLeft, posRight);
 //            posLeft = 0;
 //            posRight = 0;
 //            int length = strin.length();
@@ -93,24 +379,26 @@ public class Solution {
 //                    posRight++;
 //                    posLeft = posRight;
 //                } else if (ch == ',' & (posRight == posLeft)) {
-//                    strin.delete(posLeft,posRight+1);
+//                    strin.delete(posLeft, posRight + 1);
 //                    length = strin.length();
 //                } else if (ch == ',' & (posRight - posLeft) < min_word) {
-//                    strin.delete(posLeft,posRight+1);
+//                    strin.delete(posLeft, posRight + 1);
 //                    length = strin.length();
 //                    posRight = posLeft;
 //                }
 //            }
 //            length = strin.length();
-//            if (length > 0 && strin.charAt(length-1) == ',') {
-//                strin.delete(length-1,length);
+//            if (length > 0 && strin.charAt(length - 1) == ',') {
+//                strin.delete(length - 1, length);
+//            } else if (length > 0 && length < min_word) {
+//                strin.delete(0, length);
+//            } else if (length > 0 && length > min_word && (posRight - posLeft) < min_word) {
+//                strin.delete(posLeft - 1, posRight);
 //            }
-//            return strin.toString();
+//            System.out.println(strin.toString());
 //        }
 //    }
-}
-
-
+//}
 //Задача N 2037. Строки. Слишком короткие слова. Версия 1.
 //import java.util.Scanner;
 //public class Solution_old {
@@ -174,7 +462,6 @@ public class Solution {
 //    2
 //,pam,,param,,param,,pam,,pam,        param,param
 //4
-
 
 
 //Задача N 2025. Массивы. Запросы минимума на подмассиве.  Версия итоговая!
@@ -315,9 +602,6 @@ public class Solution {
 //        System.out.println(pos + li+1);
 //    }
 //}
-
-
-
 
 
 //Задача N 2034. Наидлиннейший почти константный подмассив. Версия 2.
@@ -516,11 +800,6 @@ public class Solution {
 // Выведите m чисел — ответы на запросы. Числа разделяйте пробелом или
 // переводом строки. На запросы следуюет отвечать в том порядке,
 // в котором они заданы во входных данных.
-
-
-
-
-
 
 
 //Задача N 2019.  Ветвления, циклы. Треугольная полка.
