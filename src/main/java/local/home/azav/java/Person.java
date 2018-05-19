@@ -15,7 +15,7 @@ public class Person {
     }
 
     public String getNameSpouse() {
-        return (spouse != null) ? spouse.name : "no";
+        return (spouse != null) ? spouse.getName() : "no";
     }
 
     /**
