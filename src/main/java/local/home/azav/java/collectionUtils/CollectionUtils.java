@@ -56,7 +56,7 @@ public class CollectionUtils<T> implements Comparable<T> {
 
     // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
     // Элементы сравнивать через Comparable.
-    // Прмер range(Arrays.asList(8,1,3,5,6, 4), 3, 6) вернет {3,4,5,6}
+    // Пример range(Arrays.asList(8,1,3,5,6, 4), 3, 6) вернет {3,4,5,6}
     public static <T> List range(List<? extends T> list, T min, T max) {
         List<T> listout = new ArrayList<>();
         CollectionUtils<T> colUtils = new CollectionUtils<>();
@@ -73,15 +73,24 @@ public class CollectionUtils<T> implements Comparable<T> {
     // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
     // Элементы сравнивать через Comparable.
     // Пример range(Arrays.asList(8,1,3,5,6, 4), 3, 6) вернет {3,4,5,6}
-    public static List range(List list, Object min, Object max, Comparator comparator) {
-        return null;
+    public static <T> List range(List<? extends T> list, T min, T max, Comparator comparator) {
+        List<T> listout = new ArrayList<>();
+        CollectionUtils<T> colUtils = new CollectionUtils<>();
+        colUtils.listin = list;
+        for (T ter : colUtils.listin) {
+            colUtils.tin = ter;
+            if (colUtils.compareTo(min) >= 0 & colUtils.compareTo(max) <= 0) {
+                listout.add(ter);
+            }
+        }
+        return listout;
     }
 
     @Override
     public int compareTo(T t) {
-        if (this.tin > t) {
+        if (this.tin.hashCode() > t.hashCode()) {
             return 1;
-        } else if (this.tin < t) {
+        } else if (this.tin.hashCode() < t.hashCode()) {
             return -1;
         } else {
             return 0;
