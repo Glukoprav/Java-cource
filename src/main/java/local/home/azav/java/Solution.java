@@ -46,6 +46,70 @@ package local.home.azav.java;
 //        1
 //        1
 //        2
+// Задача N 2057. Структуры данных. Множество
+import java.util.*;
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        TreeMap<Long,Integer> treeMap = new TreeMap<>();
+        int oper_cou = scanner.nextInt();
+        for (int i = 1; i <= oper_cou; i++) {
+            int oper = scanner.nextInt();
+            if (oper == 1) {
+                long inum = scanner.nextInt();
+                inum = inum*2200L+i;
+                treeMap.put(inum,i);
+            } else {
+                long delkey = treeMap.firstKey();
+                int val = treeMap.get(delkey);
+                treeMap.remove(delkey);
+                System.out.println((delkey-val)/2200);
+            }
+        }
+    }
+}
+
+// Задача N 2056. Структуры данных. Самое популярное слово. Версия 3.
+//import java.util.*;
+//public class Solution {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        ArrayList<String> arrayList = new ArrayList<>();
+//        do {
+//            arrayList.add(scanner.next().toLowerCase());
+//        } while (scanner.hasNext());
+//        Collections.sort(arrayList);
+//        int sizeAr = arrayList.size();
+//        int[] arrCount = new int[sizeAr];
+//        for (int i = 0; i < sizeAr; i++) {
+//            int indWord = arrayList.indexOf(arrayList.get(i));
+//            arrCount[i] = indWord;
+//        }
+//        int cou = 0;
+//        for (int i = sizeAr-1; i >= 0; i--) {
+//            if (arrCount[i] == i && cou == 0) {
+//                arrCount[i] = 1;
+//            } else if (arrCount[i] != i) {
+//                arrCount[i] = 0;
+//                cou ++;
+//            } else if (arrCount[i] == i && cou != 0) {
+//                arrCount[i] = cou + 1;
+//                cou = 0;
+//            }
+//        }
+//        cou = 0;
+//        for (int i = 0; i < sizeAr; i++) {
+//            if (cou < arrCount[i]) {
+//                cou = arrCount[i];
+//            }
+//        }
+//        for (int i = 0; i < sizeAr; i++) {
+//            if (arrCount[i] == cou) {
+//                System.out.println(arrayList.get(i));
+//            }
+//        }
+//    }
+//}
 // Задача N 2056. Структуры данных. Самое популярное слово. Версия 1.
 //import java.util.*;
 //public class Solution {
@@ -69,26 +133,26 @@ package local.home.azav.java;
 //    }
 //}
 // Задача N 2056. Структуры данных. Самое популярное слово. Версия 2.
-import java.util.*;
-public class Solution {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ArrayList<Integer> arrList = new ArrayList<>(110);
-        int oper_cou = scanner.nextInt();
-        for (int i = 1; i <= oper_cou; i++) {
-            int oper = scanner.nextInt();
-            if (oper == 1) {
-                int inum = scanner.nextInt();
-                arrList.add(inum);
-            } else {
-                Collections.sort(arrList);
-                int ikey = arrList.get(0);
-                arrList.remove(0);
-                System.out.println(ikey);
-            }
-        }
-    }
-}
+//import java.util.*;
+//public class Solution {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        ArrayList<Integer> arrList = new ArrayList<>(110);
+//        int oper_cou = scanner.nextInt();
+//        for (int i = 1; i <= oper_cou; i++) {
+//            int oper = scanner.nextInt();
+//            if (oper == 1) {
+//                int inum = scanner.nextInt();
+//                arrList.add(inum);
+//            } else {
+//                Collections.sort(arrList);
+//                int ikey = arrList.get(0);
+//                arrList.remove(0);
+//                System.out.println(ikey);
+//            }
+//        }
+//    }
+//}
 
 
 // Задача N 2056. Структуры данных. Самое популярное слово
