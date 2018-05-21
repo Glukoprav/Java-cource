@@ -1,73 +1,336 @@
 package local.home.azav.java;
 
 
-
-//Задача N 2037. Строки. Слишком короткие слова. Версия 2.
-import java.util.Scanner;
+// Задача N 2057. Структуры данных. Множество
+// Ваша задача — реализовать структуру данных, которая умеет хранить
+// мультимножество натуральных чисел, т.е. в этой структуре могут одновременно
+// храниться несколько равных элементов.
+// Эта структура должна поддерживать две операции:
+//    добавить элемент x в множество
+//    удалить минимальный элемент в множестве и вернуть его
+//  значение (если минимальных элементов несколько, то удаляется только один из них)
+//        Входные данные
+// Первая строка входных данных содержит число n (1 ≤ n ≤ 10^6) — количество операций.
+// Далее в n строках даны описания операций над множеством.
+// Описание представляет собой число — тип запроса (1 или 2) и число x (1 ≤ x ≤ 10^9)
+// если это запрос первого типа.
+//        Выходные данные
+// Для каждого запроса второго типа выведите результат на отдельной строке.
+//
+//      Пример(ы)
+//        input.txt
+//        6
+//        1  3
+//        1  2
+//        1  1
+//        2
+//        2
+//        2
+//        output.txt
+//        1
+//        2
+//        3
+//
+//        input.txt
+//        8
+//        1  1
+//        1  1
+//        2
+//        1  1
+//        1  2
+//        2
+//        2
+//        2
+//        output.txt
+//        1
+//        1
+//        1
+//        2
+// Задача N 2057. Структуры данных. Множество. Версия 1.
+import java.util.*;
 public class Solution {
     public static void main(String[] args) {
-//        Solution sol = new Solution();
-//        Scanner scanner = new Scanner(System.in);
-//
-//        StringBuilder strin = new StringBuilder(scanner.next());
-//        int min_word = scanner.nextInt();
-//        System.out.println(sol.sol2037(strin, min_word)) ;
-        Person pm1 = new Person(true,"Man1");
-        Person pw1 = new Person(false,"Woo1");
-        System.out.println("1 step");
-        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-
-        System.out.println("2 step");
-        if (pm1.marry(pw1)) {
-            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        } else {
-            System.out.println("not marry");
-            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+        Scanner scanner = new Scanner(System.in);
+        TreeMap<Long,Integer> treeMap = new TreeMap<>();
+        int oper_cou = scanner.nextInt();
+        for (int i = 1; i <= oper_cou; i++) {
+            int oper = scanner.nextInt();
+            if (oper == 1) {
+                long inum = scanner.nextInt();
+                inum = inum*2200L+i;
+                treeMap.put(inum,i);
+            } else {
+                long delkey = treeMap.firstKey();
+                int val = treeMap.get(delkey);
+                treeMap.remove(delkey);
+                System.out.println((delkey-val)/2200);
+            }
         }
-
-        System.out.println("3 step");
-        if (pm1.marry(pw1)) {
-            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        } else {
-            System.out.println("no");
-            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        }
-
-        System.out.println("4 step");
-        Person pm2= new Person(true,"Man2");
-        Person pw2 = new Person(false,"Woo2");
-        System.out.println(pm2.marry(pm1));
-        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
-        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
-
-        System.out.println("5 step");
-        System.out.println(pm2.marry(pw1));
-        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
-        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
-
-        System.out.println("6 step");
-        System.out.println(pw2.marry(pm1));
-        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
-        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
-
-        System.out.println("7 step");
-        System.out.println(pw2.marry(pm2));
-        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
-        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
     }
+}
+
+// Задача N 2057. Структуры данных. Множество. Версия 2.
+//import java.util.*;
+//public class Solution {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        ArrayList<Integer> arrList = new ArrayList<>(110);
+//        int oper_cou = scanner.nextInt();
+//        for (int i = 1; i <= oper_cou; i++) {
+//            if (scanner.nextInt() == 1) {
+//                arrList.add(scanner.nextInt());
+//            } else {
+//                int comp = arrList.get(0);
+//                for (Integer j : arrList) {
+//                    if (j < comp){
+//                        comp = j;
+//                    }
+//                }
+//                arrList.remove(arrList.indexOf(comp));
+//                System.out.println(comp);
+//            }
+//        }
+//    }
+//}
+//// Задача N 2057. Структуры данных. Множество. Версия 3.
+//import java.util.*;
+//public class Solution {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        int [] arrList = new int [1_000_002];
+//        int oper_cou = scanner.nextInt();
+//        int indArr = 0;
+//        for (int i = 1; i <= oper_cou; i++) {
+//            if (scanner.nextInt() == 1) {
+//                arrList[indArr] = scanner.nextInt();
+//                indArr++;
+//            } else {
+//                int comp = 1_500_000_000;
+//                int indJ = 0;
+//                for (int j = 0; j < indArr; j++) {
+//                    if (arrList[j] < comp & arrList[j] > 0){
+//                        comp = arrList[j];
+//                        indJ = j;
+//                    }
+//                }
+////                for (int j = indJ; j < indArr; j++) {
+////                    arrList[j] = arrList[j+1];
+////                }
+////                indArr--;
+//                arrList[indJ] = 0;
+//                System.out.println(comp);
+//            }
+//        }
+//    }
+//}
+
+// Задача N 2057. Структуры данных. Множество. Тест времени сканера! Версия 4.
+//import java.util.*;
+//public class Solution {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        int [] arrList = new int [1_000_002];
+//        int oper_cou = scanner.nextInt();
+//        int [] operList = new int[oper_cou*2+1];
+//        int indOper = 0;
+//        for (int i = 0; i < oper_cou; i++) {
+//            operList[indOper] = scanner.nextInt();
+//            if (operList[indOper] == 1) {
+//                indOper++;
+//                operList[indOper] = scanner.nextInt();
+//                indOper++;
+//            } else {
+//                indOper++;
+//            }
+//        }
+//    }
+//}
+
+
+
+
+
+//-----------------------------------------------------------------------------
+// Задача N 2056. Структуры данных. Самое популярное слово
+// Дан текст, ваша задача — найти слово, которое встречается в тексте наибольшее
+// количество раз. Текст состоит только из латинских букв, пробелов, переводов строк.
+//   Слово — это последовательность подряд идущих латинских букв,
+// регистр не имеет значения.
+// Если искомых слов несколько, ваша задача — найти все такие слова.
+//        Входные данные
+// Входные данные состоят только из латинских букв, пробелов и символов
+// перевода строки. Гарантируется, что хотя бы одно слово в текст присутствует.
+//        Выходные данные
+// Выведите все слова, которые встречаются наибольшее количество раз,
+// при их следут приводить к нижнему регистру, каждое слово выводите
+// на отдельной строке. Слова выводите в лексикографическом порядке.
+// Размер входного файла не превосходит 100 Кб.
+//        Пример(ы)
+//  Sebastian Vettel is a German Formula One racing driver currently driving for Red Bull Racing
+//    racing
+//
+//  a aa aaa aaaa
+//  a aa aaa bbbb
+//    a
+//    aa
+//    aaa
+//import java.util.*;
+//public class Solution {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        ArrayList<String> arrayList = new ArrayList<>();
+//        do {
+//            arrayList.add(scanner.next().toLowerCase());
+//        } while (scanner.hasNext());
+//        Collections.sort(arrayList);
+//        int sizeAr = arrayList.size();
+//        int[] arrCount = new int[sizeAr];
+//        for (int i = 0; i < sizeAr; i++) {
+//            int indWord = arrayList.indexOf(arrayList.get(i));
+//            arrCount[i] = indWord;
+//        }
+//        int cou = 0;
+//        for (int i = sizeAr-1; i >= 0; i--) {
+//            if (arrCount[i] == i && cou == 0) {
+//                arrCount[i] = 1;
+//            } else if (arrCount[i] != i) {
+//                arrCount[i] = 0;
+//                cou ++;
+//            } else if (arrCount[i] == i && cou != 0) {
+//                arrCount[i] = cou + 1;
+//                cou = 0;
+//            }
+//        }
+//        cou = 0;
+//        for (int i = 0; i < sizeAr; i++) {
+//            if (cou < arrCount[i]) {
+//                cou = arrCount[i];
+//            }
+//        }
+//        for (int i = 0; i < sizeAr; i++) {
+//            if (arrCount[i] == cou) {
+//                System.out.println(arrayList.get(i));
+//            }
+//        }
+//    }
+//}
+
+
+
+
+//-------------------------------------------------------------------------
+//Задача N 2037. Строки. Слишком короткие слова. Версия 2. Тест.
+//public class Solution {
+//    public static void main(String[] args) {
+////        Solution sol = new Solution();
+////        Scanner scanner = new Scanner(System.in);
+////
+////        StringBuilder strin = new StringBuilder(scanner.next());
+////        int min_word = scanner.nextInt();
+////        System.out.println(sol.sol2037(strin, min_word)) ;
+//        Person pm1 = new Person(true, "Man1");
+//        Person pw1 = new Person(false, "Woo1");
+//        System.out.println("1 step");
+//        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//
+//        System.out.println("2 step");
+//        if (pm1.marry(pw1)) {
+//            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        } else {
+//            System.out.println("not marry");
+//            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        }
+//
+//        System.out.println("3 step");
+//        if (pm1.marry(pw1)) {
+//            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        } else {
+//            System.out.println("no");
+//            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        }
+//
+//        System.out.println("4 step");
+//        Person pm2 = new Person(true, "Man2");
+//        Person pw2 = new Person(false, "Woo2");
+//        System.out.println(pm2.marry(pm1));
+//        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+//        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+//
+//        System.out.println("5 step");
+//        System.out.println(pm2.marry(pw1));
+//        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+//        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+//
+//        System.out.println("6 step");
+//        System.out.println(pw2.marry(pm1));
+//        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+//        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+//
+//        System.out.println("7 step");
+//        System.out.println(pw2.marry(pm2));
+//        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+//        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+//    }
+//
+//
+//    //Задача N 2037. Строки. Слишком короткие слова. Версия 2. Итоговая.
+//    public String sol2037(StringBuilder strin, int min_word) {
+//        if (min_word == 0) {
+//            return strin.toString();
+//        } else {
+//            char ch;
+//            int posLeft = 0, posRight = 0;
+//            while (strin.charAt(posRight) == ',') {
+//                posRight++;
+//                if (posRight == strin.length()) {
+//                    break;
+//                }
+//            }
+//            strin.delete(posLeft, posRight);
+//            posLeft = 0;
+//            posRight = 0;
+//            int length = strin.length();
+//            while (posRight < length) {
+//                ch = strin.charAt(posRight);
+//                if (ch != ',') {
+//                    posRight++;
+//                } else if (ch == ',' & (posRight - posLeft) >= min_word) {
+//                    posRight++;
+//                    posLeft = posRight;
+//                } else if (ch == ',' & (posRight == posLeft)) {
+//                    strin.delete(posLeft, posRight + 1);
+//                    length = strin.length();
+//                } else if (ch == ',' & (posRight - posLeft) < min_word) {
+//                    strin.delete(posLeft, posRight + 1);
+//                    length = strin.length();
+//                    posRight = posLeft;
+//                }
+//            }
+//            length = strin.length();
+//            if (length > 0 && strin.charAt(length - 1) == ',') {
+//                strin.delete(length - 1, length);
+//            } else if (length > 0 && length < min_word) {
+//                strin.delete(0, length);
+//            } else if (length > 0 && length > min_word && (posRight - posLeft) < min_word) {
+//                strin.delete(posLeft - 1, posRight);
+//            }
+//            return strin.toString();
+//        }
+//    }
+//}
 
 //    public String sol2037(StringBuilder strin, int min_word) {
 //        if (min_word == 0) {
@@ -108,7 +371,6 @@ public class Solution {
 //            return strin.toString();
 //        }
 //    }
-}
 
 
 //Задача N 2037. Строки. Слишком короткие слова. Версия 1.
@@ -155,8 +417,6 @@ public class Solution {
 //        System.out.println(strout);
 //    }
 //}
-
-
 //Задача N 2037. Строки. Слишком короткие слова
 //Дан текст, состоящий только из маленьких латинских букв и запятых.
 // Последовательность подряд идущих букв, окруженную запятыми (началом, концом строки),
@@ -177,32 +437,9 @@ public class Solution {
 
 
 
-//Задача N 2025. Массивы. Запросы минимума на подмассиве.  Версия итоговая!
-//import java.util.*;
-//public class Solution {
-//    public static void main(String[] args) {
-//        Scanner scanner = new Scanner(System.in);
-//
-//        int ind_mass = scanner.nextInt();
-//        int[] mass = new int[ind_mass];
-//        for (int i= 0; i<ind_mass; i++) {
-//            mass[i] = scanner.nextInt();
-//        }
-//        int num_zap = scanner.nextInt();
-//        for (int i = 0; i < num_zap; i++) {
-//            int li = scanner.nextInt();
-//            int ri = scanner.nextInt();
-//            int min_num = mass[li-1];
-//            for (int j = li; j <= ri; j++) {
-//                if (min_num > mass[j-1]) {
-//                    min_num = mass[j-1];
-//                }
-//            }
-//            System.out.println(min_num);
-//        }
-//    }
-//}
 
+
+//-------------------------------------------------------------------------
 //Задача N 2034. Наидлиннейший почти константный подмассив. Версия 2.
 //import java.util.*;
 //public class Solution {
@@ -265,8 +502,6 @@ public class Solution {
 //        System.out.println(pos + li+1);
 //    }
 //}
-
-
 //Задача N 2034. Наидлиннейший почти константный подмассив. Версия 1.
 //import java.util.*;
 //public class Solution {
@@ -315,11 +550,6 @@ public class Solution {
 //        System.out.println(pos + li+1);
 //    }
 //}
-
-
-
-
-
 //Задача N 2034. Наидлиннейший почти константный подмассив. Версия 2.
 /*
 import java.util.*;
@@ -392,8 +622,6 @@ public class Solution {
     }
 }
 */
-
-
 //Задача N 2034. Наидлиннейший почти константный подмассив. Версия 1.
 //import java.util.*;
 //public class Solution {
@@ -450,7 +678,6 @@ public class Solution {
 //        System.out.println("ri pos=" + (pos + li+1));   //!! укоротить!!
 //    }
 //}
-
 //Задача N 2034. Наидлиннейший почти константный подмассив
 //Задан массив (a1, a2,..., an). Его подмассив — это последовательность одного
 // или более его подряд идущих элементов. Очевидно, что подмассив можно задать
@@ -472,6 +699,33 @@ public class Solution {
 //Выведите l, r для искомого подмассива. Числа выводите через пробел.
 
 
+
+//-------------------------------------------------------------------------
+//Задача N 2025. Массивы. Запросы минимума на подмассиве.  Версия итоговая!
+//import java.util.*;
+//public class Solution {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//
+//        int ind_mass = scanner.nextInt();
+//        int[] mass = new int[ind_mass];
+//        for (int i= 0; i<ind_mass; i++) {
+//            mass[i] = scanner.nextInt();
+//        }
+//        int num_zap = scanner.nextInt();
+//        for (int i = 0; i < num_zap; i++) {
+//            int li = scanner.nextInt();
+//            int ri = scanner.nextInt();
+//            int min_num = mass[li-1];
+//            for (int j = li; j <= ri; j++) {
+//                if (min_num > mass[j-1]) {
+//                    min_num = mass[j-1];
+//                }
+//            }
+//            System.out.println(min_num);
+//        }
+//    }
+//}
 //Задача N 2025. Массивы. Запросы минимума на подмассиве
 //import java.util.*;
 //public class Solution {
@@ -519,10 +773,7 @@ public class Solution {
 
 
 
-
-
-
-
+//-------------------------------------------------------------------------
 //Задача N 2019.  Ветвления, циклы. Треугольная полка.
 //import java.util.Scanner;
 //public class Solution {
@@ -552,6 +803,7 @@ public class Solution {
 //  Выведите номер полки, на которой находится книга с номером n.
 
 
+//-------------------------------------------------------------------------
 // Задача N 2009.  Ветвления, циклы. Сумма на степенях двоек
 // import java.util.Scanner;
 //public class Solution {
