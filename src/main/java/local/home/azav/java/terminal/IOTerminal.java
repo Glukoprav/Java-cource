@@ -1,7 +1,7 @@
 package local.home.azav.java.terminal;
 
-import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -16,23 +16,59 @@ public class IOTerminal {
     }
 
     /**
-     * Вывод сообшения на терминал
+     * Метод вывода сообшения на терминал
      */
     protected void outTer(String str) {
         System.out.println(str);
     }
 
     /**
-     * Запрос операции на ввод с терминала
+     * Запрос на ввод аккаунта
      */
-    protected int inTerOper() throws IOException {
+    protected int inTerAcc() {
+        outTer("*********************************");
+        outTer("Выход - 99999");
+        outTer("Введите номер аккаунта (nnnnn): ");
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            outTer("Ошибка ввода!");
+            scanner.nextLine();
+            return 0;
+        }
+    }
+
+    /**
+     * Запрос на ввод pin
+     */
+    protected int inTerPin() {
+        outTer("Введите pin (nnnn): ");
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            outTer("Ошибка ввода!");
+            scanner.nextLine();
+            return 0;
+        }
+    }
+
+    /**
+     * Запрос на ввод операции с терминала
+     */
+    protected int inTerOper() {
         outTer("-------------------------------");
         outTer("Введите операцию:");
         outTer("99 - Выход");
         outTer("1 - Проверить состояние счета");
         outTer("2 - Положить деньги");
         outTer("3 - Снять деньги");
-        return scanner.nextInt();
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            outTer("Ошибка ввода!");
+            scanner.nextLine();
+            return 0;
+        }
     }
 
     /**
@@ -40,7 +76,13 @@ public class IOTerminal {
      */
     protected BigDecimal inTerSum() {
         outTer("Введите сумму: ");
-        return scanner.nextBigDecimal();
+        try {
+            return scanner.nextBigDecimal();
+        }catch (InputMismatchException e) {
+            outTer("Ошибка ввода!");
+            scanner.nextLine();
+            return BigDecimal.valueOf(0);
+        }
     }
 
     /**
@@ -62,5 +104,37 @@ public class IOTerminal {
      */
     protected void outRep() {
         outTer("Операция не распознана, введите снова!");
+    }
+
+    /**
+     * Вывод сообщения о неизвестном аккаунте
+     */
+    protected void outRepAcc() {
+        outTer("Аккаунт не найден, введите снова!");
+    }
+
+    /**
+     * Вывод сообщения о неизвестном аккаунте
+     */
+    protected void outRepPin() {
+        outTer("Неверный PIN, введите снова!");
+    }
+
+    /**
+     * Временно усыпляем при 3 неверных pin
+     */
+    protected void sleeps() throws InterruptedException, AccountIsLockedException {
+        long start = System.currentTimeMillis();
+        long end, traceTyme;
+        do {
+            end = System.currentTimeMillis();
+            traceTyme = end - start;
+            if (scanner.hasNext()) {
+                throw new AccountIsLockedException("Терпите!!!");
+            }
+        } while (traceTyme < 1000);
+        //Thread.sleep(5000);
+        //System.CurrentTimeMillis () = милисекунды
+        //System.nanoTime() = наносекунды
     }
 }

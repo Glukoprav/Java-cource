@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public interface Terminal {
     // Проверить состояние счета
-    BigDecimal checkAccount ();
+    BigDecimal checkSumAccount ();
 
     // Снять деньги
     boolean withdrawMoney (BigDecimal sum);
