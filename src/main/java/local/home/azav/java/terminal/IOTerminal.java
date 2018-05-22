@@ -16,10 +16,17 @@ public class IOTerminal {
     }
 
     /**
-     * Метод вывода сообшения на терминал
+     * Вывод обычного сообшения на терминал
      */
     protected void outTer(String str) {
         System.out.println(str);
+    }
+
+    /**
+     * Метод вывода сообшения на терминал
+     */
+    protected void outErr(String str) {
+        System.err.println(str);
     }
 
     /**
@@ -32,7 +39,7 @@ public class IOTerminal {
         try {
             return scanner.nextInt();
         } catch (InputMismatchException e) {
-            outTer("Ошибка ввода!");
+            outErr("Ошибка ввода!");
             scanner.nextLine();
             return 0;
         }
@@ -46,7 +53,7 @@ public class IOTerminal {
         try {
             return scanner.nextInt();
         } catch (InputMismatchException e) {
-            outTer("Ошибка ввода!");
+            outErr("Ошибка ввода!");
             scanner.nextLine();
             return 0;
         }
@@ -65,7 +72,7 @@ public class IOTerminal {
         try {
             return scanner.nextInt();
         } catch (InputMismatchException e) {
-            outTer("Ошибка ввода!");
+            outErr("Ошибка ввода!");
             scanner.nextLine();
             return 0;
         }
@@ -78,9 +85,9 @@ public class IOTerminal {
         outTer("Введите сумму: ");
         try {
             return scanner.nextBigDecimal();
-        }catch (InputMismatchException e) {
-            outTer("Ошибка ввода!");
-            scanner.nextLine();
+        } catch (InputMismatchException e) {
+            outErr("Ошибка ввода!");
+            clearLine();
             return BigDecimal.valueOf(0);
         }
     }
@@ -103,38 +110,47 @@ public class IOTerminal {
      * Вывод сообщения о неизвестной операции
      */
     protected void outRep() {
-        outTer("Операция не распознана, введите снова!");
+        outErr("Операция не распознана, введите снова!");
     }
 
     /**
      * Вывод сообщения о неизвестном аккаунте
      */
     protected void outRepAcc() {
-        outTer("Аккаунт не найден, введите снова!");
+        outErr("Аккаунт не найден, введите снова!");
     }
 
     /**
      * Вывод сообщения о неизвестном аккаунте
      */
     protected void outRepPin() {
-        outTer("Неверный PIN, введите снова!");
+        outErr("Неверный PIN, введите снова!");
     }
 
     /**
-     * Временно усыпляем при 3 неверных pin
+     * Временно блокируем при 3 неверных pin
      */
-    protected void sleeps() throws InterruptedException, AccountIsLockedException {
-        long start = System.currentTimeMillis();
-        long end, traceTyme;
-        do {
-            end = System.currentTimeMillis();
-            traceTyme = end - start;
-            if (scanner.hasNext()) {
-                throw new AccountIsLockedException("Терпите!!!");
-            }
-        } while (traceTyme < 1000);
-        //Thread.sleep(5000);
-        //System.CurrentTimeMillis () = милисекунды
-        //System.nanoTime() = наносекунды
+    protected void blocked() throws InterruptedException, AccountIsLockedException {
+        if (scanner.hasNext()) {
+            throw new AccountIsLockedException("Терпите!!!");
+        }
+    }
+
+    /**
+     * Вывод сообщения о временной блокировке
+     */
+    protected void outBlock(long lTime) {
+        outErr("Аккаунт блокирован ещё " + lTime + "сек.");
+    }
+
+    /** Чистка строки */
+    protected void clearLine() {
+        scanner.nextLine();
+    }
+
+    /** Сообщение о неизвестной ошибке */
+    protected void outErrIncom(String str) {
+        outErr("Спасайся кто может! Неизвестная ошибка!");
+        outErr(str);
     }
 }

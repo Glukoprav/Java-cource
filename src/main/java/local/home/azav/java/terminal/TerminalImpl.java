@@ -12,6 +12,8 @@ public class TerminalImpl implements Terminal {
     private final TerminalServer server;
     private final PinValidator pinValidator;
     private final IOTerminal ioter;
+    private int currentAccountT;
+    private int currentPinT;
 
     TerminalImpl(TerminalServer server, PinValidator pinValidator) {
         this.server = server;
@@ -26,6 +28,7 @@ public class TerminalImpl implements Terminal {
      */
     @Override
     public BigDecimal checkSumAccount() {
+        // наличие
         return BigDecimal.valueOf(0);
     }
 
@@ -45,27 +48,47 @@ public class TerminalImpl implements Terminal {
         return false;
     }
 
+    private int getCurrentAccount() {
+        return currentAccountT;
+    }
+
+    private void setCurrentAccount(int currentAccount) {
+        this.currentAccountT = currentAccount;
+    }
+
+    private int getCurrentPin() {
+        return currentPinT;
+    }
+
+    private void setCurrentPin(int currentPin) {
+        this.currentPinT = currentPin;
+    }
+
     /**
-     * Проверить наличие аккаунта на сервере
+     * Проверяет наличие аккаунта на сервере
      */
     private boolean checkAcc(int acc) {
         if (acc == 99999) {
             return false;
         }
         try {
-            return server.checkAccount(acc);
+            if (server.checkAccount(acc)) {
+                setCurrentAccount(acc);
+                return true;
+            } else {
+                return false;
+            }
         } catch (NoSuchFieldException e) {
             ioter.outRepAcc();
             return false;
         } catch (Exception e) {
-            System.out.println("Спасайся кто может! Неизвестная ошибка!");
-            System.out.println(e.getCause() + " " + e.getMessage());
+            ioter.outErrIncom(e.getCause() + " " + e.getMessage());
             return false;
         }
     }
 
     /**
-     * Проверить правильность pin у аккаунта
+     * Проверяет правильность pin у аккаунта
      */
     private boolean checkPin(int account) {
         int count = 0;
@@ -74,23 +97,33 @@ public class TerminalImpl implements Terminal {
             count++;
             int pin = ioter.inTerPin();
             try {
-                boo = pinValidator.checkPin(account,pin);
+                boo = pinValidator.checkPin(account, pin);
+                setCurrentPin(pin);
             } catch (IllegalAccessException e) {
-                ioter.outRepPin();
+                if (count == 3) {
+                    ioter.outBlock(5);
+                } else {
+                ioter.outRepPin();}
             } catch (Exception e) {
-                System.out.println("Спасайся кто может! Неизвестная ошибка!");
-                System.out.println(e.getCause() + " " + e.getMessage());
+                ioter.outErrIncom(e.getCause() + " " + e.getMessage());
             }
         } while (boo == false && count < 3);
         if ((boo == false && count == 3)) {
             // лочим аккаунт на 5 сек.
-            try {
-                ioter.sleeps();
-            } catch (AccountIsLockedException e) {
-                System.out.println("Потерпите!!");
-            } catch (InterruptedException e) {
-                System.out.println("Потерпите!!");
-            }
+            long start = System.currentTimeMillis();
+            long end, traceTyme = 0;
+            do {
+                try {
+                    ioter.blocked();
+                } catch (AccountIsLockedException e) {
+                    end = System.currentTimeMillis();
+                    traceTyme = end - start;
+                    ioter.outBlock(6 - traceTyme/1000);
+                    ioter.clearLine();
+                } catch (InterruptedException e) {
+                    ioter.outErrIncom(e.getCause() + " " + e.getMessage());
+                }
+            } while (traceTyme < 5000);
         }
         return boo;
     }
@@ -100,6 +133,7 @@ public class TerminalImpl implements Terminal {
      */
     protected void operationHandler() {
         int account = 99999;
+        int pin = 9999;
         int oper = 99;
         BigDecimal summ = BigDecimal.valueOf(0);
         summ.setScale(2, ROUND_HALF_UP);
@@ -136,6 +170,8 @@ public class TerminalImpl implements Terminal {
                     } while (oper != 99);
                 }
             }
+            setCurrentPin(9999);
+            setCurrentAccount(99999);
         } while (account != 99999);
     }
 }
