@@ -2,6 +2,7 @@ package local.home.azav.java.terminal;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+
 import static java.math.BigDecimal.ROUND_HALF_UP;
 
 /**
@@ -33,7 +34,7 @@ public class TerminalImpl implements Terminal {
      */
     @Override
     public boolean withdrawMoney(BigDecimal sum) {
-        return false;
+        return true;
     }
 
     /**
@@ -62,7 +63,7 @@ public class TerminalImpl implements Terminal {
     protected void operationHandler() {
         int oper = 99;
         BigDecimal summ = BigDecimal.valueOf(0);
-        summ.setScale(2,ROUND_HALF_UP);
+        summ.setScale(2, ROUND_HALF_UP);
         do {
             summ = BigDecimal.valueOf(0);
             oper = operationRequest();
@@ -75,7 +76,6 @@ public class TerminalImpl implements Terminal {
                     if (putMoney(summ)) {
                         ioter.outOk();
                     }
-                    ;
                     break;
                 case 3:
                     summ = ioter.inTerSum();
