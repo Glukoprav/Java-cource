@@ -1,5 +1,6 @@
 package local.home.azav.java.terminal;
 
+/** Ядро запуска терминала */
 public class CoreTerminal {
     public static void main(String[] args) {
         // поднимаем сервер
@@ -8,6 +9,7 @@ public class CoreTerminal {
         PinValidator pinVal = new PinValidator();
         // поднимаем терминал
         TerminalImpl terImpl = new TerminalImpl(terSer,pinVal);
-
+        // Запускаем обаботчик операций
+        terImpl.operationHandler();
     }
 }

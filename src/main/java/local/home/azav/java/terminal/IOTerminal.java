@@ -1,19 +1,51 @@
 package local.home.azav.java.terminal;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Scanner;
 
+/**
+ * Ввод/вывод сообщений для терминала
+ */
 public class IOTerminal {
+    private Scanner scanner;
 
-    // Вывод сообшения на терминал
-    public void outTer(String str){
+    protected IOTerminal() {
+        scanner = new Scanner(System.in);
+        outTer("Подняли сканер");
+    }
+
+    /** Вывод сообшения на терминал */
+    protected void outTer(String str) {
         System.out.println(str);
     }
 
-    // Запрос данных на ввод с терминала
-    public String inTer(String str) throws IOException {
-        System.out.println(str);
-        Scanner scanner = new Scanner(System.in);
-        return String.valueOf(scanner.next());
+    /** Запрос операции на ввод с терминала */
+    protected int inTerOper() throws IOException {
+        outTer("Введите операцию:");
+        outTer("99 - Выход");
+        outTer("1 - Проверить состояние счета");
+        outTer("2 - Положить деньги");
+        outTer("3 - Снять деньги");
+        return scanner.nextInt();
+    }
+
+    /** Запрос суммы на ввод */
+    protected BigDecimal inTerSum() {
+        outTer("Введите сумму: ");
+        return scanner.nextBigDecimal();
+    }
+
+    /** Вывести сообщение, что всё ОК */
+    protected void outOk() {
+        outTer("OK");
+    }
+
+    protected void outMoney(BigDecimal sum) {
+        outTer("Получите свои: " + sum.toString());
+    }
+
+    protected void outRep() {
+        outTer("Операция не распознана, введите снова!");
     }
 }

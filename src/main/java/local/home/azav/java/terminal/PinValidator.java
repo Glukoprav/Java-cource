@@ -3,7 +3,7 @@ package local.home.azav.java.terminal;
 public class PinValidator {
 
     public PinValidator() {
-        System.out.println("Пин-валидатор шевелится");
+        System.out.println("Пин-валидатор зашевелился");
     }
 
     /** Проверить pin */
