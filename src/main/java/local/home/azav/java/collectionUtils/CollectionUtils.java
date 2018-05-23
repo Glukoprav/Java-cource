@@ -1,8 +1,8 @@
 package local.home.azav.java.collectionUtils;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import javafx.print.Collation;
+
+import java.util.*;
 
 // Параметризовать методы, используя правило PECS, и реализовать их
 public class CollectionUtils<T> implements Comparable<T> {
@@ -24,9 +24,11 @@ public class CollectionUtils<T> implements Comparable<T> {
     }
 
     // Что надо сделать???
+    // Для эксперимента создал новый список с заданным размером и передал ему ссылку
     public static <T> List limit(List<? extends T> source, int size) {
-
-        return null;
+        List<?> list = new ArrayList<>(size);
+        list = source;
+        return list;
     }
 
     public static <T> void add(List<T> source, T o) {
@@ -37,7 +39,7 @@ public class CollectionUtils<T> implements Comparable<T> {
         removeFrom.removeAll(c2);
     }
 
-    //true если первый лист содержит все элементы второго
+    // true если первый лист содержит все элементы второго
     public static <T> boolean containsAll(List<? extends T> c1, List<? extends T> c2) {
         return c1.containsAll(c2);
     }
@@ -54,38 +56,7 @@ public class CollectionUtils<T> implements Comparable<T> {
         return boo;
     }
 
-    // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
-    // Элементы сравнивать через Comparable.
-    // Пример range(Arrays.asList(8,1,3,5,6, 4), 3, 6) вернет {3,4,5,6}
-    public static <T> List range(List<? extends T> list, T min, T max) {
-        List<T> listout = new ArrayList<>();
-        CollectionUtils<T> colUtils = new CollectionUtils<>();
-        colUtils.listin = list;
-        for (T ter : colUtils.listin) {
-            colUtils.tin = ter;
-            if (colUtils.compareTo(min) >= 0 & colUtils.compareTo(max) <= 0) {
-                listout.add(ter);
-            }
-        }
-        return listout;
-    }
-
-    // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
-    // Элементы сравнивать через Comparable.
-    // Пример range(Arrays.asList(8,1,3,5,6, 4), 3, 6) вернет {3,4,5,6}
-    public static <T> List range(List<? extends T> list, T min, T max, Comparator comparator) {
-        List<T> listout = new ArrayList<>();
-        CollectionUtils<T> colUtils = new CollectionUtils<>();
-        colUtils.listin = list;
-        for (T ter : colUtils.listin) {
-            colUtils.tin = ter;
-            if (colUtils.compareTo(min) >= 0 & colUtils.compareTo(max) <= 0) {
-                listout.add(ter);
-            }
-        }
-        return listout;
-    }
-
+    /** Переопределенный метод от интерфейса Comparable */
     @Override
     public int compareTo(T t) {
         if (this.tin.hashCode() > t.hashCode()) {
@@ -95,5 +66,34 @@ public class CollectionUtils<T> implements Comparable<T> {
         } else {
             return 0;
         }
+    }
+    // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
+    // Элементы сравнивать через Comparable.
+    // Пример range(Arrays.asList(8,1,3,5,6, 4), 3, 6) вернет {3,4,5,6}
+     //implements Comparable<T>
+    public static <T extends Comparable<? super T>> List range(List<T> list, T min, T max) {
+        List<T> listout;
+        Collections.sort(list);
+        int indMin = list.indexOf(min);
+        int indMax = list.lastIndexOf(max);
+        listout = list.subList(indMin,indMax+1);
+        return listout;
+    }
+
+    // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
+    // Элементы сравнивать через !!Comparable.  !?! Может Comparator???
+    // Пример range(Arrays.asList(8,1,3,5,6, 4), 3, 6) вернет {3,4,5,6}
+    public static <T> List range(List<T> list, T min, T max, Comparator comparator) {
+        List<T> listout;
+        Collections.sort(list, comparator);
+        int indexMin = list.indexOf(min);
+        int indexMax = list.lastIndexOf(max);
+        listout = list.subList(indexMin,indexMax+1);
+        return listout;
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println(range(Arrays.asList(8,1,3,5,4,3,6,4), 3, 6).toString());
     }
 }
