@@ -125,6 +125,7 @@ public class TerminalImpl implements Terminal {
             int pin = ioter.inTerPin();
             try {
                 boo = pinValidator.checkPin(account, pin);
+                setCurrentPin(pin);
             } catch (IllegalAccessException e) {
                 if (count == 3) {
                     ioter.outBlock(5);
