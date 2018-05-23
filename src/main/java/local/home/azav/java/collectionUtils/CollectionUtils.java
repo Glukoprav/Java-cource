@@ -56,7 +56,7 @@ public class CollectionUtils<T> implements Comparable<T> {
         return boo;
     }
 
-    /** Переопределенный метод от интерфейса Comparable */
+    // Переопределенный метод от интерфейса Comparable
     @Override
     public int compareTo(T t) {
         if (this.tin.hashCode() > t.hashCode()) {
@@ -67,6 +67,7 @@ public class CollectionUtils<T> implements Comparable<T> {
             return 0;
         }
     }
+
     // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
     // Элементы сравнивать через Comparable.
     // Пример range(Arrays.asList(8,1,3,5,6, 4), 3, 6) вернет {3,4,5,6}
@@ -92,8 +93,19 @@ public class CollectionUtils<T> implements Comparable<T> {
         return listout;
     }
 
+    // Определяем компаратор для теста
+    static Comparator compar = new Comparator<Number>() {
+        @Override
+        public int compare(Number o1, Number o2) {
+            return (int) (o1.doubleValue() - o2.doubleValue());
+        }
+    };
 
     public static void main(String[] args) {
         System.out.println(range(Arrays.asList(8,1,3,5,4,3,6,4), 3, 6).toString());
+        System.out.println(range(Arrays.asList(8,1,3,5,2,5,6,5,4,3,6,4), 3, 6,compar).toString());
+
     }
+
+
 }
