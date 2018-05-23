@@ -2,15 +2,18 @@ package local.home.azav.java.terminal;
 
 import java.math.BigDecimal;
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
+
+import static java.math.BigDecimal.ROUND_HALF_UP;
 
 /**
  * Ввод/вывод сообщений для терминала
  */
-public class IOTerminal {
+class IOTerminal {
     private Scanner scanner;
 
-    protected IOTerminal() {
+    IOTerminal() {
         scanner = new Scanner(System.in);
         outTer("Подняли сканер");
     }
@@ -18,21 +21,21 @@ public class IOTerminal {
     /**
      * Вывод обычного сообшения на терминал
      */
-    protected void outTer(String str) {
+    private void outTer(String str) {
         System.out.println(str);
     }
 
     /**
      * Метод вывода сообшения на терминал
      */
-    protected void outErr(String str) {
+    private void outErr(String str) {
         System.err.println(str);
     }
 
     /**
      * Запрос на ввод аккаунта
      */
-    protected int inTerAcc() {
+    int inTerAcc() {
         outTer("*********************************");
         outTer("Выход - 99999");
         outTer("Введите номер аккаунта (nnnnn): ");
@@ -48,7 +51,7 @@ public class IOTerminal {
     /**
      * Запрос на ввод pin
      */
-    protected int inTerPin() {
+    int inTerPin() {
         outTer("Введите pin (nnnn): ");
         try {
             return scanner.nextInt();
@@ -62,13 +65,13 @@ public class IOTerminal {
     /**
      * Запрос на ввод операции с терминала
      */
-    protected int inTerOper() {
+    int inTerOper() {
         outTer("-------------------------------");
         outTer("Введите операцию:");
         outTer("99 - Выход");
         outTer("1 - Проверить состояние счета");
-        outTer("2 - Положить деньги");
-        outTer("3 - Снять деньги");
+        outTer("2 - Снять деньги");
+        outTer("3 - Положить деньги");
         try {
             return scanner.nextInt();
         } catch (InputMismatchException e) {
@@ -81,10 +84,12 @@ public class IOTerminal {
     /**
      * Запрос суммы на ввод
      */
-    protected BigDecimal inTerSum() {
+    BigDecimal inTerSum() {
         outTer("Введите сумму: ");
         try {
-            return scanner.nextBigDecimal();
+            scanner.useLocale(Locale.US);
+            BigDecimal bigDecimal = scanner.nextBigDecimal().setScale(2, ROUND_HALF_UP);
+            return bigDecimal;
         } catch (InputMismatchException e) {
             outErr("Ошибка ввода!");
             clearLine();
@@ -93,44 +98,56 @@ public class IOTerminal {
     }
 
     /**
+     * Вывод сообщения об остатке на счете
+     */
+    void outSumAkk(String str) {
+        outTer("Остаток = " + str);
+    }
+
+    /**
      * Вывод сообщения, что всё ОК
      */
-    protected void outOk() {
+    void outOk() {
         outTer("OK");
     }
 
     /**
      * Вывод сообщения, чтоб забрали деньги
      */
-    protected void outMoney(BigDecimal sum) {
+    void outMoney(BigDecimal sum, BigDecimal ost) {
         outTer("Получите свои: " + sum.toString());
+        outTer("Остаток: " + ost.toString());
     }
 
     /**
      * Вывод сообщения о неизвестной операции
      */
-    protected void outRep() {
+    void outRep() {
         outErr("Операция не распознана, введите снова!");
     }
 
     /**
      * Вывод сообщения о неизвестном аккаунте
      */
-    protected void outRepAcc() {
+    void outRepAcc() {
         outErr("Аккаунт не найден, введите снова!");
     }
 
     /**
      * Вывод сообщения о неизвестном аккаунте
      */
-    protected void outRepPin() {
+    void outRepPin() {
         outErr("Неверный PIN, введите снова!");
+    }
+
+    void outRepSumm() {
+        outErr("Недостаточно средств на счете для данной операции!");
     }
 
     /**
      * Временно блокируем при 3 неверных pin
      */
-    protected void blocked() throws InterruptedException, AccountIsLockedException {
+    void blocked() throws InterruptedException, AccountIsLockedException {
         if (scanner.hasNext()) {
             throw new AccountIsLockedException("Терпите!!!");
         }
@@ -139,17 +156,17 @@ public class IOTerminal {
     /**
      * Вывод сообщения о временной блокировке
      */
-    protected void outBlock(long lTime) {
+    void outBlock(long lTime) {
         outErr("Аккаунт блокирован ещё " + lTime + "сек.");
     }
 
     /** Чистка строки */
-    protected void clearLine() {
+    void clearLine() {
         scanner.nextLine();
     }
 
     /** Сообщение о неизвестной ошибке */
-    protected void outErrIncom(String str) {
+    void outErrIncom(String str) {
         outErr("Спасайся кто может! Неизвестная ошибка!");
         outErr(str);
     }

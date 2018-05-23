@@ -11,10 +11,10 @@ public class TerminalServer {
     // Хранение сумм по аккаунтам
     private Map<Integer, BigDecimal> listAccSumm;
 
-    public TerminalServer() {
+    private TerminalServer() {
         listAccSumm = new TreeMap<>();
 
-        // Составляем список аккаунтов для теста
+        // Составляем список аккаунтов с суммами для теста
         listAccSumm.put(12345, BigDecimal.valueOf(20.55));
         listAccSumm.put(12346, BigDecimal.valueOf(222.4));
         listAccSumm.put(12342, BigDecimal.valueOf(0.44));
@@ -25,7 +25,7 @@ public class TerminalServer {
     /**
      * Проверка наличия аккаунта
      */
-    protected boolean checkAccount(int account) throws NoSuchFieldException {
+    boolean checkAccount(int account) throws NoSuchFieldException {
         if (listAccSumm.containsKey(account)) {
             return true;
         } else {
@@ -34,9 +34,39 @@ public class TerminalServer {
     }
 
     /**
+     * Возвращает размер суммы для указанного аккаунта
+     */
+    BigDecimal sumAccount(int account) {
+        return listAccSumm.get(account);
+    }
+
+    /**
+     * Снять сумму с указанного аккаунта.
+     * Если суммы не хватает, то возвращает исключение
+     */
+    void serverWithdrawMoney(BigDecimal sum, int account) throws NoSuchMethodException {
+        if (listAccSumm.get(account).compareTo(sum) >= 0) {
+            BigDecimal bdSum = listAccSumm.get(account).subtract(sum);
+            listAccSumm.remove(account);
+            listAccSumm.put(account,bdSum);
+        } else {
+            throw new NoSuchMethodException();
+        }
+    }
+
+    /**
+     * Положить сумму на указанный аккаунт
+     */
+     void serverPutMoney(BigDecimal sum, int account) {
+         BigDecimal bdSum = listAccSumm.get(account).add(sum);
+         listAccSumm.remove(account);
+         listAccSumm.put(account,bdSum);
+     }
+
+    /**
      * Ядро запуска терминала
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchFieldException {
         // поднимаем сервер
         TerminalServer terSer = new TerminalServer();
         // поднимаем валидатор

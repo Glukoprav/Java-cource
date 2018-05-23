@@ -24,28 +24,55 @@ public class TerminalImpl implements Terminal {
     }
 
     /**
-     * Проверить состояние счета
+     * Проверить состояние счета.
+     * Возвращает сумму на аккаунте.
      */
     @Override
-    public BigDecimal checkSumAccount() {
-        // наличие
-        return BigDecimal.valueOf(0);
+    public BigDecimal checkSumAccount() throws NoSuchFieldException {
+        if (!checkAuthentication()) {
+            throw new NoSuchFieldException();
+        };
+        return server.sumAccount(currentAccountT);
     }
 
     /**
-     * Снять деньги
+     * Снять деньги у акаунта.
+     * Возвращает true, если денег хватает.
      */
     @Override
-    public boolean withdrawMoney(BigDecimal sum) {
+    public boolean withdrawMoney(BigDecimal sum) throws NoSuchFieldException {
+        if (!checkAuthentication()) {
+            throw new NoSuchFieldException();
+        };
+        try {
+            server.serverWithdrawMoney(sum, currentAccountT);
+            return true;
+        } catch (NoSuchMethodException e) {
+            ioter.outRepSumm();
+            return false;
+        }
+
+    }
+
+    /**
+     * Положить деньги на аккаунт.
+     */
+    @Override
+    public boolean putMoney(BigDecimal sum) throws NoSuchFieldException {
+        if (!checkAuthentication()) {
+            throw new NoSuchFieldException();
+        };
+        server.serverPutMoney(sum,currentAccountT);
         return true;
     }
 
-    /**
-     * Положить деньги
-     */
-    @Override
-    public boolean putMoney(BigDecimal sum) {
-        return false;
+    private boolean checkAuthentication() {
+        if (currentAccountT != 0 && currentAccountT != 99999 &&
+                currentPinT != 0 && currentPinT != 9999) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private int getCurrentAccount() {
@@ -65,7 +92,7 @@ public class TerminalImpl implements Terminal {
     }
 
     /**
-     * Проверяет наличие аккаунта на сервере
+     * Проверяет наличие аккаунта на сервере TerminalServer
      */
     private boolean checkAcc(int acc) {
         if (acc == 99999) {
@@ -88,17 +115,16 @@ public class TerminalImpl implements Terminal {
     }
 
     /**
-     * Проверяет правильность pin у аккаунта
+     * Проверяет правильность pin аккаунта у PinValidator
      */
     private boolean checkPin(int account) {
         int count = 0;
         boolean boo = false;
         do {
-            count++;
+            count++;                                    // счетчик попыток
             int pin = ioter.inTerPin();
             try {
                 boo = pinValidator.checkPin(account, pin);
-                setCurrentPin(pin);
             } catch (IllegalAccessException e) {
                 if (count == 3) {
                     ioter.outBlock(5);
@@ -108,22 +134,22 @@ public class TerminalImpl implements Terminal {
                 ioter.outErrIncom(e.getCause() + " " + e.getMessage());
             }
         } while (boo == false && count < 3);
-        if ((boo == false && count == 3)) {
+        if ((boo == false && count == 3)) {            // при 3 неудачных попытках - блокируем ввод
             // лочим аккаунт на 5 сек.
             long start = System.currentTimeMillis();
-            long end, traceTyme = 0;
+            long end, traceTime = 0;
             do {
                 try {
                     ioter.blocked();
                 } catch (AccountIsLockedException e) {
                     end = System.currentTimeMillis();
-                    traceTyme = end - start;
-                    ioter.outBlock(6 - traceTyme/1000);
+                    traceTime = end - start;
+                    ioter.outBlock(6 - traceTime/1000);
                     ioter.clearLine();
                 } catch (InterruptedException e) {
                     ioter.outErrIncom(e.getCause() + " " + e.getMessage());
                 }
-            } while (traceTyme < 5000);
+            } while (traceTime < 5000);
         }
         return boo;
     }
@@ -131,12 +157,11 @@ public class TerminalImpl implements Terminal {
     /**
      * Обработчик операций
      */
-    protected void operationHandler() {
+    void operationHandler() throws NoSuchFieldException {
         int account = 99999;
         int pin = 9999;
         int oper = 99;
-        BigDecimal summ = BigDecimal.valueOf(0);
-        summ.setScale(2, ROUND_HALF_UP);
+        BigDecimal summ = BigDecimal.valueOf(0).setScale(2, ROUND_HALF_UP);
         do {
             account = ioter.inTerAcc();                         // запрос аккаунта
             if (checkAcc(account)) {                            // проверяем наличие аккаунта
@@ -146,18 +171,19 @@ public class TerminalImpl implements Terminal {
                         oper = ioter.inTerOper();               // запрос операции
                         switch (oper) {
                             case 1:                             // проверить остаток
-                                ioter.outTer(checkSumAccount().toString());
+                                ioter.outSumAkk(checkSumAccount().toString());
                                 break;
-                            case 2:                             // положить деньги
+                            case 2:                             // снять деньги
+                                summ = ioter.inTerSum();
+                                if (withdrawMoney(summ)) {
+                                    ioter.outMoney(summ, checkSumAccount());
+                                }
+                                break;
+                            case 3:                             // положить деньги
                                 summ = ioter.inTerSum();
                                 if (putMoney(summ)) {
                                     ioter.outOk();
-                                }
-                                break;
-                            case 3:                             // снять деньги
-                                summ = ioter.inTerSum();
-                                if (withdrawMoney(summ)) {
-                                    ioter.outMoney(summ);
+                                    ioter.outSumAkk(checkSumAccount().toString());
                                 }
                                 break;
                             case 99:                            // выход из операций
@@ -173,5 +199,6 @@ public class TerminalImpl implements Terminal {
             setCurrentPin(9999);
             setCurrentAccount(99999);
         } while (account != 99999);
+        ioter.outOk();
     }
 }

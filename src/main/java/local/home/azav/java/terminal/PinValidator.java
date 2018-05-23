@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PinValidator {
+class PinValidator {
     // Хранение pin по аккаунтам
     private Map<Integer, BigDecimal> listAccPin;
 
-    public PinValidator() {
+    PinValidator() {
         listAccPin = new TreeMap<>();
 
         // Составляем список аккаунтов для теста
@@ -22,7 +22,7 @@ public class PinValidator {
     /**
      * Проверить pin
      */
-    protected boolean checkPin(int acc, int pin) throws IllegalAccessException {
+    boolean checkPin(int acc, int pin) throws IllegalAccessException {
         if (listAccPin.containsKey(acc)) {
             if (listAccPin.get(acc).intValue() == pin) {
                 return true;

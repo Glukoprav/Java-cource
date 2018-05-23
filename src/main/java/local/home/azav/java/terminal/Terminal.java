@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 
 public interface Terminal {
     // Проверить состояние счета
-    BigDecimal checkSumAccount ();
+    BigDecimal checkSumAccount () throws NoSuchFieldException;
 
     // Снять деньги
-    boolean withdrawMoney (BigDecimal sum);
+    boolean withdrawMoney (BigDecimal sum) throws NoSuchFieldException;
 
     // Положить деньги
-    boolean putMoney (BigDecimal sum);
+    boolean putMoney (BigDecimal sum) throws NoSuchFieldException;
 }

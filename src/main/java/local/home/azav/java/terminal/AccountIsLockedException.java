@@ -1,7 +1,7 @@
 package local.home.azav.java.terminal;
 
-public class AccountIsLockedException extends Exception {
-    public AccountIsLockedException(String message) {
+class AccountIsLockedException extends Exception {
+    AccountIsLockedException(String message) {
         super(message);
     }
 }
