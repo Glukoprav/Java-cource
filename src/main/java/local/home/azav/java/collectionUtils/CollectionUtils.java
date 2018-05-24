@@ -71,7 +71,7 @@ public class CollectionUtils<T> implements Comparable<T> {
     // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
     // Элементы сравнивать через Comparable.
     // Пример range(Arrays.asList(8,1,3,5,6, 4), 3, 6) вернет {3,4,5,6}
-     //implements Comparable<T>
+    //implements Comparable<T>
     public static <T extends Comparable<? super T>> List range(List<T> list, T min, T max) {
         List<T> listout;
         Collections.sort(list);
@@ -87,9 +87,9 @@ public class CollectionUtils<T> implements Comparable<T> {
     public static <T> List range(List<T> list, T min, T max, Comparator comparator) {
         List<T> listout;
         Collections.sort(list, comparator);
-        int indexMin = list.indexOf(min);
-        int indexMax = list.lastIndexOf(max);
-        listout = list.subList(indexMin,indexMax+1);
+        int indMin = list.indexOf(min);
+        int indMax = list.lastIndexOf(max);
+        listout = list.subList(indMin,indMax+1);
         return listout;
     }
 
@@ -97,7 +97,7 @@ public class CollectionUtils<T> implements Comparable<T> {
     static Comparator compar = new Comparator<Number>() {
         @Override
         public int compare(Number o1, Number o2) {
-            return (int) (o1.doubleValue() - o2.doubleValue());
+            return (int) (o1.longValue() - o2.longValue());
         }
     };
 
