@@ -86,7 +86,7 @@ public class CollectionUtils<T> implements Comparable<T> {
     // Пример range(Arrays.asList(8,1,3,5,6, 4), 3, 6) вернет {3,4,5,6}
     public static <T> List range(List<T> list, T min, T max, Comparator comparator) {
         List<T> listout;
-        Collections.sort(list, comparator);
+        list.sort(comparator);
         int indMin = list.indexOf(min);
         int indMax = list.lastIndexOf(max);
         listout = list.subList(indMin,indMax+1);
