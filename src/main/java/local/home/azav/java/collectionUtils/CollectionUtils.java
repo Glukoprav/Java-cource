@@ -77,7 +77,7 @@ public class CollectionUtils<T> implements Comparable<T> {
         Collections.sort(list);
         int indMin = list.indexOf(min);
         int indMax = list.lastIndexOf(max);
-        listout = list.subList(indMin,indMax+1);
+        listout = list.subList(indMin, indMax + 1);
         return listout;
     }
 
@@ -89,7 +89,7 @@ public class CollectionUtils<T> implements Comparable<T> {
         list.sort(comparator);
         int indMin = list.indexOf(min);
         int indMax = list.lastIndexOf(max);
-        listout = list.subList(indMin,indMax+1);
+        listout = list.subList(indMin, indMax + 1);
         return listout;
     }
 
@@ -102,8 +102,8 @@ public class CollectionUtils<T> implements Comparable<T> {
     };
 
     public static void main(String[] args) {
-        System.out.println(range(Arrays.asList(8,1,3,5,4,3,6,4), 3, 6).toString());
-        System.out.println(range(Arrays.asList(8,1,3,5,2,5,6,5,4,3,6,4), 3, 6,compar).toString());
+        System.out.println(range(Arrays.asList(8, 1, 3, 5, 4, 3, 6, 4), 3, 6).toString());
+        System.out.println(range(Arrays.asList(8, 1, 3, 5, 2, 5, 6, 5, 4, 3, 6, 4), 3, 6, compar).toString());
 
     }
 
