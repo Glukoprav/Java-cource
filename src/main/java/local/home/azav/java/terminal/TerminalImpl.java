@@ -1,9 +1,6 @@
 package local.home.azav.java.terminal;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-
-import static java.math.BigDecimal.ROUND_HALF_UP;
 
 /**
  * Обработчик операций на терминале
@@ -18,9 +15,7 @@ public class TerminalImpl implements Terminal {
     TerminalImpl(TerminalServer server, PinValidator pinValidator) {
         this.server = server;
         this.pinValidator = pinValidator;
-        System.out.println("И терминал появился");
         ioter = new IOTerminal();
-        System.out.println("Включили ввод-вывод терминала!");
     }
 
     /**
@@ -31,21 +26,28 @@ public class TerminalImpl implements Terminal {
     public BigDecimal checkSumAccount() throws NoSuchFieldException {
         if (!checkAuthentication()) {
             throw new NoSuchFieldException();
-        };
+        }
         return server.sumAccount(currentAccountT);
     }
 
     /**
-     * Снять деньги у акаунта.
-     * Возвращает true, если денег хватает.
+     * Снять деньги у акаунта на сервере.
+     * Возвращает true, если денег хватает, сумма кратна 100 и снятие прошло нормально.
      */
     @Override
-    public boolean withdrawMoney(BigDecimal sum) throws NoSuchFieldException {
+    public boolean withdrawMoney() throws NoSuchFieldException {
         if (!checkAuthentication()) {
             throw new NoSuchFieldException();
-        };
+        }
+        int sum = ioter.inTerSum();
+        if (sum%100 != 0) {
+            ioter.outBadSum(sum);
+            return false;
+        }
         try {
-            server.serverWithdrawMoney(sum, currentAccountT);
+            BigDecimal sumBig = BigDecimal.valueOf(sum);
+            server.serverWithdrawMoney(sumBig, currentAccountT);
+            ioter.outMoney(sumBig, checkSumAccount());
             return true;
         } catch (NoSuchMethodException e) {
             ioter.outRepSumm();
@@ -55,14 +57,21 @@ public class TerminalImpl implements Terminal {
     }
 
     /**
-     * Положить деньги на аккаунт.
+     * Положить деньги на аккаунт на сервере.
+     * Возвращает true, если сумма кратна 100 и зачисление прошло нормально.
      */
     @Override
-    public boolean putMoney(BigDecimal sum) throws NoSuchFieldException {
+    public boolean putMoney() throws NoSuchFieldException {
         if (!checkAuthentication()) {
             throw new NoSuchFieldException();
-        };
-        server.serverPutMoney(sum,currentAccountT);
+        }
+        int sum = ioter.inTerSum();
+        if (sum%100 != 0) {
+            ioter.outBadSum(sum);
+            return false;
+        }
+        BigDecimal sumBig = BigDecimal.valueOf(sum);
+        server.serverPutMoney(sumBig, currentAccountT);
         return true;
     }
 
@@ -116,6 +125,7 @@ public class TerminalImpl implements Terminal {
 
     /**
      * Проверяет правильность pin аккаунта у PinValidator
+     * После 3 неправильных вводов PIN - блокирует ввод на 5 сек.
      */
     private boolean checkPin(int account) {
         int count = 0;
@@ -130,7 +140,8 @@ public class TerminalImpl implements Terminal {
                 if (count == 3) {
                     ioter.outBlock(5);
                 } else {
-                ioter.outRepPin();}
+                    ioter.outRepPin();
+                }
             } catch (Exception e) {
                 ioter.outErrIncom(e.getCause() + " " + e.getMessage());
             }
@@ -145,10 +156,8 @@ public class TerminalImpl implements Terminal {
                 } catch (AccountIsLockedException e) {
                     end = System.currentTimeMillis();
                     traceTime = end - start;
-                    ioter.outBlock(6 - traceTime/1000);
+                    ioter.outBlock(6 - traceTime / 1000);
                     ioter.clearLine();
-                } catch (InterruptedException e) {
-                    ioter.outErrIncom(e.getCause() + " " + e.getMessage());
                 }
             } while (traceTime < 5000);
         }
@@ -160,30 +169,25 @@ public class TerminalImpl implements Terminal {
      */
     void operationHandler() throws NoSuchFieldException {
         int account = 99999;
-        int pin = 9999;
+        //int pin = 9999;
         int oper = 99;
-        BigDecimal summ = BigDecimal.valueOf(0).setScale(2, ROUND_HALF_UP);
         do {
             account = ioter.inTerAcc();                         // запрос аккаунта
             if (checkAcc(account)) {                            // проверяем наличие аккаунта
                 if (checkPin(account)) {                        // проверяем pin
                     do {
-                        summ = BigDecimal.valueOf(0);
                         oper = ioter.inTerOper();               // запрос операции
                         switch (oper) {
                             case 1:                             // проверить остаток
                                 ioter.outSumAkk(checkSumAccount().toString());
                                 break;
                             case 2:                             // снять деньги
-                                summ = ioter.inTerSum();
-                                if (withdrawMoney(summ)) {
-                                    ioter.outMoney(summ, checkSumAccount());
+                                if (withdrawMoney()) {
+                                    ioter.outOk();
                                 }
                                 break;
                             case 3:                             // положить деньги
-                                summ = ioter.inTerSum();
-                                if (putMoney(summ)) {
-                                    ioter.outOk();
+                                if (putMoney()) {
                                     ioter.outSumAkk(checkSumAccount().toString());
                                 }
                                 break;

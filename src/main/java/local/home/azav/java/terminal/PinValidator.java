@@ -16,7 +16,6 @@ class PinValidator {
         listAccPin.put(12346, BigDecimal.valueOf(1235));
         listAccPin.put(12342, BigDecimal.valueOf(1236));
         listAccPin.put(12340, BigDecimal.valueOf(1237));
-        System.out.println("Пин-валидатор зашевелился");
     }
 
     /**

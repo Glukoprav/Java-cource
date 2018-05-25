@@ -2,10 +2,7 @@ package local.home.azav.java.terminal;
 
 import java.math.BigDecimal;
 import java.util.InputMismatchException;
-import java.util.Locale;
 import java.util.Scanner;
-
-import static java.math.BigDecimal.ROUND_HALF_UP;
 
 /**
  * Ввод/вывод сообщений для терминала
@@ -84,24 +81,31 @@ class IOTerminal {
     /**
      * Запрос суммы на ввод
      */
-    BigDecimal inTerSum() {
-        outTer("Введите сумму: ");
+    int inTerSum() {
+        outTer("Введите сумму, кратную 100: ");
         try {
-            scanner.useLocale(Locale.US);
-            BigDecimal bigDecimal = scanner.nextBigDecimal().setScale(2, ROUND_HALF_UP);
-            return bigDecimal;
+            int intSum = scanner.nextInt();
+            return intSum;
         } catch (InputMismatchException e) {
             outErr("Ошибка ввода!");
             clearLine();
-            return BigDecimal.valueOf(0);
+            return 0;
         }
+    }
+
+    /**
+     * Вывод сообщения о неправильной введенной сумме
+     */
+    void outBadSum(int sum) {
+        outErr("Введена сумма не кратная 100!");
+        outErr("Заберите назад свою деньгу: " + sum + " и повторите ввод");
     }
 
     /**
      * Вывод сообщения об остатке на счете
      */
     void outSumAkk(String str) {
-        outTer("Остаток = " + str);
+        outTer("Остаток: " + str);
     }
 
     /**
@@ -147,7 +151,7 @@ class IOTerminal {
     /**
      * Временно блокируем при 3 неверных pin
      */
-    void blocked() throws InterruptedException, AccountIsLockedException {
+    void blocked() throws AccountIsLockedException {
         if (scanner.hasNext()) {
             throw new AccountIsLockedException("Терпите!!!");
         }

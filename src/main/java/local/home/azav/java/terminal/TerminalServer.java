@@ -15,11 +15,10 @@ public class TerminalServer {
         listAccSumm = new TreeMap<>();
 
         // Составляем список аккаунтов с суммами для теста
-        listAccSumm.put(12345, BigDecimal.valueOf(20.55));
+        listAccSumm.put(12345, BigDecimal.valueOf(120.55));
         listAccSumm.put(12346, BigDecimal.valueOf(222.4));
         listAccSumm.put(12342, BigDecimal.valueOf(0.44));
         listAccSumm.put(12340, BigDecimal.valueOf(50.0));
-        System.out.println("Сервер ожил");
     }
 
     /**

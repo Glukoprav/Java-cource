@@ -7,8 +7,8 @@ public interface Terminal {
     BigDecimal checkSumAccount () throws NoSuchFieldException;
 
     // Снять деньги
-    boolean withdrawMoney (BigDecimal sum) throws NoSuchFieldException;
+    boolean withdrawMoney () throws NoSuchFieldException;
 
     // Положить деньги
-    boolean putMoney (BigDecimal sum) throws NoSuchFieldException;
+    boolean putMoney () throws NoSuchFieldException;
 }
