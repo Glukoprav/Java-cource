@@ -76,8 +76,8 @@ public class TerminalImpl implements Terminal {
     }
 
     private boolean checkAuthentication() {
-        if (currentAccountT != 0 && currentAccountT != 99999 &&
-                currentPinT != 0 && currentPinT != 9999) {
+        if (getCurrentAccount() != 0 && getCurrentAccount() != 99999 &&
+                getCurrentPin() != 0 && getCurrentPin() != 9999) {
             return true;
         } else {
             return false;
