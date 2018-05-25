@@ -23,7 +23,7 @@ class IOTerminal {
     }
 
     /**
-     * Метод вывода сообшения на терминал
+     * Вывод сообшения об ошибке на терминал
      */
     private void outErr(String str) {
         System.err.println(str);
