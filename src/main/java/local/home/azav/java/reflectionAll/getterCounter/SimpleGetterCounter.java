@@ -18,6 +18,7 @@ public class SimpleGetterCounter implements GetterCounter {
      */
     @Override
     public int calcGetterCount(Class<?> clazz) {
+        if (clazz == null) { return 0; }
         Method[] methodsClass = clazz.getMethods();
         int count = 0;
         for (Method met : methodsClass) {
