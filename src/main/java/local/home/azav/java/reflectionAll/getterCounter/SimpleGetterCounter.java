@@ -1,6 +1,9 @@
 package local.home.azav.java.reflectionAll.getterCounter;
 
-import local.home.azav.java.Person;
+import com.sun.deploy.net.proxy.ProxyUtils;
+import local.home.azav.java.reflectionAll.annotationSkip.PersonAnnotation;
+import local.home.azav.java.reflectionAll.annotationSkip.Skip;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +12,7 @@ public class SimpleGetterCounter implements GetterCounter {
 
     /**
      * Возвращает количество геттеров в переданном классе.
+     *
      * @param clazz класс в котором необходимо посчитать геттеры
      * @return возвращает количество найденных геттеров
      */
@@ -20,7 +24,9 @@ public class SimpleGetterCounter implements GetterCounter {
             if (met.getName().startsWith("get")) {
                 if (met.getParameterTypes().length == 0) {
                     if (!void.class.equals(met.getReturnType())) {
-                        count++;
+                        if (!met.isAnnotationPresent(Skip.class)) {
+                            count++;
+                        }
                     }
                 }
             }
@@ -30,6 +36,7 @@ public class SimpleGetterCounter implements GetterCounter {
 
     /**
      * Возвращает список геттеров в переданном классе.
+     *
      * @param clazz класс в котором необходимо прочитать геттеры.
      * @return возвращает список строк - имена найденных геттеров.
      */
@@ -40,7 +47,9 @@ public class SimpleGetterCounter implements GetterCounter {
             if (met.getName().startsWith("get")) {
                 if (met.getParameterTypes().length == 0) {
                     if (!void.class.equals(met.getReturnType())) {
-                        strArr.add(met.getName());
+                        if (!met.isAnnotationPresent(Skip.class)) {
+                            strArr.add(met.getName());
+                        }
                     }
                 }
             }
@@ -50,7 +59,8 @@ public class SimpleGetterCounter implements GetterCounter {
 
     public static void main(String[] args) {
         SimpleGetterCounter sgc = new SimpleGetterCounter();
-        System.out.println(sgc.calcGetterCount(Person.class));
-        System.out.println(sgc.arrayGetterCount(Person.class));
+        //SimpleGetterCounter cashSgc = ProxyUtils;
+        System.out.println(sgc.calcGetterCount(PersonAnnotation.class));
+        System.out.println(sgc.arrayGetterCount(PersonAnnotation.class));
     }
 }
