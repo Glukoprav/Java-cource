@@ -10,6 +10,14 @@ public class Person {
         this.name = name;
     }
 
+    public boolean isMan() {
+        return man;
+    }
+
+    public Person getSpouse() {
+        return spouse;
+    }
+
     public String getName() {
         return name;
     }
