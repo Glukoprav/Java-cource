@@ -8,37 +8,27 @@ import java.util.TreeMap;
 
 public class ProxyCacheGetter implements InvocationHandler {
     private final Object obj;
-    private final Map<Integer, Integer> cachedResults;
+    private final Map<String, Object> cachedResults;
 
     public ProxyCacheGetter(Object o) {
         obj = o;
-        cachedResults = new TreeMap<Integer, Integer>();
+        // Кэш храним как сбалансированное дерево
+        cachedResults = new TreeMap<String, Object>();
     }
 
     public Object invoke(Object proxy, Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
-        System.out.println("Метод: " + method.getName());
-        if (cachedResults.containsKey(args)) {
-            //result =  cachedResults.get(inputData);
+        String strMethod = method.getName();
+        Object result;
+        if (cachedResults.containsKey(args.toString())) {
+            // Если есть значение в кэше - возвращаем его
+            result = cachedResults.get(args.toString());
+            System.out.println("Кэшированный результат: " + result + " метода:" + strMethod);
         } else {
-            return method.invoke(obj, args);
+            // Если нет значения в кэше, то вызываем метод и результат берем в кэш
+            result = method.invoke(obj, args);
+            cachedResults.put(args.toString(), result);
+            System.out.println("Взяли в кэш: " + result);
         }
-
-        // Если такой метод с такими параметрами не вызывался - вызываем метод, а результат вместе
-        // с ключом помещаем в кэш
-//        if (!cachedResults.containsKey(inputData)){
-//            result =  method.invoke(inst, args);
-//            cachedResults.put(inputData, result);
-//            System.out.println("Вызванный метод будет помещен в кэш");
-//        }
-//        // Если по каким-то причинам в кэше хранится null - возвращаем 0
-//        else if (cachedResults.get(inputData) == null) {
-//            System.out.print("Возвращаем значение из кэша: ");
-//            result = 0;
-//        }   else{
-//            System.out.print("Возвращаем значение из кэша: ");
-//            // в других случаях возвращаем значение из кэша
-//            result =  cachedResults.get(inputData);
-//        }
-        return 0;
+        return result;
     }
 }

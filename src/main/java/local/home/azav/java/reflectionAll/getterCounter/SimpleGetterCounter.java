@@ -1,10 +1,14 @@
 package local.home.azav.java.reflectionAll.getterCounter;
 
-import com.sun.deploy.net.proxy.ProxyUtils;
+import local.home.azav.java.Person;
 import local.home.azav.java.reflectionAll.annotationSkip.PersonAnnotation;
 import local.home.azav.java.reflectionAll.annotationSkip.Skip;
+import local.home.azav.java.reflectionAll.proxyCache.ProxyCacheGetter;
 
+
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +22,13 @@ public class SimpleGetterCounter implements GetterCounter {
      */
     @Override
     public int calcGetterCount(Class<?> clazz) {
-        if (clazz == null) { return 0; }
+        if (clazz == null) {
+            return 0;
+        }
         Method[] methodsClass = clazz.getMethods();
         int count = 0;
         for (Method met : methodsClass) {
-            if (met.getName().startsWith("get")) {
+            if (met.getName().startsWith("get") || met.getName().startsWith("is")) {
                 if (met.getParameterTypes().length == 0) {
                     if (!void.class.equals(met.getReturnType())) {
                         if (!met.isAnnotationPresent(Skip.class)) {
@@ -45,7 +51,7 @@ public class SimpleGetterCounter implements GetterCounter {
         Method[] methodsClass = clazz.getMethods();
         List<String> strArr = new ArrayList<>();
         for (Method met : methodsClass) {
-            if (met.getName().startsWith("get")) {
+            if (met.getName().startsWith("get") || met.getName().startsWith("is")) {
                 if (met.getParameterTypes().length == 0) {
                     if (!void.class.equals(met.getReturnType())) {
                         if (!met.isAnnotationPresent(Skip.class)) {
@@ -58,10 +64,23 @@ public class SimpleGetterCounter implements GetterCounter {
         return strArr;
     }
 
+    /**
+     * Проверка работы метода calcGetterCount,
+     * аннотации @Skip,
+     * и кэширующего прокси, повешенного на метод calcGetterCount
+     */
     public static void main(String[] args) {
         SimpleGetterCounter sgc = new SimpleGetterCounter();
+        InvocationHandler handler = new ProxyCacheGetter(sgc);
+        GetterCounter proxy = (GetterCounter)
+                Proxy.newProxyInstance(
+                        GetterCounter.class.getClassLoader(),
+                        new Class[] { GetterCounter.class },
+                        handler);
         //SimpleGetterCounter cashSgc = ProxyUtils;
         System.out.println(sgc.calcGetterCount(PersonAnnotation.class));
+        System.out.println(sgc.calcGetterCount(PersonAnnotation.class));
+        System.out.println(sgc.calcGetterCount(Person.class));
         System.out.println(sgc.arrayGetterCount(PersonAnnotation.class));
     }
 }

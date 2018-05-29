@@ -15,6 +15,10 @@ public class PersonAnnotation {
         return man;
     }
 
+    /**
+     * Аннотация Skip помечает геттеры, которые не должны попадать в выборку
+     * методом SimpleGetterCounter.calcGetterCount
+     */
     @Skip
     public PersonAnnotation getSpouse() {
         return spouse;
