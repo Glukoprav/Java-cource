@@ -75,9 +75,8 @@ public class SimpleGetterCounter implements GetterCounter {
         GetterCounter proxy = (GetterCounter)
                 Proxy.newProxyInstance(
                         GetterCounter.class.getClassLoader(),
-                        new Class[] { GetterCounter.class },
+                        new Class[]{GetterCounter.class},
                         handler);
-        //SimpleGetterCounter cashSgc = ProxyUtils;
         System.out.println(proxy.calcGetterCount(PersonAnnotation.class));
         System.out.println(proxy.calcGetterCount(PersonAnnotation.class));
         System.out.println(proxy.calcGetterCount(Person.class));
