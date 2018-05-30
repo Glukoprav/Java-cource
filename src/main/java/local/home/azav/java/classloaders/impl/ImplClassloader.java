@@ -9,8 +9,8 @@ import java.net.URL;
  */
 public class ImplClassloader extends ApiClassloader {
 
-    public ImplClassloader() {
-        super();
+    public ImplClassloader(URL[] urls) {
+        super(urls);
         System.out.println("ImplClassloader после вызова родителя");
     }
 }

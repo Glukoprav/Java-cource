@@ -8,4 +8,5 @@ public interface ICalculator {
     // метод умножения целых
     // возвращает целое число
     int mulInt(int p1, int p2);
+
 }
