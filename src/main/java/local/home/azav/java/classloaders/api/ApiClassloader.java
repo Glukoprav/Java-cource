@@ -1,12 +1,13 @@
 package local.home.azav.java.classloaders.api;
 
-import java.net.URL;
-import java.net.URLClassLoader;
+public abstract class ApiClassloader extends ClassLoader {
 
-public class ApiClassloader extends URLClassLoader {
-
-    public ApiClassloader(URL[] urls) {
-        super(urls);
+    public ApiClassloader() {
+        super();
         System.out.println("ApiClassloader после вызова родителя");
+    }
+
+    public Class<?> loadClass() throws ClassNotFoundException {
+        return super.loadClass("local.home.azav.java.classloaders.api.ICalculator");
     }
 }

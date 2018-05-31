@@ -22,6 +22,11 @@ public class CalculatorImpl implements ICalculator {
         this.p2 = p2;
     }
 
+    public CalculatorImpl() {
+        this.p1 = 0;
+        this.p2 = 0;
+    }
+
     public CalculatorImpl(int p1, int p2) {
         this.p1 = p1;
         this.p2 = p2;
