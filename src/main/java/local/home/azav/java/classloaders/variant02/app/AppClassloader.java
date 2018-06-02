@@ -14,11 +14,4 @@ public class AppClassloader extends ApiClassloader {
         this.classPath = classPath;
         System.out.println("AppClassloader после вызова родителя");
     }
-
-//    @Override
-//    public Class<?> loadClass() throws ClassNotFoundException {
-//        return super.loadClass("local.home.azav.java.classloaders.variant02.app.AppCalc");
-//    }
-
-
 }

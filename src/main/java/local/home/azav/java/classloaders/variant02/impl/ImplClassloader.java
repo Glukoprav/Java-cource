@@ -11,7 +11,6 @@ public class ImplClassloader extends ApiClassloader {
 
     public ImplClassloader(String classPath) {
         super(classPath);
-        //super();
         this.classPath = classPath;
         System.out.println("ImplClassloader после вызова родителя");
     }

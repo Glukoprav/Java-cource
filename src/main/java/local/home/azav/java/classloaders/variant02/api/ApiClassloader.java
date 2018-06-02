@@ -1,5 +1,21 @@
 package local.home.azav.java.classloaders.variant02.api;
 
+
+/*
+    Задание:
+
+У Вас будут интерфейс Calculator, классы CalculatorImpl и App.
+Располагаться они должны в разных директориях(= package-ах) - api, impl и app соответственно.
+Необходимо создать три класслоадера: ApiClassloader, ImplClassloader и AppClassloader.
+ApiClassloader должен уметь загружать классы из api, ImplClassloader из impl, AppClassloader из app.
+Apiclassloader должен быть родителем как для ImplClassloader, так и для AppClassloader.
+
+С помощью ImplClassloader загрузить класс CalculatorImpl. С помощью AppClassloader загрузить класс App.
+1) Убедиться, что из AppClassloader недоступна загрузка CalculatorImpl.
+2) Создать класслоадер, с помощью которого возможно будет загрузить класс MyApp extends App,
+у которого будет поле с типом CalculatorImpl
+*/
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

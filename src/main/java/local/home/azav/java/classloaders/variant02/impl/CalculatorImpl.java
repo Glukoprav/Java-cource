@@ -2,6 +2,7 @@ package local.home.azav.java.classloaders.variant02.impl;
 
 import local.home.azav.java.classloaders.variant02.api.ICalculator;
 
+/* Класс реализации калькулятора */
 public class CalculatorImpl implements ICalculator {
     private int p1;
     private int p2;
