@@ -1,4 +1,4 @@
-package local.home.azav.java.classloaders.api;
+package local.home.azav.java.classloaders.variant02.api;
 
 public interface ICalculator {
     // метод сложения целых

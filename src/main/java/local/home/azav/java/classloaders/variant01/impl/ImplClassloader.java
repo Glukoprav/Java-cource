@@ -1,6 +1,6 @@
-package local.home.azav.java.classloaders.impl;
+package local.home.azav.java.classloaders.variant01.impl;
 
-import local.home.azav.java.classloaders.api.ApiClassloader;
+import local.home.azav.java.classloaders.variant01.api.ApiClassloader;
 
 /**
  * Classloader для класса CalculatorImpl
@@ -14,6 +14,6 @@ public class ImplClassloader extends ApiClassloader {
 
     @Override
     public Class<?> loadClass() throws ClassNotFoundException {
-        return super.loadClass("local.home.azav.java.classloaders.impl.CalculatorImpl");
+        return super.loadClass("local.home.azav.java.classloaders.variant01.impl.CalculatorImpl");
     }
 }

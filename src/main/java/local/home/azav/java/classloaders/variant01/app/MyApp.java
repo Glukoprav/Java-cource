@@ -1,6 +1,6 @@
-package local.home.azav.java.classloaders.app;
+package local.home.azav.java.classloaders.variant01.app;
 
-import local.home.azav.java.classloaders.impl.CalculatorImpl;
+import local.home.azav.java.classloaders.variant01.impl.CalculatorImpl;
 
 public class MyApp extends AppCalc {
 

@@ -1,6 +1,6 @@
-package local.home.azav.java.classloaders.impl;
+package local.home.azav.java.classloaders.variant01.impl;
 
-import local.home.azav.java.classloaders.api.ICalculator;
+import local.home.azav.java.classloaders.variant01.api.ICalculator;
 
 public class CalculatorImpl implements ICalculator {
     private int p1;

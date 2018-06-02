@@ -1,6 +1,6 @@
-package local.home.azav.java.classloaders.app;
+package local.home.azav.java.classloaders.variant01.app;
 
-import local.home.azav.java.classloaders.api.ApiClassloader;
+import local.home.azav.java.classloaders.variant01.api.ApiClassloader;
 
 /**
  * Classloader для класса AppCalc
@@ -13,7 +13,7 @@ public class AppClassloader extends ApiClassloader {
 
     @Override
     public Class<?> loadClass() throws ClassNotFoundException {
-        return super.loadClass("local.home.azav.java.classloaders.app.AppCalc");
+        return super.loadClass("local.home.azav.java.classloaders.variant01.app.AppCalc");
     }
 
 

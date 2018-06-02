@@ -1,4 +1,4 @@
-package local.home.azav.java.classloaders.api;
+package local.home.azav.java.classloaders.variant01.api;
 
 public abstract class ApiClassloader extends ClassLoader {
 
@@ -8,6 +8,6 @@ public abstract class ApiClassloader extends ClassLoader {
     }
 
     public Class<?> loadClass() throws ClassNotFoundException {
-        return super.loadClass("local.home.azav.java.classloaders.api.ICalculator");
+        return super.loadClass("local.home.azav.java.classloaders.variant01.api.ICalculator");
     }
 }
