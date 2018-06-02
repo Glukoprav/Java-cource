@@ -1,0 +1,17 @@
+package local.home.azav.java.classloaders.variant02.app;
+
+import local.home.azav.java.classloaders.variant02.app.AppCalc;
+import local.home.azav.java.classloaders.variant02.impl.CalculatorImpl;
+
+public class MyApp extends AppCalc {
+
+    private CalculatorImpl calcImpl;
+
+    public CalculatorImpl getCalcImpl() {
+        return calcImpl;
+    }
+
+    public void setCalcImpl(CalculatorImpl calcImpl) {
+        this.calcImpl = calcImpl;
+    }
+}
