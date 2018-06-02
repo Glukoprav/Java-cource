@@ -58,7 +58,7 @@ public abstract class ApiClassloader extends ClassLoader {
      * @param extension - строка расширения файла
      * @return Возвращаем найденный файл, иначе null
      */
-    private File findFile(String name, String extension) {
+    protected File findFile(String name, String extension) {
         File f = new File((new File(classPath)).getPath() +
                 File.separatorChar + name.replace('/', File.separatorChar) + extension);
         if (f.exists())
