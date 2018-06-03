@@ -18,7 +18,16 @@ public class MyAppClassloader extends ApiClassloader {
         System.out.println("MyAppClassloader после вызова родителя");
     }
 
-    protected Class findClass(String name) throws ClassNotFoundException {
+    @Override
+    public Class loadClass(String name,boolean resolve) throws ClassNotFoundException
+    {
+        Class result= findClass(name);
+        if (resolve)
+            resolveClass(result);
+        return result;
+    }
+
+    /*protected Class findClass(String name) throws ClassNotFoundException {
 
         Class result;
         File fileClass = super.findFile(name.replace('.', '/'), ".class");
@@ -35,5 +44,5 @@ public class MyAppClassloader extends ApiClassloader {
             throw new ClassNotFoundException("Некорректный формат класса " + name + ": " + e);
         }
         return result;
-    }
+    }*/
 }

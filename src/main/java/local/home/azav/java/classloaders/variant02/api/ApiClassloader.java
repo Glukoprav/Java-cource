@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public abstract class ApiClassloader extends ClassLoader {
+public class ApiClassloader extends ClassLoader {
 
     public final String classPath;   // путь к классу
 
@@ -29,11 +29,21 @@ public abstract class ApiClassloader extends ClassLoader {
         System.out.println("ApiClassloader конструктор");
     }
 
+    @Override
+    public Class loadClass(String name,boolean resolve) throws ClassNotFoundException
+    {
+        Class result= findClass(name);
+        if (resolve)
+            resolveClass(result);
+        return result;
+    }
+
     /**
      * Преобразовываем имя, ищем файл класса, считываем файл и устанавливаем класс
      * @param name - строка пути к файлу в формате пакета (разделитель - точка)
      * @return установленный класс
      */
+    @Override
     protected Class findClass(String name) throws ClassNotFoundException {
         Class result;
         File fileClass = findFile(name.replace('.', '/'), ".class");
