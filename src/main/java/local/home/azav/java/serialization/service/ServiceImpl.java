@@ -3,17 +3,30 @@ package local.home.azav.java.serialization.service;
 public class ServiceImpl implements Service {
 
     @Override
-    public long doHardWork01() {
-        return 111;
+    public long doHardWork01(long t) {
+        if (t > 0) {
+            return t;
+        } else {
+            return 111;
+        }
+
     }
 
     @Override
-    public long doHardWork02() {
-        return 222;
+    public long doHardWork02(long t) {
+        if (t > 0) {
+            return t;
+        } else {
+            return 222;
+        }
     }
 
     @Override
-    public long dohardWork03() {
-        return 333;
+    public long doHardWork03(long t) {
+        if (t > 0) {
+            return t;
+        } else {
+            return 333;
+        }
     }
 }
