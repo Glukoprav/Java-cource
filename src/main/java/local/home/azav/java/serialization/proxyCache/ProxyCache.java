@@ -83,6 +83,7 @@ public class ProxyCache implements InvocationHandler {
                 break;
             default:
                 result = null;
+                break;
         }
         return result;
     }
@@ -99,7 +100,7 @@ public class ProxyCache implements InvocationHandler {
                 serialMethod(strFileName,strKey,result);
                 break;
             default:
-                result = null;
+                throw new IOException("Неизвестное значение аннотации!");
         }
     }
 
