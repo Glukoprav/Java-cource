@@ -10,5 +10,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Cache {
     CacheInSpace value() default CacheInSpace.MEMORY;
-    String pathFile() default "c:/temp/serialized.tss";
+    String pathFile() default "c:/temp/";
+    String fileNamePrefix() default "data";
+    String fileExtension() default ".ssk";
 }

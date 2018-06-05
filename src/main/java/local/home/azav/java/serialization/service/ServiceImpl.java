@@ -1,5 +1,8 @@
 package local.home.azav.java.serialization.service;
 
+/**
+ * Класс, у которого будем кэшировать результаты выполнения методов
+ */
 public class ServiceImpl implements Service {
 
     @Override
