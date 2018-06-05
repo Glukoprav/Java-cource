@@ -9,12 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Cache {
+    CacheInSpace value() default CacheInSpace.MEMORY;
+    String pathFile() default "c:/temp/serialized.tss";
 }
-
-//interface Service {
-//@Cache(cacheType = FILE, fileNamePrefix = "data", zip = true, identityBy = {String.class, double.class})
-//    List<String> run(String item, double value, Date date);
-//
-//@Cache(cacheType = IN_MEMORY, listList = 100_000)
-//    List<String> work(String item);
-//        }
