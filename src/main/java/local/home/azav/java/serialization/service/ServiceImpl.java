@@ -1,9 +1,11 @@
 package local.home.azav.java.serialization.service;
 
+import java.io.Serializable;
+
 /**
  * Класс, у которого будем кэшировать результаты выполнения методов
  */
-public class ServiceImpl implements Service {
+public class ServiceImpl implements Service, Serializable {
 
     @Override
     public long doHardWork01(long t) {

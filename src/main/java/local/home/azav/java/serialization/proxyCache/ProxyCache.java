@@ -42,27 +42,15 @@ public class ProxyCache implements InvocationHandler {
                 // Если нет значения в кэше, то вызываем метод и результат берем в кэш
                 result = method.invoke(obj, arguments);
                 insertInCache(strKey, result, annCache);
-                System.out.println("Взяли в кэш: " + result);
-            } else {
-                System.out.println("Кэшированный результат: " + result + ", метода: " + strMethod);
             }
         } else {
             result = method.invoke(obj, arguments);
-
+            System.out.println("Метод без аннотации: " + strMethod);
         }
         return result;
     }
 
-    // Приватный класс для сериализации
-    private class MethodSerial implements Serializable {
-        private String method;
-        private Object result;
 
-        MethodSerial(String method, Object result) {
-            this.method = method;
-            this.result = result;
-        }
-    }
 
     // Проверяем наличие значения в кэше, выбор места - по переданной аннотации
     private Object checkInCache(String strKey, Cache cache) throws IOException, ClassNotFoundException {
@@ -70,13 +58,16 @@ public class ProxyCache implements InvocationHandler {
         switch (cache.value()) {
             case MEMORY:
                 result = cachedResults.get(strKey);
+                System.out.println("Результат из кэша ПАМЯТИ: " + result + ", по ключу: " + strKey);
                 break;
             case FILE:
                 // Путь и имя файла: из аннотации путь и префикс + ключ + расширение из аннотации
                 String strFileName = cache.pathFile() + cache.fileNamePrefix() + strKey + cache.fileExtension();
                 if (Files.exists(Paths.get(strFileName))) {
-                    MethodSerial ms = deserialMethod(strFileName);
-                    result = ms.result;
+                    KeySerial ks = (KeySerial) deserialMethod(strFileName);
+                    result = ks.getResult();
+                    String keyMethod = ks.getMethod();
+                    System.out.println("Результат из ФАЙЛОВОГО кэша: " + result + ", по ключу: " + keyMethod);
                 } else {
                     return null;
                 }
@@ -93,30 +84,42 @@ public class ProxyCache implements InvocationHandler {
         switch (cache.value()) {
             case MEMORY:
                 cachedResults.put(strKey, result);
+                System.out.println("Взяли в кэш ПАМЯТИ: " + result);
                 break;
             case FILE:
                 // Путь и имя файла: из аннотации путь и префикс + ключ + расширение из аннотации
                 String strFileName = cache.pathFile() + cache.fileNamePrefix() + strKey + cache.fileExtension();
-                serialMethod(strFileName,strKey,result);
+                // Создаем объект кэширования для SerializationProxy
+                KeySerial keySerial = new KeySerial(strKey,result);
+                serialMethod(strFileName, keySerial);
+                System.out.println("Взяли в ФАЙЛОВЫЙ кэш: " + result);
                 break;
             default:
                 throw new IOException("Неизвестное значение аннотации!");
         }
     }
 
-    private MethodSerial deserialMethod(String strFileName) throws IOException, ClassNotFoundException {
+    private Object deserialMethod(String strFileName) {
         try (FileInputStream fis = new FileInputStream(strFileName);
              ObjectInputStream oin = new ObjectInputStream(fis)) {
-            return (MethodSerial) oin.readObject();
+            Object obj = oin.readObject();
+        }catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return obj;
     }
 
-    private void serialMethod(String strFileName, String strKey, Object result) throws IOException {
+    private void serialMethod(String strFileName, Object result) {
         try (FileOutputStream fos = new FileOutputStream(strFileName);
              ObjectOutputStream out = new ObjectOutputStream(fos)) {
-            MethodSerial methodSerial = new MethodSerial(strKey, result);
-            out.writeObject(methodSerial);
+            out.writeObject(result);
             out.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

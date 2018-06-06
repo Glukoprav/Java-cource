@@ -3,6 +3,7 @@ package local.home.azav.java.serialization.main;
 import local.home.azav.java.serialization.proxyCache.ProxyCache;
 import local.home.azav.java.serialization.service.Service;
 import local.home.azav.java.serialization.service.ServiceImpl;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
