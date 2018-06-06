@@ -23,10 +23,6 @@ class KeySerial implements Serializable {
     public Object getResult() {
         return result;
     }
-//    // no-arg Constructor
-//    KeySerial() {
-//        System.out.println("no-arg constructor");
-//    }
 
     /**
      * writeReplace - метод для proxy pattern
@@ -34,7 +30,7 @@ class KeySerial implements Serializable {
      * @return Object = KeyProxy с полями из KeySerial
      */
     private Object writeReplace() {
-        System.out.println("In writeReplace() method");
+        System.out.println("Пишем в сериализованную прокси");
         return new KeyProxy(this);
     }
 
@@ -51,7 +47,7 @@ class KeySerial implements Serializable {
 
         // readResolve метод для KeySerial.KeyProxy
         private Object readResolve() {
-            System.out.println("In readResolve() method");
+            System.out.println("Читаем из сериализованной прокси");
             return new KeySerial(method, result);
         }
     }

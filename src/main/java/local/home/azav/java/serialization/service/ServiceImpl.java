@@ -1,11 +1,14 @@
 package local.home.azav.java.serialization.service;
 
+import local.home.azav.java.serialization.annotationCache.Cache;
+import local.home.azav.java.serialization.annotationCache.CacheInSpace;
+
 import java.io.Serializable;
 
 /**
  * Класс, у которого будем кэшировать результаты выполнения методов
  */
-public class ServiceImpl implements Service, Serializable {
+public class ServiceImpl implements Service {
 
     @Override
     public long doHardWork01(long t) {
@@ -32,6 +35,15 @@ public class ServiceImpl implements Service, Serializable {
             return t;
         } else {
             return 333;
+        }
+    }
+
+    @Override
+    public long doHardWork04(long t) {
+        if (t > 0) {
+            return t;
+        } else {
+            return 444;
         }
     }
 }

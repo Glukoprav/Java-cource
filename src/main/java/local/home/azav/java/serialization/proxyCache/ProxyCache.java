@@ -51,7 +51,6 @@ public class ProxyCache implements InvocationHandler {
     }
 
 
-
     // Проверяем наличие значения в кэше, выбор места - по переданной аннотации
     private Object checkInCache(String strKey, Cache cache) throws IOException, ClassNotFoundException {
         Object result;
@@ -64,9 +63,9 @@ public class ProxyCache implements InvocationHandler {
                 // Путь и имя файла: из аннотации путь и префикс + ключ + расширение из аннотации
                 String strFileName = cache.pathFile() + cache.fileNamePrefix() + strKey + cache.fileExtension();
                 if (Files.exists(Paths.get(strFileName))) {
-                    KeySerial ks = (KeySerial) deserialMethod(strFileName);
-                    result = ks.getResult();
-                    String keyMethod = ks.getMethod();
+                    Object ks = deserialMethod(strFileName);
+                    result = ((KeySerial) ks).getResult();
+                    String keyMethod = ((KeySerial) ks).getMethod();
                     System.out.println("Результат из ФАЙЛОВОГО кэша: " + result + ", по ключу: " + keyMethod);
                 } else {
                     return null;
@@ -90,7 +89,7 @@ public class ProxyCache implements InvocationHandler {
                 // Путь и имя файла: из аннотации путь и префикс + ключ + расширение из аннотации
                 String strFileName = cache.pathFile() + cache.fileNamePrefix() + strKey + cache.fileExtension();
                 // Создаем объект кэширования для SerializationProxy
-                KeySerial keySerial = new KeySerial(strKey,result);
+                KeySerial keySerial = new KeySerial(strKey, result);
                 serialMethod(strFileName, keySerial);
                 System.out.println("Взяли в ФАЙЛОВЫЙ кэш: " + result);
                 break;
@@ -99,16 +98,18 @@ public class ProxyCache implements InvocationHandler {
         }
     }
 
-    private Object deserialMethod(String strFileName) {
+    private KeySerial deserialMethod(String strFileName) {
+        KeySerial obje;
         try (FileInputStream fis = new FileInputStream(strFileName);
              ObjectInputStream oin = new ObjectInputStream(fis)) {
-            Object obj = oin.readObject();
-        }catch (ClassNotFoundException e) {
+            obje = (KeySerial) oin.readObject();
+            return obje;
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return obj;
+        return obje = null;
     }
 
     private void serialMethod(String strFileName, Object result) {

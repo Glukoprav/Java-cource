@@ -16,7 +16,7 @@ public class Main {
                         Service.class.getClassLoader(),
                         new Class[]{Service.class},
                         handler);
-        // Кэш в файле
+        // Кэш в файле c расширением .ssk
         System.out.println("Результат: " + proxy.doHardWork01(100));
         System.out.println("Результат: " + proxy.doHardWork01(200));
         System.out.println("Результат: " + proxy.doHardWork01(100));
@@ -32,5 +32,9 @@ public class Main {
         System.out.println("Результат: " + proxy.doHardWork03(-10));
         System.out.println("Результат: " + proxy.doHardWork03(-10));
 
+        // Кэш в файле c расширением .sdd
+        System.out.println("Результат: " + proxy.doHardWork04(-100));
+        System.out.println("Результат: " + proxy.doHardWork04(200));
+        System.out.println("Результат: " + proxy.doHardWork04(-100));
     }
 }
