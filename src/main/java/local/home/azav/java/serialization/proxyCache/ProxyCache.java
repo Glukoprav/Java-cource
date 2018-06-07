@@ -134,6 +134,9 @@ public class ProxyCache implements InvocationHandler {
     /**
      * Десериализация кэшированного результата
      * через сериализованный прокси KeySerial
+     *
+     * @param strFileName имя файла для десериализации.
+     * @return результат, приведенный к типу сериализованного прокси.
      */
     private KeySerial deserialMethod(String strFileName) {
         KeySerial obje;
