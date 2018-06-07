@@ -25,6 +25,7 @@ class KeySerial implements Serializable {
     }
 
     /**
+     * Записываем проксированный результат
      * writeReplace - метод для proxy pattern
      *
      * @return Object = KeyProxy с полями из KeySerial
@@ -34,7 +35,9 @@ class KeySerial implements Serializable {
         return new KeyProxy(this);
     }
 
-    // Приватный класс для сериализации
+    /**
+     * Приватный класс для сериализованного прокси.
+     */
     private static class KeyProxy implements Serializable {
         private static final long serialVersionUID = -2899736491170223339L;
         private String method;
@@ -45,7 +48,10 @@ class KeySerial implements Serializable {
             this.result = key.result;
         }
 
-        // readResolve метод для KeySerial.KeyProxy
+        /**
+         * Возвращаем кэшированный результат через вызов конструктора родителя прокси.
+         * readResolve метод для proxy pattern - KeySerial.KeyProxy.
+         */
         private Object readResolve() {
             System.out.println("Читаем из сериализованной прокси");
             return new KeySerial(method, result);

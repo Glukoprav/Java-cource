@@ -7,6 +7,9 @@ import local.home.azav.java.serialization.service.ServiceImpl;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
+/**
+ * Класс проверки работы кэширующего и сериализованного прокси
+ */
 public class Main {
     public static void main(String[] args) {
         ServiceImpl sgc = new ServiceImpl();

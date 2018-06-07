@@ -11,6 +11,13 @@ import java.nio.file.Paths;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Класс кеширующего прокси.
+ * Использует аннотацию Cache как признак кешируемого метода и реализует её атрибуты.
+ * Пространство для кэширования:
+ * - память - используется сбалансированное дерево TreeMap;
+ * - файловая система - используется сериализуемый прокси.
+ */
 public class ProxyCache implements InvocationHandler {
     private final Object obj;
     private final Map<String, Object> cachedResults;
@@ -21,10 +28,17 @@ public class ProxyCache implements InvocationHandler {
         cachedResults = new TreeMap<>();
     }
 
-    public Object invoke(Object proxy, Method method, Object[] arguments) throws InvocationTargetException, IllegalAccessException, IOException, ClassNotFoundException {
+    /**
+     * Обработчик вызова метода в экземпляре прокси.
+     * Проверяем наличие гоотового результата в пространстве кэша
+     * и возвращает результат, или из кэша, или вызовом исходного
+     * (кэшируемого) метода.
+     */
+    public Object invoke(Object proxy, Method method, Object[] arguments) throws InvocationTargetException, IllegalAccessException, IOException {
         Object result;
+        // Берем имя метода
         String strMethod = method.getName();
-        // Собираем аргументы метода в строку
+        // Собираем аргументы вызванного метода в строку
         StringBuilder strBuilderArgs = new StringBuilder();
         for (Object arg : arguments) {
             strBuilderArgs.append(arg.toString());
@@ -39,11 +53,13 @@ public class ProxyCache implements InvocationHandler {
             // Проверяем наличие в кэше
             result = checkInCache(strKey, annCache);
             if (result == null) {
-                // Если нет значения в кэше, то вызываем метод и результат берем в кэш
+                // Если нет значения в кэше, то вызываем исходный метод
                 result = method.invoke(obj, arguments);
+                // И результат берем в кэш
                 insertInCache(strKey, result, annCache);
             }
         } else {
+            // Если аннотации Cache нет, то вызываем исходный метод
             result = method.invoke(obj, arguments);
             System.out.println("Метод без аннотации: " + strMethod);
         }
@@ -51,8 +67,16 @@ public class ProxyCache implements InvocationHandler {
     }
 
 
-    // Проверяем наличие значения в кэше, выбор места - по переданной аннотации
-    private Object checkInCache(String strKey, Cache cache) throws IOException, ClassNotFoundException {
+    /**
+     * Проверяет наличие значения в кэше, выбор пространства - по переданной аннотации.
+     *
+     * @param strKey ключ поиска (склеенные - имя метода и его аргументы).
+     *               Для MEMORY - используется - ключ поиска.
+     *               Для FILE - из аннотации путь и префикс + ключ поиска + расширение из аннотации.
+     * @param cache  аннотация, назначенная исходному методу
+     * @return результат, хранящийся в кэше, при отсутствии в кэше - вернет null.
+     */
+    private Object checkInCache(String strKey, Cache cache) {
         Object result;
         switch (cache.value()) {
             case MEMORY:
@@ -63,6 +87,7 @@ public class ProxyCache implements InvocationHandler {
                 // Путь и имя файла: из аннотации путь и префикс + ключ + расширение из аннотации
                 String strFileName = cache.pathFile() + cache.fileNamePrefix() + strKey + cache.fileExtension();
                 if (Files.exists(Paths.get(strFileName))) {
+                    // Если нашли файл - десериализуем
                     Object ks = deserialMethod(strFileName);
                     result = ((KeySerial) ks).getResult();
                     String keyMethod = ((KeySerial) ks).getMethod();
@@ -78,7 +103,15 @@ public class ProxyCache implements InvocationHandler {
         return result;
     }
 
-    // Вставка в кэш, выбор места - по переданной аннотации
+    /**
+     * Вставка в кэш, выбор пространства - по переданной аннотации.
+     *
+     * @param strKey ключ поиска (склеенные - имя метода и его аргументы).
+     *               Для MEMORY - используется - ключ поиска.
+     *               Для FILE - из аннотации путь и префикс + ключ поиска + расширение из аннотации.
+     * @param result вычисленный результат исходного метода, помещаемый в кэш.
+     * @param cache  аннотация, назначенная исходному методу.
+     */
     private void insertInCache(String strKey, Object result, Cache cache) throws IOException {
         switch (cache.value()) {
             case MEMORY:
@@ -98,6 +131,10 @@ public class ProxyCache implements InvocationHandler {
         }
     }
 
+    /**
+     * Десериализация кэшированного результата
+     * через сериализованный прокси KeySerial
+     */
     private KeySerial deserialMethod(String strFileName) {
         KeySerial obje;
         try (FileInputStream fis = new FileInputStream(strFileName);
@@ -112,6 +149,13 @@ public class ProxyCache implements InvocationHandler {
         return obje = null;
     }
 
+    /**
+     * Сериализация результатата.
+     *
+     * @param strFileName имя файла для сериализации.
+     * @param result      сериализуемый результат, приведенный к типу
+     *                    сериализованного прокси KeySerial
+     */
     private void serialMethod(String strFileName, Object result) {
         try (FileOutputStream fos = new FileOutputStream(strFileName);
              ObjectOutputStream out = new ObjectOutputStream(fos)) {

@@ -3,6 +3,11 @@ package local.home.azav.java.serialization.service;
 import local.home.azav.java.serialization.annotationCache.Cache;
 import local.home.azav.java.serialization.annotationCache.CacheInSpace;
 
+/**
+ * Интерфейс, использующий аннотацию @Cache для обозначения,
+ * по каким методам и куда - кэшировать результаты вызовов методов.
+ * Используются различные атрибуты аннотации @Cache.
+ */
 public interface Service {
 
     @Cache(value = CacheInSpace.FILE, fileExtension = ".ssm")

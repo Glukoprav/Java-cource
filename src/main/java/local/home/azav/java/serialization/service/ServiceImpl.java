@@ -6,7 +6,7 @@ import local.home.azav.java.serialization.annotationCache.CacheInSpace;
 import java.io.Serializable;
 
 /**
- * Класс, у которого будем кэшировать результаты выполнения методов
+ * Класс, у которого будем кэшировать результаты выполнения разных методов
  */
 public class ServiceImpl implements Service {
 
