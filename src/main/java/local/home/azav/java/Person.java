@@ -4,11 +4,22 @@ public class Person {
     private final boolean man;
     private final String name;
     private Person spouse;
+    private int age;
 
     public Person(boolean man, String name) {
         this.man = man;
         this.name = name;
     }
+
+    public Person(boolean man, String name, int age) {
+        this.man = man;
+        this.name = name;
+        this.age = age;
+    }
+
+    public int getAge() { return age; }
+
+    public void setAge(int age) { this.age = age; }
 
     public boolean isMan() {
         return man;
@@ -64,5 +75,4 @@ public class Person {
             return false;
         }
     }
-
 }
