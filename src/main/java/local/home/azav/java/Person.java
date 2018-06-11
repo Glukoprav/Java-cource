@@ -4,11 +4,12 @@ public class Person {
     private final boolean man;
     private final String name;
     private Person spouse;
-    private int age;
+    private final int age;
 
     public Person(boolean man, String name) {
         this.man = man;
         this.name = name;
+        age = 18;
     }
 
     public Person(boolean man, String name, int age) {
@@ -18,8 +19,6 @@ public class Person {
     }
 
     public int getAge() { return age; }
-
-    public void setAge(int age) { this.age = age; }
 
     public boolean isMan() {
         return man;
@@ -74,5 +73,26 @@ public class Person {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        String sp;
+        if (man) {
+            if (spouse == null) {
+                sp = "холост.";
+            } else {
+                sp = "женат.";
+            }
+            return "Мужчина( " + "имя= " + name +", возраст=" + age + ", " + sp + ")";
+        } else {
+            if (spouse == null) {
+                sp = "не замужем.";
+            } else {
+                sp = "замужем.";
+            }
+            return "Женщина( " + "имя= " + name +", возраст=" + age + ", " + sp + ")";
+        }
+
     }
 }
