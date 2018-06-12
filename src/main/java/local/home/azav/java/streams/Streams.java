@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 //   После выполнения всех операций коллекция someCollection не должна поменяться.
 //   Класс надо параметризовать используя правило PECS
 public class Streams<T> {
-    private final List<T> list;
+    private List<T> list;
 
     public Streams(List<? extends T> list) {
         this.list = new ArrayList<>(list);
@@ -42,11 +42,13 @@ public class Streams<T> {
      * @return объект Streams.
      */
     public Streams<T> filter(Predicate<? super T> streamsPredicate) {
+        List<T> listout = new ArrayList<>();
         for (T t : list) {
-            if (!streamsPredicate.test(t)) {
-                list.remove(t);
+            if (streamsPredicate.test(t)) {
+                listout.add(t);
             }
         }
+        list = listout;
         return this;
     }
 
@@ -57,11 +59,11 @@ public class Streams<T> {
      * @return объект Streams.
      */
     public Streams<T> transform(Function<? super T, ? extends T> tran) {
+        List<T> listout = new ArrayList<>();
         for (T t : list) {
-            int index = list.indexOf(t);
-            T transNew = (T) tran.apply(t);
-            list.set(index, transNew);
+            listout.add(tran.apply(t));
         }
+        list = listout;
         return this;
     }
 
@@ -75,8 +77,8 @@ public class Streams<T> {
     public <K, V> Map<K, V> toMap(Function<? super T, ? extends K> keyMap, Function<? super T, ? extends V> keyValue) {
         Map<K, V> map = new TreeMap<>();
         for (T t : list) {
-            K keyNew = (K) keyMap.apply(t);
-            V valueNew = (V) keyValue.apply(t);
+            K keyNew = keyMap.apply(t);
+            V valueNew = keyValue.apply(t);
             map.put(keyNew, valueNew);
         }
         return map;
