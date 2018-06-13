@@ -77,9 +77,7 @@ public class Streams<T> {
     public <K, V> Map<K, V> toMap(Function<? super T, ? extends K> keyMap, Function<? super T, ? extends V> keyValue) {
         Map<K, V> map = new TreeMap<>();
         for (T t : list) {
-            K keyNew = keyMap.apply(t);
-            V valueNew = keyValue.apply(t);
-            map.put(keyNew, valueNew);
+            map.put(keyMap.apply(t), keyValue.apply(t));
         }
         return map;
     }
