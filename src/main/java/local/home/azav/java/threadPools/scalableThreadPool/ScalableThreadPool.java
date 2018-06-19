@@ -1,4 +1,4 @@
-package local.home.azav.java.threadPools.ScalableThreadPool;
+package local.home.azav.java.threadPools.scalableThreadPool;
 
 import local.home.azav.java.threadPools.ThreadPool;
 
@@ -37,14 +37,14 @@ public class ScalableThreadPool implements ThreadPool {
 //        import java.util.concurrent.LinkedBlockingQueue;
 //        import java.util.concurrent.atomic.AtomicInteger;
 
-//public class ScalableThreadPool implements ThreadPool {
+//public class scalableThreadPool implements ThreadPool {
 //
 //    private final BlockingQueue<Runnable> tasks = new LinkedBlockingQueue<>();
 //    private final int minThreadsCount;
 //    private final int maxThreadsCount;
 //    private final AtomicInteger currentThreadsCount;
 //
-//    public ScalableThreadPool(int minThreadsCount, int maxThreadsCount) {
+//    public scalableThreadPool(int minThreadsCount, int maxThreadsCount) {
 //        this.minThreadsCount = minThreadsCount;
 //        this.maxThreadsCount = maxThreadsCount;
 //        currentThreadsCount = new AtomicInteger();
