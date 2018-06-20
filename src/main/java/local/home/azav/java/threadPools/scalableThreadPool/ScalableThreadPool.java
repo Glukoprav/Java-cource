@@ -2,6 +2,9 @@ package local.home.azav.java.threadPools.scalableThreadPool;
 
 import local.home.azav.java.threadPools.ThreadPool;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
 import java.util.function.Supplier;
 
 /**
@@ -12,6 +15,17 @@ import java.util.function.Supplier;
  * При отсутствии задания в очереди, количество потоков опять должно быть уменьшено до значения min
  */
 public class ScalableThreadPool implements ThreadPool {
+    private final int minNumThread;  // Минимальноее число потоков
+    private final int maxNumThread;  // Максимальноее число потоков
+    ExecutorService threadPool;      // Пул потоков
+    public List<Future> listFutures; // Список для результатов работы потоков
+
+    public ScalableThreadPool(int minNumThread, int maxNumThread) {
+        super();
+        this.minNumThread = minNumThread;
+        this.maxNumThread = maxNumThread;
+        listFutures = new ArrayList<>();
+    }
 
     /**
      * Запускает потоки. Потоки бездействуют, до тех пор пока не появится
@@ -19,7 +33,9 @@ public class ScalableThreadPool implements ThreadPool {
      */
     @Override
     public void start() {
-
+        threadPool = new ThreadPoolExecutor(minNumThread, maxNumThread, 1L,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<Runnable>());
     }
 
     /**
@@ -28,66 +44,10 @@ public class ScalableThreadPool implements ThreadPool {
      */
     @Override
     public void execute(Supplier runnable) {
+        listFutures.add(CompletableFuture.supplyAsync(runnable, threadPool));
+    }
 
+    public void shutdown() {
+        threadPool.shutdown();
     }
 }
-
-
-//        import java.util.concurrent.BlockingQueue;
-//        import java.util.concurrent.LinkedBlockingQueue;
-//        import java.util.concurrent.atomic.AtomicInteger;
-
-//public class scalableThreadPool implements ThreadPool {
-//
-//    private final BlockingQueue<Runnable> tasks = new LinkedBlockingQueue<>();
-//    private final int minThreadsCount;
-//    private final int maxThreadsCount;
-//    private final AtomicInteger currentThreadsCount;
-//
-//    public scalableThreadPool(int minThreadsCount, int maxThreadsCount) {
-//        this.minThreadsCount = minThreadsCount;
-//        this.maxThreadsCount = maxThreadsCount;
-//        currentThreadsCount = new AtomicInteger();
-//    }
-//
-//    @Override
-//    public void start() {
-//        while (currentThreadsCount.get() < minThreadsCount) {
-//            new Worker().start();
-//            currentThreadsCount.incrementAndGet();
-//        }
-//    }
-//
-//    @Override
-//    public void execute(Runnable runnable) {
-//        try {
-//            tasks.put(runnable);
-//            if (tasks.size() > currentThreadsCount.get()
-//                    && currentThreadsCount.get() < maxThreadsCount) {
-//                new Worker().start();
-//                currentThreadsCount.incrementAndGet();
-//            }
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException("Interrupted exception: " + e.getMessage(), e);
-//        }
-//    }
-//
-//    private class Worker extends Thread {
-//        @Override
-//        public void run() {
-//            while (true) {
-//                if (tasks.isEmpty() && currentThreadsCount.get() > minThreadsCount) {
-//                    this.interrupt();
-//                    currentThreadsCount.decrementAndGet();
-//                    return;
-//                } else {
-//                    try {
-//                        tasks.take().run();
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException("Interrupted exception: " + e.getMessage(), e);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}

@@ -1,10 +1,17 @@
 package local.home.azav.java.threadPools;
 
 import local.home.azav.java.threadPools.fixedThreadPool.FixedThreadPool;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+
 import static java.lang.String.format;
 
+/**
+ * Класс для проверки работы пула с фиксированниы числом потоков.
+ * Сначала запускаем и измеряем время работы задачи в одном потоке,
+ * затем запускаем и измеряем время работы задачи в пуле потоков.
+ */
 public class MainFixedThreadPool {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         // Создаем класс задачи
@@ -36,7 +43,7 @@ public class MainFixedThreadPool {
         }
         // Собираем результаты потоков в окончательный результат
         double valuePool = 0;
-        for (Future<Double> future : fixPool.futures) {
+        for (Future<Double> future : fixPool.listFutures) {
             valuePool += future.get();
         }
         // Выводим многопоточный результат
