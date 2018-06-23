@@ -1,4 +1,4 @@
-package local.home.azav.java.threadPools;
+package local.home.azav.java.hw11_12_threadPools;
 
 /**
  * Класс с нагрузочной задачей

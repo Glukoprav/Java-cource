@@ -1,6 +1,6 @@
-package local.home.azav.java.threadPools;
+package local.home.azav.java.hw11_12_threadPools;
 
-import local.home.azav.java.threadPools.scalableThreadPool.ScalableThreadPool;
+import local.home.azav.java.hw11_12_threadPools.scalableThreadPool.ScalableThreadPool;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import static java.lang.String.format;

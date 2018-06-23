@@ -1,6 +1,6 @@
-package local.home.azav.java.threadPools.scalableThreadPool;
+package local.home.azav.java.hw11_12_threadPools.scalableThreadPool;
 
-import local.home.azav.java.threadPools.ThreadPool;
+import local.home.azav.java.hw11_12_threadPools.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.List;

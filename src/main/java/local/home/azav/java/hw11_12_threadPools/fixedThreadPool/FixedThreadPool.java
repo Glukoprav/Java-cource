@@ -1,7 +1,7 @@
-package local.home.azav.java.threadPools.fixedThreadPool;
+package local.home.azav.java.hw11_12_threadPools.fixedThreadPool;
 
 
-import local.home.azav.java.threadPools.ThreadPool;
+import local.home.azav.java.hw11_12_threadPools.ThreadPool;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

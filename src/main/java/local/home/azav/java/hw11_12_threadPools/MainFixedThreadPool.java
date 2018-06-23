@@ -1,6 +1,6 @@
-package local.home.azav.java.threadPools;
+package local.home.azav.java.hw11_12_threadPools;
 
-import local.home.azav.java.threadPools.fixedThreadPool.FixedThreadPool;
+import local.home.azav.java.hw11_12_threadPools.fixedThreadPool.FixedThreadPool;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
