@@ -1,42 +1,43 @@
 package local.home.azav.java.hw13_taskCallable;
 
 import local.home.azav.java.Person;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.function.Supplier;
 
 /**
  * Класс проверки работы Task
  */
 public class Main implements Callable<Person> {
     public static void main(String[] args) {
-        // Создаем экзекутор с фиксированным числом потоков
-        ExecutorService executor = Executors.newFixedThreadPool(8);
         // Создаем объект проверки
         Callable<Person> callable = new Main();
         //создаем список с Future, которые ассоциированы с Callable
         List<Future<Person>> list = new ArrayList<>();
         // Создаем наш Task
         Task task = new Task(callable);
-        Runnable getValue = () -> {
+        // заворачиваем в Supplier, чтобы принял экзекутор
+        Supplier getValue = () -> {
             try {
-                task.get();
-                //System.out.println(task.get());
+                return task.get();
             } catch (Exception e) {
                 System.out.println("Проблема с получением значения!");
                 e.printStackTrace();
+                return null;
             }
         };
-        for(int i=0; i< 15; i++){
-            //сабмитим таски, которые будут выполнены пулом потоков
-            Future<Person> future = (Future<Person>) executor.submit(getValue);
-            //добавляя Future в список мы сможем получить результат выполнения
-            list.add(future);
+        // Создаем экзекутор с фиксированным числом потоков
+        ExecutorService executor = Executors.newFixedThreadPool(8);
+        // экзекутором сабмитим таски, которые будут выполнены пулом потоков и закинуты в список Future
+        for (int i = 0; i < 16; i++) {
+            list.add(CompletableFuture.supplyAsync(getValue, executor));
         }
-        for(Future<Person> fut : list) {
+        for (Future<Person> fut : list) {
             try {
                 try {
-                    System.out.println(fut.get());
+                    System.out.println("из Future: " + fut.get());
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
@@ -47,11 +48,10 @@ public class Main implements Callable<Person> {
         executor.shutdown();
     }
 
+    // Задача, вызываемая из Task.get
     @Override
     public Person call() throws Exception {
-        // спим секунду
-        Thread.sleep(1000);
-        // и для примера возвращаем новую персону
-        return new Person(true, "Вася", 25);
+        // для примера возвращаем новую персону
+        return new Person(true, "Вася П.", 25);
     }
 }
