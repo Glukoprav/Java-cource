@@ -30,10 +30,11 @@ public class Main implements Callable<Person> {
         };
         // Создаем экзекутор с фиксированным числом потоков
         ExecutorService executor = Executors.newFixedThreadPool(8);
-        // экзекутором сабмитим таски, которые будут выполнены пулом потоков и закинуты в список Future
+        // Сапливим таски для экзекутора, которые будут выполнены пулом потоков и закинуты в список из Future
         for (int i = 0; i < 16; i++) {
             list.add(CompletableFuture.supplyAsync(getValue, executor));
         }
+        // Распечатаем список значений, полученных потоками
         for (Future<Person> fut : list) {
             try {
                 try {
@@ -49,6 +50,7 @@ public class Main implements Callable<Person> {
     }
 
     // Задача, вызываемая из Task.get
+    // Создаем новую персону, которую и вернем всем потокам
     @Override
     public Person call() throws Exception {
         // для примера возвращаем новую персону
