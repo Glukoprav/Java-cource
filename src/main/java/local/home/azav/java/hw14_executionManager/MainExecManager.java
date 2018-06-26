@@ -28,7 +28,33 @@ public class MainExecManager {
                     () -> System.out.println("5")
             );
 
-
+//            Runnable[] tasks = new Runnable[]{
+//                    new Runnable() {
+//                        public void run() {
+//                            System.out.println("task1");
+//                        }
+//                    },
+//                    new Runnable() {
+//                        public void run() {
+//                            System.out.println("task2");
+//                        }
+//                    },
+//                    new Runnable() {
+//                        public void run() {
+//                            System.out.println("task3");
+//                        }
+//                    },
+//                    new Runnable() {
+//                        public void run() {
+//                            System.out.println("task4");
+//                        }
+//                    }
+//            };
+//
+//            Runnable callback = () -> System.err.println("\nCallback run now!\n");
+//
+//            ExecutionManagerImpl executionManager = new ExecutionManagerImpl();
+//            executionManager.execute(callback,tasks);
 
             context.interrupt();
             System.out.println("Количество прерванных задач: " + context.getInterruptedTaskCount());
