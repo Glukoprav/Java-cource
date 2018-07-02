@@ -12,24 +12,21 @@ public class SchoolChatServer {
 
         try (ServerSocket serverSocket = new ServerSocket(PORT)
         ) {
-            while (!serverSocket.isClosed()) {
-                Socket socket = serverSocket.accept();
-                InputStream inStream = socket.getInputStream();
-                OutputStream outStream = socket.getOutputStream();
-                ChatServerTread chatServer = new ChatServerTread(socket, new DataInputStream(inStream), new DataOutputStream(outStream));
-                // Запускаем поток сервера
-                Thread thread = new Thread(chatServer);
-                thread.start();
-            }
+            Socket socket = serverSocket.accept();
+            InputStream inStream = socket.getInputStream();
+            OutputStream outStream = socket.getOutputStream();
+            ChatServerThread chatServer = new ChatServerThread(socket, new DataInputStream(inStream), new DataOutputStream(outStream));
+            // Запускаем поток сервера
+            Thread threadServer = new Thread(chatServer);
+            threadServer.start();
         }
     }
-
 
     // Запуск сервера
     public static void main(String[] args) {
         try {
-            SchoolChatServer server = new SchoolChatServer();
-            server.startServer();
+            SchoolChatServer serverChat = new SchoolChatServer();
+            serverChat.startServer();
         } catch (IOException e) {
             e.printStackTrace();
         }

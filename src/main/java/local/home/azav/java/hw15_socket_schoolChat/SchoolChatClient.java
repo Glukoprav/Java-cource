@@ -9,27 +9,21 @@ import java.net.Socket;
 public class SchoolChatClient {
     private final static String ADDRESS = "localhost";
     private final static int PORT = 21212;
-    private final Socket socket;
-    private final DataInputStream inputStream;
-    private final DataOutputStream outputStream;
-
-    public SchoolChatClient(Socket socket, DataInputStream inputStream, DataOutputStream outputStream) {
-        this.socket = socket;
-        this.inputStream = inputStream;
-        this.outputStream = outputStream;
-    }
 
     private void startClient() {
-
-    }
-
-    public static void main(String[] args) {
         try (Socket socket = new Socket(ADDRESS, PORT);
              InputStream inStream = socket.getInputStream();
              OutputStream outStream = socket.getOutputStream();) {
-            new SchoolChatClient(socket, new DataInputStream(inStream), new DataOutputStream(outStream)).startClient();
+            ChatClientThread chatClient = new ChatClientThread(socket, new DataInputStream(inStream), new DataOutputStream(outStream));
+            Thread treadClient = new Thread(chatClient);
+            treadClient.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        SchoolChatClient clientChat = new SchoolChatClient();
+        clientChat.startClient();
     }
 }
