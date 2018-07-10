@@ -6,7 +6,11 @@ import java.net.Socket;
 
 public class SchoolChatServer {
     private final static int PORT = 21212;
+    private static int numberServer = 0;
 
+    SchoolChatServer () {
+        numberServer++;
+    }
 
     public void startServer() throws IOException {
 
@@ -24,6 +28,10 @@ public class SchoolChatServer {
 
     // Запуск сервера
     public static void main(String[] args) {
+        if (SchoolChatServer.numberServer > 0) {
+            System.out.println("Чат-Сервер уже запущен! Лишний процесс прерываем.");
+            System.exit(0);
+        }
         try {
             SchoolChatServer serverChat = new SchoolChatServer();
             serverChat.startServer();
