@@ -9,21 +9,36 @@ import java.net.Socket;
 public class SchoolChatClient {
     private final static String ADDRESS = "localhost";
     private final static int PORT = 21212;
+    private final Socket socket;
+    private final DataInputStream inputStream;
+    private final DataOutputStream outputStream;
+    private static int numberClient = 0;
 
-    private void startClient() {
+    public SchoolChatClient(Socket socket, DataInputStream inputStream, DataOutputStream outputStream) {
+        this.socket = socket;
+        this.inputStream = inputStream;
+        this.outputStream = outputStream;
+        numberClient++;
+    }
+
+//    private void startClient() {
+//
+////            Thread treadClient = new Thread(chatClient);
+////            treadClient.start();
+//
+//    }
+
+    public static void main(String[] args) {
         try (Socket socket = new Socket(ADDRESS, PORT);
              InputStream inStream = socket.getInputStream();
              OutputStream outStream = socket.getOutputStream();) {
-            ChatClientThread chatClient = new ChatClientThread(socket, new DataInputStream(inStream), new DataOutputStream(outStream));
-            Thread treadClient = new Thread(chatClient);
-            treadClient.start();
+            SchoolChatClient clientChat = new SchoolChatClient(socket, new DataInputStream(inStream), new DataOutputStream(outStream));
+            //clientChat.startClient();
+            System.out.println(String.format("Коннект с сервером, client ip %s port %s", socket.getInetAddress(), socket.getPort()));
+            System.out.println("Стартовал клиент: " + numberClient);
+            System.out.println("Введите логин: ");
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        SchoolChatClient clientChat = new SchoolChatClient();
-        clientChat.startClient();
     }
 }
