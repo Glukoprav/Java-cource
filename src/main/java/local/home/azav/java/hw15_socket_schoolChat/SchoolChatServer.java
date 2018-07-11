@@ -7,6 +7,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Задание 15
+ * <p>
+ * Разработать клиент-серверное приложение SchoolChat
+ * - вход в систему по логину - дополнительных проверок не нужно
+ * - историю чатов хранить не нужно
+ * - сервер понимает 2 команды: отправить сообщение пользователю и получить все сообщения текущему пользователю
+ * - клиент при получении сообщения просто выводит информацию: [логин] message
+ * - при входе нового пользователя все участники чата получают нотификацию - сообщение от пользователя SYSTEM
+ * - формат сообщения от текущего пользователя к другому пользователю, пересылаемый через сервер:
+ * $login message, где login - логин другого пользователя, т.е. $ - признак сообщения для пересылки
+ */
+
 public class SchoolChatServer {
     private volatile static int numberServer = 0;
     private final static int PORT = 21212;
@@ -72,11 +85,58 @@ public class SchoolChatServer {
         @Override
         public void run() {
             try {
-                outputStream.writeUTF("[SYSTEM] Сервер приветствует " + login);
-                outputStream.flush();
+                // Сообщение всем от сервера - о подключении нового пользователя.
+                for (ClientsInfo clientsInfo : listClientsInfo) {
+                    clientsInfo.sendMessage(serverMessage("Подключен новый клиент " + login));
+                }
+                String messageFull;
+                // Получаем сообщения от клиента, пока не получим: exit
+                do {
+                    messageFull = inputStream.readUTF();
+                    // Если сообщение начинается с символа $ и его логин имеется среди списка клиентов, то оно для пересылки
+                    if (messageFull.charAt(0) == '$') {
+                        String strLoginExternal = extpactLoginExternal(messageFull);
+                        System.out.println("strLoginExternal" + strLoginExternal);
+                        if (listClientsInfo.contains(strLoginExternal)) {
+
+                            ClientsInfo clientInfo = listClientsInfo.get(listClientsInfo.indexOf(strLoginExternal));
+                            String messSend = messageFull.substring(strLoginExternal.length() + 2, messageFull.length());
+                            System.out.println("messSend" + messSend);
+                            clientInfo.sendMessage(clientsMessage(login, messSend));
+                        }
+                    }
+                } while (!"exit".equals(messageFull));
+                // Сообщение всем от сервера - об отключении пользователя.
+                for (ClientsInfo clientsInfo : listClientsInfo) {
+                    clientsInfo.sendMessage(serverMessage("Отключается клиент " + login));
+                }
+                inputStream.close();
+                outputStream.close();
+                socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        private String extpactLoginExternal(String message) {
+            // Берем адресный логин из сообщения
+            String[] strMess = message.split(" ");
+            StringBuilder loginExternal = new StringBuilder(strMess[0]);
+            loginExternal.deleteCharAt(0);
+            return loginExternal.toString();
+        }
+
+        private String serverMessage(String message) {
+            return "[SYSTEM] " + message;
+        }
+
+        private String clientsMessage(String login, String message) {
+            return "[" + login + "] " + message;
+        }
+
+        private void sendMessage(String message) throws IOException {
+            outputStream.writeUTF(message);
+            outputStream.flush();
         }
     }
 }

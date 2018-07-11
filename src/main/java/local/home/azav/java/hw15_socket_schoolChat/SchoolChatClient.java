@@ -73,13 +73,13 @@ public class SchoolChatClient {
     private void outputMessage(SchoolChatClient clientChat, Scanner scanner) throws IOException {
         String message = "";
         do {
-            System.out.print("[" + clientChat.loginClient + "] >");
+            System.out.print("[" + loginClient + "] >");
             message = scanner.next();
             /*(!" ".equals(message) || !"\n".equals(message) || !"\0".equals(message) ||
                     !"exit".equals(message) || !" \n".equals(message) || message.length() != 0)*/
             if (!"exit".equals(message)) {
-                clientChat.outputStream.writeUTF("[" + clientChat.loginClient + "]" + message);
-                clientChat.outputStream.flush();
+                outputStream.writeUTF("[" + loginClient + "]" + message);
+                outputStream.flush();
             }
         } while (!"exit".equals(message));
     }
