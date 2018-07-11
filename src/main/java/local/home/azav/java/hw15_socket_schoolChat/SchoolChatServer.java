@@ -4,36 +4,46 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SchoolChatServer {
     private volatile static int numberServer = 0;
     private final static int PORT = 21212;
+    private final Object object = new Object();
     // Список клиентов c из сокетами и входным/выходным потоком
     private final CopyOnWriteArrayList<ClientsInfo> listClientsInfo = new CopyOnWriteArrayList<>();
 
     private SchoolChatServer() {
-        numberServer++;
+        synchronized (object) {
+            numberServer++;
+        }
     }
 
     private void workServer() throws IOException {
+        // Пул потоков для клиентов
+        ExecutorService executorService = Executors.newFixedThreadPool(12);
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
                 String login;
+                // Ждем подсоединения нового клиента
                 Socket socket = serverSocket.accept();
                 System.out.println(String.format("Коннект с клиентом, client ip %s port %s", socket.getInetAddress(), socket.getPort()));
                 DataInputStream inStream = new DataInputStream(socket.getInputStream());
                 DataOutputStream outStream = new DataOutputStream(socket.getOutputStream());
                 login = inStream.readUTF();
+                // Собираем информацию о новом клиентском подключении
                 ClientsInfo clientsInfo = new ClientsInfo(socket, inStream, outStream, login);
-                System.out.println("clientsInfo> " + clientsInfo.toString());
-                //outStream.writeUTF("Пришел логин: " + );
                 listClientsInfo.add(clientsInfo);
+                // Запускаем в отдельном потоке
+                executorService.execute(clientsInfo);
                 if (false) {
                     System.out.println("Сервер остановлен! 1");
                     break;
                 }
             }
         }
+        executorService.shutdown();
     }
 
     // Запуск сервера
@@ -46,7 +56,7 @@ public class SchoolChatServer {
         chatServer.workServer();
     }
 
-    private class ClientsInfo {
+    private class ClientsInfo implements Runnable {
         private final Socket socket;
         private final DataInputStream inputStream;
         private final DataOutputStream outputStream;
@@ -57,6 +67,16 @@ public class SchoolChatServer {
             this.inputStream = inputStream;
             this.outputStream = outputStream;
             this.login = login;
+        }
+
+        @Override
+        public void run() {
+            try {
+                outputStream.writeUTF("[SYSTEM] Сервер приветствует " + login);
+                outputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

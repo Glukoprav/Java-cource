@@ -8,9 +8,10 @@ import java.util.Scanner;
  * Класс клиентского приложения SchoolChat
  */
 public class SchoolChatClient {
-    private static int numberClient = 0;
+    private volatile static int numberClient = 0;
     private final static String ADDRESS = "localhost";
     private final static int PORT = 21212;
+    private final Object object = new Object();
     private final Socket socket;
     private final DataInputStream inputStream;
     private final DataOutputStream outputStream;
@@ -20,16 +21,17 @@ public class SchoolChatClient {
         this.socket = socket;
         this.inputStream = inputStream;
         this.outputStream = outputStream;
-        numberClient++;
+        synchronized (object) {
+            numberClient++;
+        }
     }
 
     public static void main(String[] args) {
         try (Socket socket = new Socket(ADDRESS, PORT);
              InputStream inStream = socket.getInputStream();
-             OutputStream outStream = socket.getOutputStream();) {
+             OutputStream outStream = socket.getOutputStream()) {
             SchoolChatClient clientChat = new SchoolChatClient(socket, new DataInputStream(inStream), new DataOutputStream(outStream));
-            System.out.println(String.format("Коннект с сервером, client ip %s port %s", socket.getInetAddress(), socket.getPort()));
-            System.out.println("Стартовал клиент: " + SchoolChatClient.numberClient);
+            System.out.println(String.format("Коннект с сервером, ip: %s, port: %s", socket.getInetAddress(), socket.getPort()));
             // Поднимаем поток сообщений от сервера
             clientChat.startMessageFromServer();
             // Cчитываем логин
@@ -38,7 +40,13 @@ public class SchoolChatClient {
             // Засылаем логин на сервер
             clientChat.outputStream.writeUTF(clientChat.loginClient);
             clientChat.outputStream.flush();
-            // Отправляем сообщения серверу, пока не введем "exit"
+            // Немного подождем, чтоб успел подняться поток ответов
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            // Сидим в цикле и отправляем сообщения серверу, пока не введем "exit"
             clientChat.outputMessage(clientChat, scanner);
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,13 +69,15 @@ public class SchoolChatClient {
         return login;
     }
 
+    // Отправка сообщений на сервер
     private void outputMessage(SchoolChatClient clientChat, Scanner scanner) throws IOException {
         String message = "";
         do {
-            System.out.println("[" + clientChat.loginClient + "] >");
-            message = scanner.nextLine();
-            if (!" ".equals(message) || !"\n".equals(message) || !"\0".equals(message) ||
-                    !"exit".equals(message) || !" \n".equals(message) || message.length() != 0) {
+            System.out.print("[" + clientChat.loginClient + "] >");
+            message = scanner.next();
+            /*(!" ".equals(message) || !"\n".equals(message) || !"\0".equals(message) ||
+                    !"exit".equals(message) || !" \n".equals(message) || message.length() != 0)*/
+            if (!"exit".equals(message)) {
                 clientChat.outputStream.writeUTF("[" + clientChat.loginClient + "]" + message);
                 clientChat.outputStream.flush();
             }
