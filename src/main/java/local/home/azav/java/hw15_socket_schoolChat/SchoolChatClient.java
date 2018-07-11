@@ -23,8 +23,6 @@ public class SchoolChatClient {
         numberClient++;
     }
 
-
-
     public static void main(String[] args) {
         try (Socket socket = new Socket(ADDRESS, PORT);
              InputStream inStream = socket.getInputStream();
@@ -41,16 +39,7 @@ public class SchoolChatClient {
             clientChat.outputStream.writeUTF(clientChat.loginClient);
             clientChat.outputStream.flush();
             // Отправляем сообщения серверу, пока не введем "exit"
-            String message = "";
-            do {
-                System.out.println("[" + clientChat.loginClient + "] >");
-                message = scanner.nextLine();
-                if (!" ".equals(message) || !"\n".equals(message) || !"\0".equals(message) ||
-                    !"exit".equals(message) || !" \n".equals(message) || message.length() != 0) {
-                    clientChat.outputStream.writeUTF("[" + clientChat.loginClient + "]" + message);
-                    clientChat.outputStream.flush();
-                }
-            } while (!"exit".equals(message));
+            clientChat.outputMessage(clientChat, scanner);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,6 +59,19 @@ public class SchoolChatClient {
             login = scanner.next();
         }
         return login;
+    }
+
+    private void outputMessage(SchoolChatClient clientChat, Scanner scanner) throws IOException {
+        String message = "";
+        do {
+            System.out.println("[" + clientChat.loginClient + "] >");
+            message = scanner.nextLine();
+            if (!" ".equals(message) || !"\n".equals(message) || !"\0".equals(message) ||
+                    !"exit".equals(message) || !" \n".equals(message) || message.length() != 0) {
+                clientChat.outputStream.writeUTF("[" + clientChat.loginClient + "]" + message);
+                clientChat.outputStream.flush();
+            }
+        } while (!"exit".equals(message));
     }
 
     // Поток для вывода сообщений от сервера
