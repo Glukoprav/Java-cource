@@ -3,9 +3,8 @@ package local.home.azav.java.hw15_socket_schoolChat;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * Задание 15
@@ -24,8 +23,8 @@ public class SchoolChatServer {
     private volatile static int numberServer = 0;
     private final static int PORT = 21212;
     private final Object object = new Object();
-    // Список клиентов c из сокетами и входным/выходным потоком
-    private final CopyOnWriteArrayList<ClientsInfo> listClientsInfo = new CopyOnWriteArrayList<>();
+    // Карта логинов клиентов c из сокетами и входным/выходным потоком
+    private final ConcurrentMap<String, ClientsInfo> mapClients = new ConcurrentHashMap<>();
 
     private SchoolChatServer() {
         synchronized (object) {
@@ -47,7 +46,7 @@ public class SchoolChatServer {
                 login = inStream.readUTF();
                 // Собираем информацию о новом клиентском подключении
                 ClientsInfo clientsInfo = new ClientsInfo(socket, inStream, outStream, login);
-                listClientsInfo.add(clientsInfo);
+                mapClients.put(login,clientsInfo);
                 // Запускаем в отдельном потоке
                 executorService.execute(clientsInfo);
                 if (false) {
@@ -86,29 +85,26 @@ public class SchoolChatServer {
         public void run() {
             try {
                 // Сообщение всем от сервера - о подключении нового пользователя.
-                for (ClientsInfo clientsInfo : listClientsInfo) {
-                    clientsInfo.sendMessage(serverMessage("Подключен новый клиент " + login));
+                for (String key : mapClients.keySet()) {
+                    mapClients.get(key).sendMessage(serverMessage("Подключен новый клиент " + login));
                 }
                 String messageFull;
                 // Получаем сообщения от клиента, пока не получим: exit
                 do {
                     messageFull = inputStream.readUTF();
-                    // Если сообщение начинается с символа $ и его логин имеется среди списка клиентов, то оно для пересылки
-                    if (messageFull.charAt(0) == '$') {
+                    // Если сообщение не пустое, начинается с символа $ и его логин имеется среди списка клиентов, то оно для пересылки
+                    if (messageFull.length() > 0 && messageFull.charAt(0) == '$') {
                         String strLoginExternal = extpactLoginExternal(messageFull);
-                        System.out.println("strLoginExternal" + strLoginExternal);
-                        if (listClientsInfo.contains(strLoginExternal)) {
-
-                            ClientsInfo clientInfo = listClientsInfo.get(listClientsInfo.indexOf(strLoginExternal));
+                        if (mapClients.containsKey(strLoginExternal)) {
+                            ClientsInfo clientInfo = mapClients.get(strLoginExternal);
                             String messSend = messageFull.substring(strLoginExternal.length() + 2, messageFull.length());
-                            System.out.println("messSend" + messSend);
                             clientInfo.sendMessage(clientsMessage(login, messSend));
                         }
                     }
                 } while (!"exit".equals(messageFull));
                 // Сообщение всем от сервера - об отключении пользователя.
-                for (ClientsInfo clientsInfo : listClientsInfo) {
-                    clientsInfo.sendMessage(serverMessage("Отключается клиент " + login));
+                for (String key : mapClients.keySet()) {
+                    mapClients.get(key).sendMessage(serverMessage("Отключается клиент " + login));
                 }
                 inputStream.close();
                 outputStream.close();

@@ -74,11 +74,12 @@ public class SchoolChatClient {
         String message = "";
         do {
             System.out.print("[" + loginClient + "] >");
-            message = scanner.next();
+            message = scanner.nextLine();
             /*(!" ".equals(message) || !"\n".equals(message) || !"\0".equals(message) ||
                     !"exit".equals(message) || !" \n".equals(message) || message.length() != 0)*/
-            if (!"exit".equals(message)) {
-                outputStream.writeUTF("[" + loginClient + "]" + message);
+            if (!"exit".equals(message) || !" ".equals(message) || !"\n".equals(message) || !"\0".equals(message) ||
+                    !" \n".equals(message) || message.length() != 0) {
+                outputStream.writeUTF(/*"[" + loginClient + "]" + */message);
                 outputStream.flush();
             }
         } while (!"exit".equals(message));
