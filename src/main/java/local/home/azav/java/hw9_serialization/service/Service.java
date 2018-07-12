@@ -1,7 +1,7 @@
 package local.home.azav.java.hw9_serialization.service;
 
-import local.home.azav.java.hw9_serialization.annotationCache.Cache;
-import local.home.azav.java.hw9_serialization.annotationCache.CacheInSpace;
+import local.home.azav.java.hw9_serialization.annotationcache.Cache;
+import local.home.azav.java.hw9_serialization.annotationcache.CacheInSpace;
 
 /**
  * Интерфейс, использующий аннотацию @Cache для обозначения,

@@ -1,6 +1,6 @@
 package local.home.azav.java.hw9_serialization.main;
 
-import local.home.azav.java.hw9_serialization.proxyCache.ProxyCache;
+import local.home.azav.java.hw9_serialization.proxycache.ProxyCache;
 import local.home.azav.java.hw9_serialization.service.Service;
 import local.home.azav.java.hw9_serialization.service.ServiceImpl;
 
