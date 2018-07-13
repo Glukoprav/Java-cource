@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class MainJit {
     public static void main(String[] args) {
-        Map<Integer, String> map = new HashMap<Integer, String>();
+        Map<Integer, String> mapJit = new HashMap<>();
         for (int i = 0; i < 100000  ; i++) {
-            map.put(i,"value "+i);
+            mapJit.put(i,"value"+i);
         }
         //System.out.println(map.values().toString());
     }
