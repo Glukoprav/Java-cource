@@ -1,4 +1,4 @@
-package local.home.azav.java.hw17_goodcode_refactoring;
+package local.home.azav.java.hw17_1_refactoring_salary_report;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
