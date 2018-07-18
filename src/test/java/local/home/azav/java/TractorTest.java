@@ -44,22 +44,23 @@ public class TractorTest extends TestCase {
 
     @Test
     public void testShouldTurnAndMoveInTheRightDirection(){
+        tractor.move("F");
+        tractor.move("T");
+        tractor.move("F");
+        assertEquals(1, tractor.getPositionX());
+        assertEquals(1, tractor.getPositionY());
         tractor.move("T");
         tractor.move("F");
         assertEquals(1, tractor.getPositionX());
         assertEquals(0, tractor.getPositionY());
         tractor.move("T");
         tractor.move("F");
-        assertEquals(1, tractor.getPositionX());
-        assertEquals(-1, tractor.getPositionY());
-        tractor.move("T");
-        tractor.move("F");
-        assertEquals(0, tractor.getPositionX());
-        assertEquals(-1, tractor.getPositionY());
-        tractor.move("T");
-        tractor.move("F");
         assertEquals(0, tractor.getPositionX());
         assertEquals(0, tractor.getPositionY());
+        tractor.move("T");
+        tractor.move("F");
+        assertEquals(0, tractor.getPositionX());
+        assertEquals(1, tractor.getPositionY());
     }
 
     @Test

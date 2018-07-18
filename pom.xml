@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>local.home.azav.java</groupId>
-    <artifactId>first-project</artifactId>
+    <artifactId>Java-cource</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>local.home.azav.java</groupId>
-            <artifactId>first-project</artifactId>
+            <artifactId>Java-cource</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

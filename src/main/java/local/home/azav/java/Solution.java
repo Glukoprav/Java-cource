@@ -294,176 +294,176 @@ package local.home.azav.java;
 
 
 //Задача N 2037. Строки. Слишком короткие слова. Версия 2. c тестовым куском
-//import java.util.Scanner;
-//public class Solution {
-//
-//
-//    public static void main(String[] args) {
-//        Solution sol = new Solution();
-////        Scanner scanner = new Scanner(System.in);
-//
-//        StringBuilder strin = new StringBuilder(/*scanner.next()*/);
-//        int lenn;
-////        int min_word = scanner.nextInt();
-////        System.out.println(sol.sol2037(strin, min_word));
-//        strin.append("sdf,er,ertert,,,,h,,");
-//        System.out.println("sdf,er,ertert,,,,h,, " + ":3 > " + sol.sol2037(strin, 3));
-//        lenn = strin.length();
-//        if (lenn !=0) {strin.delete(0,lenn);}
-//
-//        strin.append(",d");
-//        System.out.println(",d " + ":1 > " + sol.sol2037(strin, 1));
-//        lenn = strin.length();
-//        if (lenn !=0) {strin.delete(0,lenn);}
-//
-//        strin.append(",sdf");
-//        System.out.println(",sdf " + ":3 > " + sol.sol2037(strin, 3));
-//        lenn = strin.length();
-//        if (lenn !=0) {strin.delete(0,lenn);}
-//
-//        strin.append(",sdf,");
-//        System.out.println(",sdf, " + ":3 > " + sol.sol2037(strin, 3));
-//        lenn = strin.length();
-//        if (lenn !=0) {strin.delete(0,lenn);}
-//
-//        strin.append("we,,,dd,d");
-//        System.out.println("we " + ":3 > " + sol.sol2037(strin, 3));
-//        lenn = strin.length();
-//        if (lenn !=0) {strin.delete(0,lenn);}
-//
-//        strin.append("sdf,dd");
-//        System.out.println("sdf,dd " + ":2 > " + sol.sol2037(strin, 2));
-//        lenn = strin.length();
-//        if (lenn !=0) {strin.delete(0,lenn);}
-//
-//        strin.append("d,d,");
-//        System.out.println("d,d, " + ":1 > " + sol.sol2037(strin, 1));
-//        lenn = strin.length();
-//        if (lenn !=0) {strin.delete(0,lenn);}
-//
-//        strin.append("d");
-//        System.out.println("d " + ":1 > " + sol.sol2037(strin, 1));
-//        lenn = strin.length();
-//        if (lenn !=0) {strin.delete(0,lenn);}
-//
-//        strin.append("d");
-//        System.out.println("d " + ":2 > " + sol.sol2037(strin, 2));
-//        lenn = strin.length();
-//        if (lenn !=0) {strin.delete(0,lenn);}
-//
-//    }
-//
-//    public String sol2037 (StringBuilder strin, int min_word) {
-//        if (min_word == 0) {
-//            return strin.toString();
-//        } else {
-//            char ch;
-//            int posLeft = 0, posRight = 0;
-//            while (strin.charAt(posRight) == ',') {
-//                posRight++;
-//                if (posRight == strin.length()) {
-//                    break;
-//                }
-//            }
-//            strin.delete(posLeft,posRight);
-//            posLeft = 0;
-//            posRight = 0;
-//            int length = strin.length();
-//            while (posRight < length) {
-//                ch = strin.charAt(posRight);
-//                if (ch != ',') {
-//                    posRight++;
-//                } else if (ch == ',' & (posRight - posLeft) >= min_word) {
-//                    posRight++;
-//                    posLeft = posRight;
-//                } else if (ch == ',' & (posRight == posLeft)) {
-//                    strin.delete(posLeft,posRight+1);
-//                    length = strin.length();
-//                } else if (ch == ',' & (posRight - posLeft) < min_word) {
-//                    strin.delete(posLeft,posRight+1);
-//                    length = strin.length();
-//                    posRight = posLeft;
-//                }
-//            }
-//            length = strin.length();
-//            if (length > 0 && strin.charAt(length-1) == ',') {
-//                strin.delete(length-1,length);
-//            } else if (length > 0 && length < min_word) {
-//                strin.delete(0,length);
-//            } else if (length > 0 && length > min_word && (posRight - posLeft) < min_word) {
-//                strin.delete(posLeft-1,posRight);
-//            }
-//            return strin.toString();
-//        }
-//    }
-//}
+import java.util.Scanner;
+public class Solution {
+
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+//        Scanner scanner = new Scanner(System.in);
+
+        StringBuilder strin = new StringBuilder(/*scanner.next()*/);
+        int lenn;
+//        int min_word = scanner.nextInt();
+//        System.out.println(sol.sol2037(strin, min_word));
+        strin.append("sdf,er,ertert,,,,h,,");
+        System.out.println("sdf,er,ertert,,,,h,, " + ":3 > " + sol.sol2037(strin, 3));
+        lenn = strin.length();
+        if (lenn !=0) {strin.delete(0,lenn);}
+
+        strin.append(",d");
+        System.out.println(",d " + ":1 > " + sol.sol2037(strin, 1));
+        lenn = strin.length();
+        if (lenn !=0) {strin.delete(0,lenn);}
+
+        strin.append(",sdf");
+        System.out.println(",sdf " + ":3 > " + sol.sol2037(strin, 3));
+        lenn = strin.length();
+        if (lenn !=0) {strin.delete(0,lenn);}
+
+        strin.append(",sdf,");
+        System.out.println(",sdf, " + ":3 > " + sol.sol2037(strin, 3));
+        lenn = strin.length();
+        if (lenn !=0) {strin.delete(0,lenn);}
+
+        strin.append("we,,,dd,d");
+        System.out.println("we " + ":3 > " + sol.sol2037(strin, 3));
+        lenn = strin.length();
+        if (lenn !=0) {strin.delete(0,lenn);}
+
+        strin.append("sdf,dd");
+        System.out.println("sdf,dd " + ":2 > " + sol.sol2037(strin, 2));
+        lenn = strin.length();
+        if (lenn !=0) {strin.delete(0,lenn);}
+
+        strin.append("d,d,");
+        System.out.println("d,d, " + ":1 > " + sol.sol2037(strin, 1));
+        lenn = strin.length();
+        if (lenn !=0) {strin.delete(0,lenn);}
+
+        strin.append("d");
+        System.out.println("d " + ":1 > " + sol.sol2037(strin, 1));
+        lenn = strin.length();
+        if (lenn !=0) {strin.delete(0,lenn);}
+
+        strin.append("d");
+        System.out.println("d " + ":2 > " + sol.sol2037(strin, 2));
+        lenn = strin.length();
+        if (lenn !=0) {strin.delete(0,lenn);}
+
+    }
+
+    public String sol2037 (StringBuilder strin, int min_word) {
+        if (min_word == 0) {
+            return strin.toString();
+        } else {
+            char ch;
+            int posLeft = 0, posRight = 0;
+            while (strin.charAt(posRight) == ',') {
+                posRight++;
+                if (posRight == strin.length()) {
+                    break;
+                }
+            }
+            strin.delete(posLeft,posRight);
+            posLeft = 0;
+            posRight = 0;
+            int length = strin.length();
+            while (posRight < length) {
+                ch = strin.charAt(posRight);
+                if (ch != ',') {
+                    posRight++;
+                } else if (ch == ',' && (posRight - posLeft) >= min_word) {
+                    posRight++;
+                    posLeft = posRight;
+                } else if (ch == ',' && (posRight == posLeft)) {
+                    strin.delete(posLeft,posRight+1);
+                    length = strin.length();
+                } else if (ch == ',' && (posRight - posLeft) < min_word) {
+                    strin.delete(posLeft,posRight+1);
+                    length = strin.length();
+                    posRight = posLeft;
+                }
+            }
+            length = strin.length();
+            if (length > 0 && strin.charAt(length-1) == ',') {
+                strin.delete(length-1,length);
+            } else if (length > 0 && length < min_word) {
+                strin.delete(0,length);
+            } else if (length > 0 && length > min_word && (posRight - posLeft) < min_word) {
+                strin.delete(posLeft-1,posRight);
+            }
+            return strin.toString();
+        }
+    }
+}
 
 
 // Для теста Person
 
-public class Solution {
-    public static void main(String[] args) {
-        Solution sol = new Solution();
-    //}
-
-    //public void sol2037(StringBuilder strin, int min_word) {
-        Person pm1 = new Person(true, "Man1");
-        Person pw1 = new Person(false, "Woo1");
-        System.out.println("1 step");
-        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-
-        System.out.println("2 step");
-        if (pm1.marry(pw1)) {
-            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        } else {
-            System.out.println("not marry");
-            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        }
-
-        System.out.println("3 step");
-        if (pm1.marry(pw1)) {
-            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        } else {
-            System.out.println("no");
-            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        }
-
-        System.out.println("4 step");
-        Person pm2 = new Person(true, "Man2");
-        Person pw2 = new Person(false, "Woo2");
-        System.out.println(pm2.marry(pm1));
-        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
-        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
-
-        System.out.println("5 step");
-        System.out.println(pm2.marry(pw1));
-        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
-        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
-
-        System.out.println("6 step");
-        System.out.println(pw2.marry(pm1));
-        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
-        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
-
-        System.out.println("7 step");
-        System.out.println(pw2.marry(pm2));
-        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
-        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
-        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
-        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
-    }
-}
+//public class Solution {
+//    public static void main(String[] args) {
+//        Solution sol = new Solution();
+//    //}
+//
+//    //public void sol2037(StringBuilder strin, int min_word) {
+//        Person pm1 = new Person(true, "Man1");
+//        Person pw1 = new Person(false, "Woo1");
+//        System.out.println("1 step");
+//        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//
+//        System.out.println("2 step");
+//        if (pm1.marry(pw1)) {
+//            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        } else {
+//            System.out.println("not marry");
+//            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        }
+//
+//        System.out.println("3 step");
+//        if (pm1.marry(pw1)) {
+//            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        } else {
+//            System.out.println("no");
+//            System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//            System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        }
+//
+//        System.out.println("4 step");
+//        Person pm2 = new Person(true, "Man2");
+//        Person pw2 = new Person(false, "Woo2");
+//        System.out.println(pm2.marry(pm1));
+//        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+//        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+//
+//        System.out.println("5 step");
+//        System.out.println(pm2.marry(pw1));
+//        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+//        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+//
+//        System.out.println("6 step");
+//        System.out.println(pw2.marry(pm1));
+//        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+//        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+//
+//        System.out.println("7 step");
+//        System.out.println(pw2.marry(pm2));
+//        System.out.println(pm2.getName() + " on " + pm2.getNameSpouse());
+//        System.out.println(pw1.getName() + " on " + pw1.getNameSpouse());
+//        System.out.println(pm1.getName() + " on " + pm1.getNameSpouse());
+//        System.out.println(pw2.getName() + " on " + pw2.getNameSpouse());
+//    }
+//}
 
 
 //Задача N 2037. Строки. Слишком короткие слова. Версия 2.
