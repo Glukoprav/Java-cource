@@ -1,0 +1,135 @@
+Задачи по SQL с сайта http://www.sql-ex.ru/ и мои решения:
+
+Задание: 1 (Serge I: 2002-09-30)
+Найдите номер модели, скорость и размер жесткого диска для всех ПК стоимостью менее 500 дол.
+Вывести: model, speed и hd
+
+select p.model, p.speed, p.hd from PC p
+ where p.model in (select model from Product where type = 'PC')
+   and p.price < 500
+
+
+Задание: 2 (Serge I: 2002-09-21)
+Найдите производителей принтеров. Вывести: maker
+select distinct maker from product
+ where type = 'Printer'
+
+Задание: 3 (Serge I: 2002-09-30)
+Найдите номер модели, объем памяти и размеры экранов ПК-блокнотов, цена которых превышает 1000 дол.
+
+select l.model, l.ram, l.screen from Laptop l
+ where l.model in (select model from Product where type = 'Laptop')
+   and l.price > 1000
+
+
+Задание: 4 (Serge I: 2002-09-21)
+Найдите все записи таблицы Printer для цветных принтеров.
+
+Select * from Printer
+ where color = 'y'
+
+Задание: 5 (Serge I: 2002-09-30)
+Найдите номер модели, скорость и размер жесткого диска ПК, имеющих 12x или 24x CD и цену менее 600 дол.
+
+Select p.model, p.speed, p.hd from PC p
+  join Product pr on p.model = pr.model
+ where p.price < 600
+   and p.cd in ('12x','24x')
+
+
+Задание: 6 (Serge I: 2002-10-28)
+Для каждого производителя, выпускающего ПК-блокноты c объёмом жесткого диска не менее 10 Гбайт,
+найти скорости таких ПК-блокнотов. Вывод: производитель, скорость.
+
+Select distinct p.maker, l.speed from Laptop l
+  join Product p on p.model = l.model
+ where p.type = 'Laptop'
+   and l.hd >= 10
+
+
+Задание: 7 (Serge I: 2002-11-02)
+Найдите номера моделей и цены всех имеющихся в продаже продуктов (любого типа)
+производителя B (латинская буква).
+
+Select p.model, pc.price from Product p join PC pc on p.model=pc.model
+ where p.maker = 'B'
+UNION
+Select p.model, l.price from Product p join Laptop l on p.model=l.model
+ where p.maker = 'B'
+UNION
+Select p.model, pr.price from Product p join Printer pr on p.model=pr.model
+ where p.maker = 'B'
+
+
+Задание: 8 (Serge I: 2003-02-03)
+Найдите производителя, выпускающего ПК, но не ПК-блокноты.
+
+select ee.maker from
+ (select maker from Product
+   where type = 'PC'
+  EXCEPT
+  select maker from Product
+   where type = 'Laptop') ee
+
+
+Задание: 9 (Serge I: 2002-11-02)
+Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker
+
+Select distinct p.maker from Product p join PC pc on p.model = pc.model
+ where p.type = 'PC'
+   and pc.speed >= 450
+
+
+Задание: 10 (Serge I: 2002-09-23)
+Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
+
+Select p.model, p.price from Printer p
+ where p.price in (select max(price) from Printer)
+   and p.model in (select model from Product where type = 'Printer')
+
+
+Задание: 11 (Serge I: 2002-11-02)
+Найдите среднюю скорость ПК.
+
+Select avg(speed) from PC
+
+
+Задание: 12 (Serge I: 2002-11-02)
+Найдите среднюю скорость ПК-блокнотов, цена которых превышает 1000 дол.
+
+Select avg(speed) from Laptop
+ where price > 1000
+
+
+Задание: 13 (Serge I: 2002-11-02)
+Найдите среднюю скорость ПК, выпущенных производителем A.
+
+Select avg(speed) from PC pc join Product p on pc.model = p.model
+ where p.maker = 'A'
+
+
+Задание: 14 (Serge I: 2012-04-20)
+Найти производителей, которые выпускают более одной модели, при этом все выпускаемые производителем
+модели являются продуктами одного типа.  Вывести: maker, type
+
+select p.maker, max(p.type)
+from product p
+group by p.maker
+having count(model) > 1 and count(distinct p.type) = 1
+
+
+Задание: 15 (Serge I: 2003-02-03)
+Найдите размеры жестких дисков, совпадающих у двух и более PC. Вывести: HD
+
+Select pc.hd from PC pc
+ group by pc.hd
+having count(pc.hd) > 1
+
+
+Задание: 16 (Serge I: 2003-02-03)
+Найдите пары моделей PC, имеющих одинаковые скорость и RAM. В результате каждая пара
+указывается только один раз, т.е. (i,j), но не (j,i),
+Порядок вывода: модель с большим номером, модель с меньшим номером, скорость и RAM.
+
+Select distinct pc1.model, pc2.model, pc1.speed, pc1.ram from PC pc1, PC pc2
+ where pc1.speed = pc2.speed and pc1.ram = pc2.ram and pc1.model > pc2.model
