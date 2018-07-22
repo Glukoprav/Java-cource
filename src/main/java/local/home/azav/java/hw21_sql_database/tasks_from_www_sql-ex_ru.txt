@@ -1,5 +1,24 @@
 Задачи по SQL с сайта http://www.sql-ex.ru/ и мои решения:
 
+Краткая информация о базе данных "Компьютерная фирма":
+
+Схема БД состоит из четырех таблиц:
+Product(maker, model, type)
+PC(code, model, speed, ram, hd, cd, price)
+Laptop(code, model, speed, ram, hd, price, screen)
+Printer(code, model, color, type, price)
+Таблица Product представляет производителя (maker), номер модели (model) и тип
+('PC' - ПК, 'Laptop' - ПК-блокнот или 'Printer' - принтер). Предполагается, что
+номера моделей в таблице Product уникальны для всех производителей и типов продуктов.
+В таблице PC для каждого ПК, однозначно определяемого уникальным кодом – code, указаны
+модель – model (внешний ключ к таблице Product), скорость - speed (процессора в мегагерцах),
+объем памяти - ram (в мегабайтах), размер диска - hd (в гигабайтах), скорость считывающего
+устройства - cd (например, '4x') и цена - price. Таблица Laptop аналогична таблице РС за
+исключением того, что вместо скорости CD содержит размер экрана -screen (в дюймах).
+В таблице Printer для каждой модели принтера указывается, является ли он цветным - color
+('y', если цветной), тип принтера - type (лазерный – 'Laser', струйный – 'Jet' или матричный
+– 'Matrix') и цена - price.
+
 Задание: 1 (Serge I: 2002-09-30)
 Найдите номер модели, скорость и размер жесткого диска для всех ПК стоимостью менее 500 дол.
 Вывести: model, speed и hd
@@ -127,9 +146,66 @@ having count(pc.hd) > 1
 
 
 Задание: 16 (Serge I: 2003-02-03)
-Найдите пары моделей PC, имеющих одинаковые скорость и RAM. В результате каждая пара
-указывается только один раз, т.е. (i,j), но не (j,i),
-Порядок вывода: модель с большим номером, модель с меньшим номером, скорость и RAM.
+Найдите пары моделей PC, имеющих одинаковые скорость и RAM. В результате каждая пара указывается только один раз,
+т.е. (i,j), но не (j,i), Порядок вывода: модель с большим номером, модель с меньшим номером, скорость и RAM.
+Select distinct pc1.model, pc2.model, pc1.speed, pc1.ram
+  from PC pc1, PC pc2
+ where pc1.speed = pc2.speed
+   and pc1.ram = pc2.ram
+   and pc1.model > pc2.model
 
-Select distinct pc1.model, pc2.model, pc1.speed, pc1.ram from PC pc1, PC pc2
- where pc1.speed = pc2.speed and pc1.ram = pc2.ram and pc1.model > pc2.model
+
+Задание: 17 (Serge I: 2003-02-03)
+Найдите модели ПК-блокнотов, скорость которых меньше скорости любого из ПК.
+Вывести: type, model, speed
+
+Select distinct p.type, l.model, l.speed
+  from Laptop l join Product p on l.model = p.model
+ where l.speed < (select min(speed) from PC)
+
+
+Задание: 18 (Serge I: 2003-02-03)
+Найдите производителей самых дешевых цветных принтеров. Вывести: maker, price
+
+Select distinct p.maker, pr.price
+  from Product p join Printer pr on p.model = pr.model
+ where p.type = 'Printer'
+   and pr.color = 'y'
+   and pr.price = (select min(price) from Printer where color = 'y')
+
+
+Задание: 19 (Serge I: 2003-02-13)
+Для каждого производителя, имеющего модели в таблице Laptop, найдите средний размер экрана выпускаемых им ПК-блокнотов.
+Вывести: maker, средний размер экрана.
+
+Select p.maker, avg(l.screen)
+  from Product p join Laptop l on p.model = l.model
+ group by p.maker
+
+
+Задание: 20 (Serge I: 2003-02-13)
+Найдите производителей, выпускающих по меньшей мере три различных модели ПК. Вывести: Maker, число моделей ПК.
+
+Select p.maker, count(p.model) cm
+  from Product p
+ where p.type = 'PC'
+ group by p.maker
+having count(distinct p.model) > 2
+
+
+Задание: 21 (Serge I: 2003-02-13)
+Найдите максимальную цену ПК, выпускаемых каждым производителем, у которого есть модели в таблице PC.
+Вывести: maker, максимальная цена.
+
+Select p.maker, max(pc.price)
+  from Product p join PC pc on p.model = pc.model
+ group by maker
+
+
+Задание: 22 (Serge I: 2003-02-13)
+Для каждого значения скорости ПК, превышающего 600 МГц, определите среднюю цену ПК с такой же скоростью.
+Вывести: speed, средняя цена.
+
+Select pc.speed, avg(pc.price) from PC
+ where pc.speed > 600
+ group by pc.speed
