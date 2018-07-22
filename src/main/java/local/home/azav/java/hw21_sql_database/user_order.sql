@@ -87,15 +87,15 @@ select u.id user_id,
  order by o.date_order;
 
 select * from user_order_item
- where user_id = 2 and date_order = '11.06.2018';
+ where user_id = 2 and date_order =to_date('11-06-2018', 'dd-mm-yyyy');
 
 select * from user_order_item
- where user_name = 'Petrov' and date_order = '11.06.2018';
+ where user_name = 'Petrov' and date_order =to_date('11-06-2018', 'dd-mm-yyyy');
 
-select sum(uo.order_cost) from user_order_item uo where uo.user_id = 2 and uo.date_order = '11.06.2018';
+select sum(uo.order_cost) from user_order_item uo where uo.user_id = 2 and uo.date_order =to_date('11-06-2018', 'dd-mm-yyyy');
 
 select user_id, user_name, order_id, date_order, item_name, value, price, order_cost from user_order_item
- where user_id = 2 and date_order = '11.06.2018'
+ where user_id = 2 and date_order = to_date('11-06-2018', 'dd-mm-yyyy')
 union
 select rt.user_id, rt.user_name, rt.order_id, rt.date_order, rt.item_name, rt.value, rt.price, sc.order_cost
   from (select null as user_id, null as user_name, null as order_id, null as date_order, 'Total cost' as item_name, null as value, null as price
@@ -103,16 +103,18 @@ select rt.user_id, rt.user_name, rt.order_id, rt.date_order, rt.item_name, rt.va
        (select sum(uo.order_cost) order_cost
           from user_order_item uo
          where uo.user_id = 2
-           and uo.date_order = '11.06.2018') sc;
+           and uo.date_order = to_date('11-06-2018', 'dd-mm-yyyy')) sc
+order by user_id desc;
 
-select * from user_order_item uo where uo.date_order = '15.05.2018';
+select * from user_order_item uo where uo.date_order = to_date('15-05-2018', 'dd-mm-yyyy');
 
 select user_id, user_name, order_id, date_order, item_name, value, price, order_cost
-  from user_order_item uo where uo.date_order = '15.05.2018'
+  from user_order_item uo where uo.date_order = to_date('15-05-2018', 'dd-mm-yyyy')
 union
 select rt.user_id, rt.user_name, rt.order_id, rt.date_order, rt.item_name, rt.value, rt.price, sc.order_cost
   from (select null as user_id, null as user_name, null as order_id, null as date_order, 'Total cost' as item_name, null as value, null as price
           from user_order_item where rownum = 1) rt,
        (select sum(uo.order_cost) order_cost
           from user_order_item uo
-         where uo.date_order = '15.05.2018') sc;
+         where uo.date_order = to_date('15-05-2018', 'dd-mm-yyyy')) sc
+order by user_id desc;
