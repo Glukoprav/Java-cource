@@ -1,4 +1,4 @@
-package local.home.azav.java.hw22_dao_refactor.domen;
+package local.home.azav.java.hw22_refactoring_dao.domen;
 
 import java.math.BigDecimal;
 

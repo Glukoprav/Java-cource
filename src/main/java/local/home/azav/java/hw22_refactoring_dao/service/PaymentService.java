@@ -1,6 +1,6 @@
-package local.home.azav.java.hw22_dao_refaktor.service;
+package local.home.azav.java.hw22_refactoring_dao.service;
 
-import local.home.azav.java.hw22_dao_refaktor.domen.Account;
+import local.home.azav.java.hw22_refactoring_dao.domen.Account;
 
 import java.math.BigDecimal;
 

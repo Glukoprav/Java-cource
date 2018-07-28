@@ -1,7 +1,7 @@
-package local.home.azav.java.hw22_dao_refaktor.h2;
+package local.home.azav.java.hw22_refactoring_dao.h2;
 
 
-import local.home.azav.java.hw22_dao_refaktor.exceptions.DaoException;
+import local.home.azav.java.hw22_refactoring_dao.exceptions.DaoException;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -13,12 +13,12 @@ import java.sql.SQLException;
  * Created by SBT-Pozdnyakov-AN on 02.11.2017.
  * Refactored Zavgorodniy on 26.07.2018
  */
-public class TrasferH2DaoService extends local.home.azav.java.hw22_dao_refaktor.h2.AbstractH2DaoService {
+public class TrasferH2DaoService extends AbstractH2DaoService {
 
     public void createTrasfer(String accFrom, String accTo, BigDecimal amount) throws SQLException {
         Connection connection = null;
         try {
-            connection = getConnection(local.home.azav.java.hw22_dao_refaktor.h2.AbstractH2DaoService.CONNECT_URL);
+            connection = getConnection(AbstractH2DaoService.CONNECT_URL);
             connection.setAutoCommit(false);
             changeBalance(connection, accFrom, amount.negate());
             changeBalance(connection, accTo, amount);

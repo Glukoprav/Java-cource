@@ -1,4 +1,4 @@
-package local.home.azav.java.hw22_dao_refaktor.exceptions;
+package local.home.azav.java.hw22_refactoring_dao.exceptions;
 
 public class DaoException extends Exception {
 

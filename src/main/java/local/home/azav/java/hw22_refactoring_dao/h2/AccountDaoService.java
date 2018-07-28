@@ -1,7 +1,7 @@
-package local.home.azav.java.hw22_dao_refaktor.h2;
+package local.home.azav.java.hw22_refactoring_dao.h2;
 
-import local.home.azav.java.hw22_dao_refaktor.domen.Account;
-import local.home.azav.java.hw22_dao_refaktor.exceptions.DaoException;
+import local.home.azav.java.hw22_refactoring_dao.domen.Account;
+import local.home.azav.java.hw22_refactoring_dao.exceptions.DaoException;
 
 import java.util.List;
 

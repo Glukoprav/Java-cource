@@ -1,5 +1,7 @@
-package local.home.azav.java.hw22_dao_refactor.domen;
+package local.home.azav.java.hw22_refactoring_dao.domen;
 
+
+import local.home.azav.java.hw22_refactoring_dao.domen.Account;
 
 import java.util.List;
 

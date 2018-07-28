@@ -1,12 +1,12 @@
-package local.home.azav.java.hw22_dao_refaktor.service;
+package local.home.azav.java.hw22_refactoring_dao.service;
 
-import local.home.azav.java.hw22_dao_refaktor.PersonDaoService;
-import local.home.azav.java.hw22_dao_refaktor.domen.Account;
-import local.home.azav.java.hw22_dao_refaktor.domen.Person;
-import local.home.azav.java.hw22_dao_refaktor.exceptions.DaoException;
-import local.home.azav.java.hw22_dao_refaktor.h2.AccountDaoService;
-import local.home.azav.java.hw22_dao_refaktor.h2.AccountH2DaoService;
-import local.home.azav.java.hw22_dao_refaktor.h2.PersonH2DaoService;
+import local.home.azav.java.hw22_refactoring_dao.PersonDaoService;
+import local.home.azav.java.hw22_refactoring_dao.domen.Account;
+import local.home.azav.java.hw22_refactoring_dao.domen.Person;
+import local.home.azav.java.hw22_refactoring_dao.exceptions.DaoException;
+import local.home.azav.java.hw22_refactoring_dao.h2.AccountDaoService;
+import local.home.azav.java.hw22_refactoring_dao.h2.AccountH2DaoService;
+import local.home.azav.java.hw22_refactoring_dao.h2.PersonH2DaoService;
 
 import java.util.List;
 

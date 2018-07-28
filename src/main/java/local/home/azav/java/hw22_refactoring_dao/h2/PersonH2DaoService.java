@@ -1,8 +1,8 @@
-package local.home.azav.java.hw22_dao_refaktor.h2;
+package local.home.azav.java.hw22_refactoring_dao.h2;
 
-import local.home.azav.java.hw22_dao_refaktor.PersonDaoService;
-import local.home.azav.java.hw22_dao_refaktor.domen.Person;
-import local.home.azav.java.hw22_dao_refaktor.exceptions.DaoException;
+import local.home.azav.java.hw22_refactoring_dao.PersonDaoService;
+import local.home.azav.java.hw22_refactoring_dao.domen.Person;
+import local.home.azav.java.hw22_refactoring_dao.exceptions.DaoException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * Refactored Zavgorodniy on 26.07.2018
  */
 public class PersonH2DaoService extends AbstractH2DaoService implements PersonDaoService {
-    public static final String CONNECT_URL = "jdbc:h2:tcp://localhost/C:\\TEMP\\test.db";
+    public static final String CONNECT_URL = "jdbc:local.home.azav.java.hw22_refactoring_dao.h2:tcp://localhost/C:\\TEMP\\test.db";
 
 
     public Person getPersonById(Integer id) throws DaoException {
