@@ -1,21 +1,24 @@
 package local.home.azav.java.hw23_spring_task1;
 
-/** Задача 1 освоения Spring, по Youtube-лекциям
- * https://www.youtube.com/watch?v=3wBteulZaAs&list=PL6jg6AGdCNaWF-sUH2QDudBRXo54zuN1t&index=1 */
+/**
+ * Задача 1 освоения Spring, по Youtube-лекциям
+ * https://www.youtube.com/watch?v=3wBteulZaAs&list=PL6jg6AGdCNaWF-sUH2QDudBRXo54zuN1t&index=1
+ */
 public class App {
     private Client client;
     private ConsoleEventLogger eventLogger;
 
-    public App(Client client, ConsoleEventLogger eventLogger) {
-        this.client = client;
-        this.eventLogger = eventLogger;
-    }
-
-    public void logEvent(String msg) {
-
-    }
-
     public static void main(String[] args) {
+        App app = new App();
+        app.client = new Client("1", "Fedia Van");
+        app.eventLogger = new ConsoleEventLogger();
 
+        app.logEvent("First probe event " + app.client.getId());
+
+    }
+
+    private void logEvent(String msg) {
+        String message = msg.replaceAll(client.getId(), client.getFullName());
+        eventLogger.logEvent(message);
     }
 }

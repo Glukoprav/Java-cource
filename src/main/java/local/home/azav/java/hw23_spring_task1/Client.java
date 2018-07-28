@@ -1,23 +1,23 @@
 package local.home.azav.java.hw23_spring_task1;
 
 public class Client {
-    private int id;
+    private String id;
     private String fullName;
 
-    public Client(int id) {
+    public Client(String id) {
         this.id = id;
     }
 
-    public Client(int id, String fullName) {
+    public Client(String id, String fullName) {
         this.id = id;
         this.fullName = fullName;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
