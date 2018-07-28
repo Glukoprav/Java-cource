@@ -41,9 +41,6 @@ public class PersonH2DaoService extends AbstractH2DaoService implements PersonDa
                 if (person == null) {
                     throw new DaoException("Person not found id=" + id);
                 }
-                if (!resultSet.isClosed()) {
-                    resultSet.close();
-                }
             }
             return person;
 
@@ -53,44 +50,28 @@ public class PersonH2DaoService extends AbstractH2DaoService implements PersonDa
         }
     }
 
-    // сохранение персоны в БД
+    /**
+     * Задание к лекции 22:
+     * реализовать метод save - сохранение данных персоны в БД
+     */
     public Person save(Person person) throws PersonDaoException {
         if (person == null) {
             throw new PersonDaoException("Person not found!");
         }
         try (Connection connection = getConnection(CONNECT_URL);
              PreparedStatement preparedStatement =
-                     connection.prepareStatement("SELECT * FROM BANK.PERSON WHERE id=?");) {
-            // проверяем наличие персоны с данным идентом в базе
-            int personId = person.getId();
-            preparedStatement.setInt(1, personId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                int i = 0;
-                while (resultSet.next()) {
-                    i++;
-                    if (i > 1) {
-                        throw new PersonDaoException("More than one row");
-                    }
-                    person = new Person();
-                    person.setId(resultSet.getInt("id"));
-                    person.setFirstName(resultSet.getString("first_name"));
-                    person.setLastName(resultSet.getString("last_name"));
-                    person.setAge(resultSet.getInt("age"));
-                }
-                if (person == null) {
-                    //throw new DaoException("Person not found id=" + personId);
-                    // если нет, то сохраняем
-
-                } else {
-                    // если есть, то update
-
-                }
-                if (!resultSet.isClosed()) {
-                    resultSet.close();
-                }
+                     connection.prepareStatement(
+                             "MERGE INTO BANK.PERSON (id, first_name, last_name, age) KEY (id) VALUES (?, ?, ?, ?)");) {
+            preparedStatement.setInt(1, person.getId());
+            preparedStatement.setString(2, person.getFirstName());
+            preparedStatement.setString(3, person.getLastName());
+            preparedStatement.setInt(4, person.getAge());
+            int resultInt = preparedStatement.executeUpdate();
+            if (resultInt != 1) {
+                throw new PersonDaoException("Not valid save person!");
             }
+            connection.commit();
             return person;
-
         } catch (SQLException e) {
             e.printStackTrace();
             throw new PersonDaoException("Save person error", e);

@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by SBT-Pozdnyakov-AN on 02.11.2017.
+ * Refactored Zavgorodniy on 26.07.2018
  */
 public class PersonFacade {
 

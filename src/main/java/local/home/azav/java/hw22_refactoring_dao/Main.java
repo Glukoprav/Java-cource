@@ -16,7 +16,7 @@ public class Main {
     public static final String CONNECT_URL = "jdbc:local.home.azav.java.hw22_refactoring_dao.h2:tcp://localhost/C:\\TEST\\test.db";
     public static final String GET_PERSON_QUERY = "SELECT * FROM BANK.PERSON";
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    public static void main(String[] args) throws SQLException {
 
         try {
             Person person = new PersonFacade().getPersonById(2);
