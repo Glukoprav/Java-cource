@@ -28,7 +28,7 @@ public class MainRecipes {
     @Autowired
     private Recipes recipes;
 
-    @Autowired
+   // @Autowired
     public MainRecipes(DataSource dataSource) {
         this.dataSource = dataSource;
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -46,6 +46,7 @@ public class MainRecipes {
     }
 
     private void createTable() throws SQLException {
+        // RUNSCRIPT FROM fileNameString scriptCompressionEncryption
         jdbcTemplate.update("CREATE TABLE dishes(" +
                 "dishes_id int," +
                 "name varchar(80));");
