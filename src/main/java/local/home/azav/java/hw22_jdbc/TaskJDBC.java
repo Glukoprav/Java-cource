@@ -18,7 +18,7 @@ public class TaskJDBC {
         // jdbc:local.home.azav.java.hw22_refactoring_dao.h2:~/test
         // jdbc:local.home.azav.java.hw22_refactoring_dao.h2:tcp://localhost/~/test
         //try(Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:od","HR","qwerty");
-        try (Connection connection = DriverManager.getConnection("jdbc:local.home.azav.java.hw22_refactoring_dao.h2:~/test", "sa", "");
+        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("select * from user_order_item order by date_order");) {
             while (resultSet.next()) {

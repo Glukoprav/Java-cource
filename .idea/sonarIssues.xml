@@ -268,7 +268,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw24_spring_jdbc/Dishes.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw24_spring_jdbc/MainRecipes.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw24_spring_jdbc/Recipes.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw24_spring_jdbc/Recipies.java">
           <value>
             <set />
           </value>
@@ -279,6 +294,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/TractorTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw24_spring_jdbc/MainRecipesTest.java">
           <value>
             <set />
           </value>
