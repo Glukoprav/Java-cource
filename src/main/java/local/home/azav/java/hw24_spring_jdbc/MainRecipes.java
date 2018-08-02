@@ -25,10 +25,10 @@ import java.sql.SQLException;
 public class MainRecipes {
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private Recipes recipes;
+    //@Autowired
+    //private Recipe recipes;
 
-   // @Autowired
+    @Autowired
     public MainRecipes(DataSource dataSource) {
         this.dataSource = dataSource;
         jdbcTemplate = new JdbcTemplate(dataSource);

@@ -273,12 +273,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw24_spring_jdbc/DishesDAO.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw24_spring_jdbc/MainRecipes.java">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw24_spring_jdbc/Recipe.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw24_spring_jdbc/Recipes.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw24_spring_jdbc/RecipesDAO.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw24_spring_jdbc/RecipesWork.java">
           <value>
             <set />
           </value>
