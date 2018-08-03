@@ -1,14 +1,14 @@
-package local.home.azav.java.hw24_spring_jdbc;
+package local.home.azav.java.hw24_spring_jdbc.model;
 
 /**
  * Класс - блюдо
  * Список блюд в БД - таблица dishes
  */
-public class Dishes {
+public class Dish {
     private int dishes_id;
     private String name;
 
-    public Dishes(int dishes_id, String name) {
+    public Dish(int dishes_id, String name) {
 
         this.dishes_id = dishes_id;
         this.name = name;

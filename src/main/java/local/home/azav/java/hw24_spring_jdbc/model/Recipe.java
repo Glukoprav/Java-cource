@@ -1,4 +1,4 @@
-package local.home.azav.java.hw24_spring_jdbc;
+package local.home.azav.java.hw24_spring_jdbc.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
