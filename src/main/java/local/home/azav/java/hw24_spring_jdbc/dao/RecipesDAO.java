@@ -3,12 +3,14 @@ package local.home.azav.java.hw24_spring_jdbc.dao;
 import local.home.azav.java.hw24_spring_jdbc.model.Dish;
 import local.home.azav.java.hw24_spring_jdbc.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.stereotype.Component;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -18,19 +20,27 @@ import java.util.List;
 /**
  * Класс работы с рецептами
  */
-@Component
+@Configuration
 public class RecipesDAO {
     private DataSource dataSource;
 
-    @Autowired
     public RecipesDAO(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    @Bean
+    public DriverManagerDataSource dataSource() {
+        System.out.println("Create dateSource!");
+        return new DriverManagerDataSource("jdbc:h2:~/test", "sa", "");
     }
 
     /**
      * Взять все строки ингредиентов
      */
+    @Bean
     public List<Recipe> getAll() {
+        //System.out.println("---------------");
+        //System.out.println(dataSource.toString());
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         final List<Recipe> resultList;
         resultList = jdbcTemplate.query("Select * from recipes", new RecipeRowMapper());
@@ -50,6 +60,7 @@ public class RecipesDAO {
     /**
      * Взять рецепт по наименованию блюда
      */
+    @Bean
     public List<Recipe> getByName(String name) {
         final NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         SqlParameterSource paramsName = new BeanPropertySqlParameterSource(name);
@@ -78,5 +89,17 @@ public class RecipesDAO {
             return new Dish(resultSet.getInt("dishes_id"),
                     resultSet.getString("name"));
         }
+    }
+
+    private void createTable(JdbcTemplate jdbcTemplate) throws SQLException {
+        // RUNSCRIPT FROM fileNameString scriptCompressionEncryption
+        jdbcTemplate.update("CREATE TABLE dishes(" +
+                "dishes_id int," +
+                "name varchar(80));");
+
+        jdbcTemplate.update("CREATE TABLE recipes(" +
+                "dishes_id int," +
+                "ingredient varchar(80)," +
+                "value int);");
     }
 }

@@ -1,5 +1,6 @@
 package local.home.azav.java.hw24_spring_jdbc;
 
+import local.home.azav.java.hw24_spring_jdbc.dao.RecipesDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -20,40 +21,28 @@ import java.sql.SQLException;
  * и их количественного состава;
  * - удаление блюда.
  */
-
-@Configuration
+//@Configuration
 public class MainRecipes {
-    private DataSource dataSource;
-    private JdbcTemplate jdbcTemplate;
+    //private DataSource dataSource;
+    //private JdbcTemplate jdbcTemplate;
     //@Autowired
     //private Recipe recipes;
 
-    @Autowired
-    public MainRecipes(DataSource dataSource) {
-        this.dataSource = dataSource;
-        jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+    //@Autowired
+//    public MainRecipes(DataSource dataSource) {
+//        this.dataSource = dataSource;
+//        jdbcTemplate = new JdbcTemplate(dataSource);
+//    }
 
     public static void main(String[] args) {
+        System.out.println("Create context.");
         AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(MainRecipes.class);
-
+                new AnnotationConfigApplicationContext(RecipesDAO.class);  //MainRecipes.class);
+        System.out.println("Make getBean.");
+        RecipesDAO recipesDAO = context.getBean(RecipesDAO.class);
+        recipesDAO.getAll();
     }
 
-    @Bean
-    public DriverManagerDataSource dataSource() {
-        return new DriverManagerDataSource("jdbc:h2:~/test", "sa", "");
-    }
 
-    private void createTable() throws SQLException {
-        // RUNSCRIPT FROM fileNameString scriptCompressionEncryption
-        jdbcTemplate.update("CREATE TABLE dishes(" +
-                "dishes_id int," +
-                "name varchar(80));");
 
-        jdbcTemplate.update("CREATE TABLE recipes(" +
-                "dishes_id int," +
-                "ingredient varchar(80)," +
-                "value int);");
-    }
 }
