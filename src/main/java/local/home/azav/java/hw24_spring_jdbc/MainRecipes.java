@@ -2,9 +2,11 @@ package local.home.azav.java.hw24_spring_jdbc;
 
 import local.home.azav.java.hw24_spring_jdbc.dao.RecipesDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
@@ -36,11 +38,12 @@ public class MainRecipes {
 
     public static void main(String[] args) {
         System.out.println("Create context.");
-        AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(RecipesDAO.class);  //MainRecipes.class);
+//        AnnotationConfigApplicationContext context =
+//                new AnnotationConfigApplicationContext(ConfigAndConsole.class);  //MainRecipes.class);
+        ApplicationContext context = new ClassPathXmlApplicationContext("configcontext.xml");
         System.out.println("Make getBean.");
-        RecipesDAO recipesDAO = context.getBean(RecipesDAO.class);
-        recipesDAO.getAll();
+        ConfigAndConsole console = context.getBean(ConfigAndConsole.class);
+        console.MakeConsole();
     }
 
 

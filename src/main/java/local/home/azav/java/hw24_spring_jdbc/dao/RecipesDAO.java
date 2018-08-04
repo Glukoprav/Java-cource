@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Класс работы с рецептами
  */
-@Configuration
+//@Configuration
 public class RecipesDAO {
     private DataSource dataSource;
 
@@ -28,16 +28,9 @@ public class RecipesDAO {
         this.dataSource = dataSource;
     }
 
-    @Bean
-    public DriverManagerDataSource dataSource() {
-        System.out.println("Create dateSource!");
-        return new DriverManagerDataSource("jdbc:h2:~/test", "sa", "");
-    }
-
     /**
      * Взять все строки ингредиентов
      */
-    @Bean
     public List<Recipe> getAll() {
         //System.out.println("---------------");
         //System.out.println(dataSource.toString());
@@ -60,7 +53,6 @@ public class RecipesDAO {
     /**
      * Взять рецепт по наименованию блюда
      */
-    @Bean
     public List<Recipe> getByName(String name) {
         final NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         SqlParameterSource paramsName = new BeanPropertySqlParameterSource(name);
