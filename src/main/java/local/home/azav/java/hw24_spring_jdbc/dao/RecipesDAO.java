@@ -53,20 +53,20 @@ public class RecipesDAO {
     /**
      * Взять рецепт по наименованию блюда
      */
-    public List<Recipe> getByName(String name) {
-        final NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        SqlParameterSource paramsName = new BeanPropertySqlParameterSource(name);
-        final List<Dish> resultId
-                = jdbcTemplate.query("Select * from dishes where name=:name",paramsName,new DishesRowMapper());
-        final List<Recipe> resultList;
-        if (resultId.isEmpty()) {
-            return resultList = null;
-        } else {
-            SqlParameterSource paramsId = new BeanPropertySqlParameterSource(resultId.get(0).getDishes_id());
-            resultList = jdbcTemplate.query("Select * from recipes where dishes_id=:dishes_id", paramsId, new RecipeRowMapper());
-            return resultList;
-        }
-    }
+//    public List<Recipe> getByName(String name) {
+//        final NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+//        SqlParameterSource paramsName = new BeanPropertySqlParameterSource(name);
+//        final List<Dish> resultId
+//                = jdbcTemplate.query("Select * from dishes where name=:name",paramsName,new DishesRowMapper());
+//        final List<Recipe> resultList;
+//        if (resultId.isEmpty()) {
+//            return resultList = null;
+//        } else {
+//            SqlParameterSource paramsId = new BeanPropertySqlParameterSource(resultId.get(0).getDishes_id());
+//            resultList = jdbcTemplate.query("Select * from recipes where dishes_id=:dishes_id", paramsId, new RecipeRowMapper());
+//            return resultList;
+//        }
+//    }
 
     private class RecipeRowMapper implements RowMapper<Recipe> {
         public Recipe mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -76,10 +76,5 @@ public class RecipesDAO {
         }
     }
 
-    private class DishesRowMapper implements RowMapper<Dish> {
-        public Dish mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Dish(resultSet.getInt("dishes_id"),
-                    resultSet.getString("name"));
-        }
-    }
+
 }
