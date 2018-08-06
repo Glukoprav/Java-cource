@@ -30,18 +30,8 @@ public class DishesDAO {
     }
 
     public List<Dish> getByName(String name) {
-        final NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        SqlParameterSource paramsName = new BeanPropertySqlParameterSource(name);
-        final List<Dish> resultId
-                = jdbcTemplate.query("Select * from dishes where name like '%:name%'", paramsName, new DishesRowMapper());
-        return resultId;
-//        if (resultId.isEmpty()) {
-//            return resultList = null;
-//        } else {
-//            SqlParameterSource paramsId = new BeanPropertySqlParameterSource(resultId.get(0).getDishes_id());
-//            resultList = jdbcTemplate.query("Select * from recipes where dishes_id=:dishes_id", paramsId, new RecipeRowMapper());
-//            return resultList;
-//        }
+        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.query("Select * from dishes where name like '%" + name + "%'", new DishesRowMapper());
     }
 
     private class DishesRowMapper implements RowMapper<Dish> {

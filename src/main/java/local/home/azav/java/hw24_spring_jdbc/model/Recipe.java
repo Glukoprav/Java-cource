@@ -1,32 +1,27 @@
 package local.home.azav.java.hw24_spring_jdbc.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.sql.DataSource;
-
 /**
  * Класс - рецепт из ингредиентов
  * Список рецептов блюд в БД - таблица recipes
  */
 
 public class Recipe {
-    private int dishes_id;
+    private int dishesId;
     private String ingredient;
     private int value;
 
-    public Recipe(int dishes_id, String ingredient, int value) {
-        this.dishes_id = dishes_id;
+    public Recipe(int dishesId, String ingredient, int value) {
+        this.dishesId = dishesId;
         this.ingredient = ingredient;
         this.value = value;
     }
 
-    public int getDishes_id() {
-        return dishes_id;
+    public int getDishesId() {
+        return dishesId;
     }
 
-    public void setDishes_id(int dishes_id) {
-        this.dishes_id = dishes_id;
+    public void setDishesId(int dishesId) {
+        this.dishesId = dishesId;
     }
 
     public String getIngredient() {
@@ -47,10 +42,6 @@ public class Recipe {
 
     @Override
     public String toString() {
-        return "Recipes{" +
-                "dishes_id=" + dishes_id +
-                ", ingredient='" + ingredient + '\'' +
-                ", value=" + value +
-                '}';
+        return "Ингридиент: " + ingredient + ", количество: " + value + " гр.";
     }
 }

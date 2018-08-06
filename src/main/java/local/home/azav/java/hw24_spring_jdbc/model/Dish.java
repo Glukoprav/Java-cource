@@ -5,20 +5,20 @@ package local.home.azav.java.hw24_spring_jdbc.model;
  * Список блюд в БД - таблица dishes
  */
 public class Dish {
-    private int dishes_id;
+    private int dishesId;
     private String name;
 
-    public Dish(int dishes_id, String name) {
+    public Dish(int dishesId, String name) {
 
-        this.dishes_id = dishes_id;
+        this.dishesId = dishesId;
         this.name = name;
     }
-    public int getDishes_id() {
-        return dishes_id;
+    public int getDishesId() {
+        return dishesId;
     }
 
-    public void setDishes_id(int dishes_id) {
-        this.dishes_id = dishes_id;
+    public void setDishesId(int dishesId) {
+        this.dishesId = dishesId;
     }
 
     public String getName() {
@@ -31,6 +31,6 @@ public class Dish {
 
     @Override
     public String toString() {
-        return "Номер: " + dishes_id + ", Наименование: " + name;
+        return "Номер: " + dishesId + ", Наименование: " + name;
     }
 }

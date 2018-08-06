@@ -62,7 +62,7 @@ public class RecipesDAO {
 //        if (resultId.isEmpty()) {
 //            return resultList = null;
 //        } else {
-//            SqlParameterSource paramsId = new BeanPropertySqlParameterSource(resultId.get(0).getDishes_id());
+//            SqlParameterSource paramsId = new BeanPropertySqlParameterSource(resultId.get(0).getDishesId());
 //            resultList = jdbcTemplate.query("Select * from recipes where dishes_id=:dishes_id", paramsId, new RecipeRowMapper());
 //            return resultList;
 //        }

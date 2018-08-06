@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.Scanner;
 
-//@Configuration
+//@Configu1ration
 public class ConfigAndConsole {
     private RecipesDAO recipesDAO;
     private DishesDAO dishesDAO;
@@ -22,18 +22,18 @@ public class ConfigAndConsole {
     }
 
     // Метод консольного меню
-    protected void MakeConsole() {
+    protected void makeConsole() {
         printAllDishes();
         while (true) {
             menuConsole();
-            int userInput = 0;
+            int intInput = 0;
             try {
-                userInput = Integer.valueOf(scanner.nextLine());
+                intInput = Integer.valueOf(scanner.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("Введите цифру от 1 до 5");
                 continue;
             }
-            switch (userInput) {
+            switch (intInput) {
                 case 1:
                     printAllDishes();
                     break;
@@ -50,14 +50,14 @@ public class ConfigAndConsole {
                     System.out.println("Выход!");
                     return;
                 default:
-                    System.out.println("Введите цифру 1-4");
+                    System.out.println("Введите цифру 1-5");
             }
         }
     }
 
     private void menuConsole() {
         System.out.println("1. Список блюд.\n" +
-                "2. Поиск по наименованию.\n" +
+                "2. Поиск по наименованию блюда.\n" +
                 "3. Добавление блюда.\n" +
                 "4. Удаление блюда.\n" +
                 "5. Выход из программы.\n" +
@@ -77,6 +77,7 @@ public class ConfigAndConsole {
         for (Dish dish : list) {
             System.out.println(dish.toString());
         }
+        System.out.println("-------------------------------------");
     }
 
     private void searchDishes() {
