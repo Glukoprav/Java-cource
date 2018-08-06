@@ -8,11 +8,15 @@ public class Dish {
     private int dishesId;
     private String name;
 
-    public Dish(int dishesId, String name) {
+    public Dish(String name) {
+        this.name = name;
+    }
 
+    public Dish(int dishesId, String name) {
         this.dishesId = dishesId;
         this.name = name;
     }
+
     public int getDishesId() {
         return dishesId;
     }

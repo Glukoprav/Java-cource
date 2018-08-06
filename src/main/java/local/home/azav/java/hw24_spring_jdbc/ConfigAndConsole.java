@@ -46,7 +46,7 @@ public class ConfigAndConsole {
                     addDish();
                     break;
                 case 5:
-                    addDish();
+                    addIngredient();
                     break;
                 case 6:
                     deleteDish();
@@ -61,7 +61,8 @@ public class ConfigAndConsole {
     }
 
     private void menuConsole() {
-        System.out.println("1. Список блюд.\n" +
+        System.out.println("--------Меню---------\n" +
+                "1. Список блюд.\n" +
                 "2. Поиск по наименованию блюда.\n" +
                 "3. Показать ингредиенты по номеру блюда.\n" +
                 "4. Добавление блюда.\n" +
@@ -100,6 +101,12 @@ public class ConfigAndConsole {
     }
 
     private void addDish() {
+        System.out.print("Введите название нового блюда: ");
+        String newName = scanner.nextLine();
+        dishesDAO.insertDish(newName);
+    }
+
+    private void addIngredient() {
 
     }
 

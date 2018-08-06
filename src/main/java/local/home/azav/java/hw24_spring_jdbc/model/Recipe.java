@@ -10,6 +10,10 @@ public class Recipe {
     private String ingredient;
     private int value;
 
+    public Recipe(String ingredient) {
+        this.ingredient = ingredient;
+    }
+
     public Recipe(int dishesId, String ingredient, int value) {
         this.dishesId = dishesId;
         this.ingredient = ingredient;

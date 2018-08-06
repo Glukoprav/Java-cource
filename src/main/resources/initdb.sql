@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS dishes(dishesid int, name varchar(80));
+CREATE TABLE IF NOT EXISTS dishes(dishesid int not null primary key AUTO_INCREMENT, name varchar(80));
 CREATE TABLE IF NOT EXISTS recipes(dishesid int, ingredient varchar(80), value int);
 INSERT INTO DISHES VALUES(1, 'Коктейль Робот');
 INSERT INTO DISHES VALUES(2, 'Горное мороженое');
