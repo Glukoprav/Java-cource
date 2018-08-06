@@ -8,11 +8,11 @@ import javax.sql.DataSource;
 /**
  * Класс работы с наименованиями блюд
  */
-@Component
+//@Component
 public class DishesDAO {
     private DataSource dataSource;
 
-    @Autowired
+    //@Autowired
     public DishesDAO(DataSource dataSource) {
         this.dataSource = dataSource;
     }

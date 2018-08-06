@@ -45,7 +45,4 @@ public class MainRecipes {
         ConfigAndConsole console = context.getBean(ConfigAndConsole.class);
         console.MakeConsole();
     }
-
-
-
 }

@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS dishes(dishes_id int, name varchar(80));
+CREATE TABLE IF NOT EXISTS recipes(dishes_id int, ingredient varchar(80), value int);
+INSERT INTO DISHES VALUES(1, 'Коктейль Робот');
+INSERT INTO DISHES VALUES(2, 'Горное мороженое');
+INSERT INTO DISHES VALUES(3, 'Напиток высокогорный');
+INSERT INTO RECIPES VALUES(1, 'Мятный ликер',100);
+INSERT INTO RECIPES VALUES(1, 'Пиво пенное',500);
+INSERT INTO RECIPES VALUES(1, 'Мед липкий',100);
+INSERT INTO RECIPES VALUES(2, 'Сгущенное молоко',300);
+INSERT INTO RECIPES VALUES(2, 'Свежий горный снег',400);
+INSERT INTO RECIPES VALUES(2, 'Солнце',1);
+INSERT INTO RECIPES VALUES(3, 'Спирт медицинский',200);
+INSERT INTO RECIPES VALUES(3, 'Вода ледникового ручья',300);
+INSERT INTO RECIPES VALUES(3, 'Глюкоза',10);
+INSERT INTO RECIPES VALUES(3, 'Мед',50);

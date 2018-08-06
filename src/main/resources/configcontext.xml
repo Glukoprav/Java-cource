@@ -8,7 +8,8 @@
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
         <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:~/recipes.db" />
+        <!--<property name="url" value="jdbc:h2:~/recipes.db" />-->
+        <property name="url" value="jdbc:h2:c:\Users\Azav\IdeaProjects\Java-cource\src\main\resources\recipes.db" />
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
@@ -17,6 +18,7 @@
           class="local.home.azav.java.hw24_spring_jdbc.ConfigAndConsole">
         <constructor-arg ref="recipesDAO"/>
         <constructor-arg ref="dishesDAO"/>
+        <constructor-arg ref="dataSource"/>
     </bean>
     <!--<jdbc:initialize-database>-->
         <!--<jdbc:script location="classpath:schema.sql"/>-->

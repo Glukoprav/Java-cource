@@ -82,16 +82,4 @@ public class RecipesDAO {
                     resultSet.getString("name"));
         }
     }
-
-    private void createTable(JdbcTemplate jdbcTemplate) throws SQLException {
-        // RUNSCRIPT FROM fileNameString scriptCompressionEncryption
-        jdbcTemplate.update("CREATE TABLE dishes(" +
-                "dishes_id int," +
-                "name varchar(80));");
-
-        jdbcTemplate.update("CREATE TABLE recipes(" +
-                "dishes_id int," +
-                "ingredient varchar(80)," +
-                "value int);");
-    }
 }
