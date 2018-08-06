@@ -18,7 +18,6 @@
           class="local.home.azav.java.hw24_spring_jdbc.ConfigAndConsole">
         <constructor-arg ref="recipesDAO"/>
         <constructor-arg ref="dishesDAO"/>
-        <constructor-arg ref="dataSource"/>
     </bean>
     <!--<jdbc:initialize-database>-->
         <!--<jdbc:script location="classpath:schema.sql"/>-->
@@ -57,20 +56,5 @@
     <bean id="recipe"
           class="local.home.azav.java.hw24_spring_jdbc.model.Recipe"
           scope="prototype"/>
-
-    <!--<bean id="unitDaoImpl"-->
-    <!--class="ru.sbt.averveyko.dao.UnitDaoImpl">-->
-    <!--<constructor-arg ref="dataSource"/>-->
-    <!--<constructor-arg ref="unitMapper"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="compositionDaoImpl"-->
-    <!--class="ru.sbt.averveyko.dao.CompositionDaoImpl">-->
-    <!--<constructor-arg ref="dataSource"/>-->
-    <!--<constructor-arg ref="compositionEntryMapper"/>-->
-    <!--<constructor-arg ref="ingredientDaoImpl"/>-->
-    <!--<constructor-arg ref="recipeDaoImpl"/>-->
-    <!--<constructor-arg ref="unitDaoImpl"/>-->
-    <!--</bean>-->
 
 </beans>

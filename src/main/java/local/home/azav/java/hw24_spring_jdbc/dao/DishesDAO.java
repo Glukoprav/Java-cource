@@ -34,9 +34,15 @@ public class DishesDAO {
         return jdbcTemplate.query("Select * from dishes where name like '%" + name + "%'", new DishesRowMapper());
     }
 
+    public Dish getById(int dishesId) {
+        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.queryForObject("Select * from dishes where dishesid=?", new DishesRowMapper(),
+                dishesId);
+    }
+
     private class DishesRowMapper implements RowMapper<Dish> {
         public Dish mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Dish(resultSet.getInt("dishes_id"),
+            return new Dish(resultSet.getInt("dishesid"),
                     resultSet.getString("name"));
         }
     }

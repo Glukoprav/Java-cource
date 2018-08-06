@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS dishes(dishes_id int, name varchar(80));
-CREATE TABLE IF NOT EXISTS recipes(dishes_id int, ingredient varchar(80), value int);
+CREATE TABLE IF NOT EXISTS dishes(dishesid int, name varchar(80));
+CREATE TABLE IF NOT EXISTS recipes(dishesid int, ingredient varchar(80), value int);
 INSERT INTO DISHES VALUES(1, 'Коктейль Робот');
 INSERT INTO DISHES VALUES(2, 'Горное мороженое');
 INSERT INTO DISHES VALUES(3, 'Напиток высокогорный');

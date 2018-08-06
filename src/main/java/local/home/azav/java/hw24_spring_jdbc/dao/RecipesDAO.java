@@ -1,6 +1,5 @@
 package local.home.azav.java.hw24_spring_jdbc.dao;
 
-import local.home.azav.java.hw24_spring_jdbc.model.Dish;
 import local.home.azav.java.hw24_spring_jdbc.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,49 +31,23 @@ public class RecipesDAO {
      * Взять все строки ингредиентов
      */
     public List<Recipe> getAll() {
-        //System.out.println("---------------");
-        //System.out.println(dataSource.toString());
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        final List<Recipe> resultList;
-        resultList = jdbcTemplate.query("Select * from recipes", new RecipeRowMapper());
-        return resultList;
+        return jdbcTemplate.query("Select * from recipes", new RecipeRowMapper());
     }
 
     /**
      * Взять рецепт по иденту блюда
      */
-    public List<Recipe> getById(int dishesId) {
-        final NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        SqlParameterSource paramsId = new BeanPropertySqlParameterSource(dishesId);
-        return jdbcTemplate.query("Select * from recipes where dishes_id=:dishesId",
-                paramsId, new RecipeRowMapper());
+    public List<Recipe> getById(int dishesid) {
+        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.query("Select * from recipes where dishesid=?", new RecipeRowMapper(), dishesid);
     }
-
-    /**
-     * Взять рецепт по наименованию блюда
-     */
-//    public List<Recipe> getByName(String name) {
-//        final NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-//        SqlParameterSource paramsName = new BeanPropertySqlParameterSource(name);
-//        final List<Dish> resultId
-//                = jdbcTemplate.query("Select * from dishes where name=:name",paramsName,new DishesRowMapper());
-//        final List<Recipe> resultList;
-//        if (resultId.isEmpty()) {
-//            return resultList = null;
-//        } else {
-//            SqlParameterSource paramsId = new BeanPropertySqlParameterSource(resultId.get(0).getDishesId());
-//            resultList = jdbcTemplate.query("Select * from recipes where dishes_id=:dishes_id", paramsId, new RecipeRowMapper());
-//            return resultList;
-//        }
-//    }
 
     private class RecipeRowMapper implements RowMapper<Recipe> {
         public Recipe mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Recipe(resultSet.getInt("dishes_id"),
+            return new Recipe(resultSet.getInt("dishesid"),
                     resultSet.getString("ingredient"),
                     resultSet.getInt("value"));
         }
     }
-
-
 }
