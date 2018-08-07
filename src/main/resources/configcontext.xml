@@ -9,7 +9,8 @@
 
         <property name="driverClassName" value="org.h2.Driver"/>
         <!--<property name="url" value="jdbc:h2:~/recipes.db" />-->
-        <property name="url" value="jdbc:h2:c:\Users\Azav\IdeaProjects\Java-cource\src\main\resources\recipes.db" />
+        <!--<property name="url" value="jdbc:h2:c:\Users\Azav\IdeaProjects\Java-cource\src\main\resources\recipes.db" />-->
+        <property name="url" value="jdbc:h2:C:\Documents and Settings\andreyz\IdeaProjects\firstproject\src\main\resources\recipes.db" />
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
@@ -30,14 +31,6 @@
     <!--<tx:annotation-driven/>-->
 
     <!--<context:component-scan base-package="ru.sbt.averveyko.dao"/>-->
-
-    <!--<bean id="ingredientMapper" class="ru.sbt.averveyko.dao.utils.IngredientMapper"/>-->
-    <!--<bean id="recipeMapper" class="ru.sbt.averveyko.dao.utils.RecipeMapper"/>-->
-    <!--<bean id="unitMapper" class="ru.sbt.averveyko.dao.utils.UnitMapper"/>-->
-    <!--<bean id="compositionEntryMapper" class="ru.sbt.averveyko.dao.utils.CompositionEntryMapper">-->
-        <!--<constructor-arg ref="ingredientDaoImpl"/>-->
-        <!--<constructor-arg ref="unitDaoImpl"/>-->
-    <!--</bean>-->
 
     <bean id="dishesDAO"
           class="local.home.azav.java.hw24_spring_jdbc.dao.DishesDAO">

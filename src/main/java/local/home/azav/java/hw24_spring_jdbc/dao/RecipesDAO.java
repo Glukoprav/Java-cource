@@ -1,15 +1,8 @@
 package local.home.azav.java.hw24_spring_jdbc.dao;
 
 import local.home.azav.java.hw24_spring_jdbc.model.Recipe;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -19,7 +12,6 @@ import java.util.List;
 /**
  * Класс работы с рецептами
  */
-//@Configuration
 public class RecipesDAO {
     private DataSource dataSource;
 
@@ -41,6 +33,16 @@ public class RecipesDAO {
     public List<Recipe> getById(int dishesid) {
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return jdbcTemplate.query("Select * from recipes where dishesid=?", new RecipeRowMapper(), dishesid);
+    }
+
+    public int insertIngredient(int intId, String newName, int intValue) {
+        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.update("INSERT INTO recipes (dishesid, ingredient, value) VALUES(?,?,?)", intId, newName, intValue);
+    }
+
+    public int deleteRecipe(int intId) {
+        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.update("delete from recipes where dishesid = ?", intId);
     }
 
     private class RecipeRowMapper implements RowMapper<Recipe> {

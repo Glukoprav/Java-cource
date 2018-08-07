@@ -15,12 +15,12 @@ public class ConfigAndConsole {
     private DishesDAO dishesDAO;
     private Scanner scanner = new Scanner(System.in);
 
-    public ConfigAndConsole(RecipesDAO recipesDAO, DishesDAO dishesDAO/*, DataSource dataSource*/) {
+    public ConfigAndConsole(RecipesDAO recipesDAO, DishesDAO dishesDAO) {
         this.recipesDAO = recipesDAO;
         this.dishesDAO = dishesDAO;
     }
 
-    // Метод консольного меню
+    // Метод обработки консольного меню
     void makeConsole() {
         printAllDishes();
         while (true) {
@@ -103,15 +103,44 @@ public class ConfigAndConsole {
     private void addDish() {
         System.out.print("Введите название нового блюда: ");
         String newName = scanner.nextLine();
-        dishesDAO.insertDish(newName);
+        int result = dishesDAO.insertDish(newName);
+        if (result == 1) {
+            System.out.println("Добавлено " + result + " блюдо: " + newName);
+        } else {
+            System.out.println("Блюдо " + newName + "не добавилось!");
+        }
     }
 
     private void addIngredient() {
-
+        System.out.print("Введите идентификатор блюда, которому добавляем ингредиент: ");
+        int intInput = Integer.parseInt(scanner.nextLine());
+        System.out.print("Введите название ингредиента: ");
+        String newName = scanner.nextLine();
+        System.out.print("Введите количество ингредиента, в граммах: ");
+        int intValue = Integer.parseInt(scanner.nextLine());
+        int result = recipesDAO.insertIngredient(intInput, newName, intValue);
+        if (result == 1) {
+            System.out.println("Добавлен " + result + " ингредиент: " + newName + " к блюду " + intInput);
+        } else {
+            System.out.println("Ингредиент " + newName + "не добавился!");
+        }
     }
 
     private void deleteDish() {
-
+        System.out.print("Введите идентификатор блюда для удаления: ");
+        int intInput = Integer.parseInt(scanner.nextLine());
+        int result = recipesDAO.deleteRecipe(intInput);
+        if (result > 0) {
+            System.out.println("Удалено " + result + " ингредиентов у блюда " + intInput);
+        } else {
+            System.out.println("Ингредиентов не удалено!");
+        }
+        result = dishesDAO.deleteDish(intInput);
+        if (result == 1) {
+            System.out.println("Удалено " + result + " блюдо " + intInput);
+        } else {
+            System.out.println("Блюдо не удалено!");
+        }
     }
 
 

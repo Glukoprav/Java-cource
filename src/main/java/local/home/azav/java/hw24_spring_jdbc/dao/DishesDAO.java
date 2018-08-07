@@ -3,11 +3,6 @@ package local.home.azav.java.hw24_spring_jdbc.dao;
 import local.home.azav.java.hw24_spring_jdbc.model.Dish;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -33,7 +28,8 @@ public class DishesDAO {
 
     public List<Dish> getByName(String name) {
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        return jdbcTemplate.query("Select * from dishes where name like '%" + name + "%'", new DishesRowMapper());
+        StringBuilder stringBuilder = new StringBuilder("Select * from dishes where name like '%");
+        return jdbcTemplate.query(stringBuilder.append(name).append("%'").toString(), new DishesRowMapper());
     }
 
     public Dish getById(int dishesId) {
@@ -42,32 +38,22 @@ public class DishesDAO {
                 dishesId);
     }
 
-    public void insertDish(String newName) {
-        Dish dish = new Dish(newName);
-        SqlParameterSource param = new BeanPropertySqlParameterSource(newName);
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        int result = namedParameterJdbcTemplate.update("INSERT INTO dishes (name) VALUES (:name)", param, keyHolder);
-        dish.setDishesId(keyHolder.getKey().intValue());
-        System.out.println("Добавлен " + result + " ингредиент: " + dish.getName());
-
+    public int insertDish(String newName) {
+        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        int maxId = jdbcTemplate.queryForObject("Select max(dishesid) as dishesid from dishes", Integer.class);
+        return jdbcTemplate.update("INSERT INTO dishes (dishesid, name) VALUES(?,?)", maxId + 1, newName);
     }
 
-//    private List<Integer> getMaxId() {
-//        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-//        return jdbcTemplate.query("Select max(dishesid) as dishesid from dishes", new IntegerRowMapper());
-//    }
-
-    private class DishesRowMapper implements RowMapper<Dish> {
-        public Dish mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Dish(resultSet.getInt("dishesid"),
-                    resultSet.getString("name"));
-        }
+    public int deleteDish(int dishesId) {
+        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.update("delete from dishes where dishesid = ?", dishesId);
     }
 
-//    private class IntegerRowMapper implements RowMapper<Integer> {
-//        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-//            return new Integer(resultSet.getInt("dishesid"));
-//        }
-//    }
+private class DishesRowMapper implements RowMapper<Dish> {
+    public Dish mapRow(ResultSet resultSet, int i) throws SQLException {
+        return new Dish(resultSet.getInt("dishesid"),
+                resultSet.getString("name"));
+    }
+}
+
 }
