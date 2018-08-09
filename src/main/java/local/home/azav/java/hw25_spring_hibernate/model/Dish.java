@@ -1,6 +1,7 @@
 package local.home.azav.java.hw25_spring_hibernate.model;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,8 +15,9 @@ import javax.persistence.Table;
 @Table(name = "DISHES")
 public class Dish {
     @Id
+    @Column( name = "DISHESID" )
     private int dishesId;
-
+    @Column( name = "NAME" )
     private String name;
 
     public Dish(String name) {

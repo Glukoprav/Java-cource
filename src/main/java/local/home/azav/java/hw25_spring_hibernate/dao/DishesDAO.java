@@ -12,13 +12,17 @@ import java.util.List;
 /**
  * Класс работы с наименованиями блюд
  */
-public class DishesDAO {
+public class DishesDAO implements IDishesDAO {
     private DataSource dataSource;
 
     public DishesDAO(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Получение списка всех блюд
+     */
+    @Override
     public List<Dish> getAll() {
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         final List<Dish> resultList;
@@ -26,24 +30,40 @@ public class DishesDAO {
         return resultList;
     }
 
+    /**
+     * Получение блюда по имени или части имени
+     */
+    @Override
     public List<Dish> getByName(String name) {
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         StringBuilder stringBuilder = new StringBuilder("Select * from dishes where name like '%");
         return jdbcTemplate.query(stringBuilder.append(name).append("%'").toString(), new DishesRowMapper());
     }
 
+    /**
+     * Получение блюда по идентификатору
+     */
+    @Override
     public Dish getById(int dishesId) {
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return jdbcTemplate.queryForObject("Select * from dishes where dishesid=?", new DishesRowMapper(),
                 dishesId);
     }
 
+    /**
+     * Добавление нового блюда
+     */
+    @Override
     public int insertDish(String newName) {
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         int maxId = jdbcTemplate.queryForObject("Select max(dishesid) as dishesid from dishes", Integer.class);
         return jdbcTemplate.update("INSERT INTO dishes (dishesid, name) VALUES(?,?)", maxId + 1, newName);
     }
 
+    /**
+     * Удаление блюда со всеми ингредиентами
+     */
+    @Override
     public int deleteDish(int dishesId) {
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return jdbcTemplate.update("delete from dishes where dishesid = ?", dishesId);

@@ -1,13 +1,21 @@
 package local.home.azav.java.hw25_spring_hibernate.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Класс - рецепт из ингредиентов
  * Список рецептов блюд в БД - таблица recipes
  */
-
+@Entity
+@Table(name = "RECIPES")
 public class Recipe {
+    @Column( name = "DISHESID" )
     private int dishesId;
+    @Column( name = "INGREDIENT" )
     private String ingredient;
+    @Column( name = "VALUE" )
     private int value;
 
     public Recipe(String ingredient) {
