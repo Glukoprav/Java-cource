@@ -12,13 +12,13 @@ import java.util.List;
  * Список блюд в БД - таблица dishes
  */
 @Entity
-@Table(name = "DISHES")
+@Table(name = "dishes")
 public class Dish implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( name = "DISHESID" )
+    @Column( name = "dishesid" )
     private int dishesId;
-    @Column( name = "NAME" )
+    @Column( name = "name" )
     private String name;
 
 //    @OneToMany(mappedBy = "DISHES", cascade = CascadeType.ALL, orphanRemoval = true)

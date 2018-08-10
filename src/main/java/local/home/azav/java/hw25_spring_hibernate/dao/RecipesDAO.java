@@ -24,7 +24,7 @@ public class RecipesDAO implements IRecipesDAO {
     @Override
     public List<Recipe> getAll() {
         Session session = this.sessionFactory.openSession();
-        List<Recipe> recipeListList = session.createQuery("from RECIPES").list();
+        List<Recipe> recipeListList = session.createQuery("from Recipe").list();
         session.close();
         return recipeListList;
     }
@@ -35,7 +35,7 @@ public class RecipesDAO implements IRecipesDAO {
     @Override
     public List<Recipe> getById(int dishesid) {
         Session session = this.sessionFactory.openSession();
-        String str = "Select r from recipes r where dishesid=" + dishesid;
+        String str = "Select r from Recipe r where dishesid=" + dishesid;
         List<Recipe> recipeListList = session.createQuery(str).list();
         session.close();
         return recipeListList;
@@ -58,7 +58,7 @@ public class RecipesDAO implements IRecipesDAO {
      */
     @Override
     public void deleteRecipe(int intId) {
-        StringBuilder stringBuilder = new StringBuilder("from recipes where dishesId=").append(intId);
+        StringBuilder stringBuilder = new StringBuilder("from Recipe where dishesId=").append(intId);
         Session session = this.sessionFactory.openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(stringBuilder.toString(),Recipe.class);

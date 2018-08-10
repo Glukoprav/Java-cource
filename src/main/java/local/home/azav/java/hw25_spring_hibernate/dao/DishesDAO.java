@@ -23,7 +23,7 @@ public class DishesDAO implements IDishesDAO {
     @Override
     public List<Dish> getAll() {
         Session session = this.sessionFactory.openSession();
-        List<Dish> dishesList = session.createQuery("from DISHES").list();
+        List<Dish> dishesList = session.createQuery("from Dish").list();
         session.close();
         return dishesList;
     }
@@ -33,7 +33,7 @@ public class DishesDAO implements IDishesDAO {
      */
     @Override
     public List<Dish> getByName(String name) {
-        StringBuilder stringBuilder = new StringBuilder("from dishes where name like '%").append(name).append("%'");
+        StringBuilder stringBuilder = new StringBuilder("from Dish where name like '%").append(name).append("%'");
         Session session = this.sessionFactory.openSession();
         List<Dish> dishesList = session.createQuery(stringBuilder.toString()).list();
         session.close();
@@ -67,7 +67,7 @@ public class DishesDAO implements IDishesDAO {
      */
     @Override
     public void deleteDish(int dishesId) {
-        StringBuilder stringBuilder = new StringBuilder("from dishes where dishesId=").append(dishesId);
+        StringBuilder stringBuilder = new StringBuilder("from Dish where dishesId=").append(dishesId);
         Session session = this.sessionFactory.openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(stringBuilder.toString(),Dish.class);
