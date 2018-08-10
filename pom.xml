@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--<org.springframework-version>4.2.2.RELEASE</org.springframework-version>-->
         <spring.ver>4.3.17.RELEASE</spring.ver>
+        <spring-boot.ver>2.0.3.RELEASE</spring-boot.ver>
         <hibernate-version>5.0.1.Final</hibernate-version>
     </properties>
 
@@ -73,18 +74,28 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.ver}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
-            <version>2.0.3.RELEASE</version>
+            <version>${spring-boot.ver}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.ver}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring-boot.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring-boot.ver}</version>
         </dependency>
         <!-- Hibernate -->
         <!-- to start need only this -->

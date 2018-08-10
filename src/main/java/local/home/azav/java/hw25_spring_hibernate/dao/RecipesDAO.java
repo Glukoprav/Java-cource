@@ -1,6 +1,9 @@
 package local.home.azav.java.hw25_spring_hibernate.dao;
 
 import local.home.azav.java.hw25_spring_hibernate.model.Recipe;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -13,10 +16,10 @@ import java.util.List;
  * Класс работы с рецептами
  */
 public class RecipesDAO implements IRecipesDAO {
-    private DataSource dataSource;
+    private SessionFactory sessionFactory;
 
-    public RecipesDAO(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     /**
@@ -24,8 +27,10 @@ public class RecipesDAO implements IRecipesDAO {
      */
     @Override
     public List<Recipe> getAll() {
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        return jdbcTemplate.query("Select * from recipes", new RecipeRowMapper());
+        Session session = this.sessionFactory.openSession();
+        List<Recipe> personList = session.createQuery("from RECIPES").list();
+        session.close();
+        return personList;
     }
 
     /**
@@ -33,8 +38,11 @@ public class RecipesDAO implements IRecipesDAO {
      */
     @Override
     public List<Recipe> getById(int dishesid) {
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        return jdbcTemplate.query("Select * from recipes where dishesid=?", new RecipeRowMapper(), dishesid);
+        Session session = this.sessionFactory.openSession();
+        List<Recipe> personList = session.createQuery("Select r from recipes r where dishesid= :dishesid", Recipe.class).setParameter("dishesid", dishesid);
+                //session.createSQLQuery("Select * from recipes where dishesid=" + dishesid).list();
+        session.close();
+        return personList;
     }
 
     /**
@@ -42,6 +50,12 @@ public class RecipesDAO implements IRecipesDAO {
      */
     @Override
     public int insertIngredient(int intId, String newName, int intValue) {
+        Recipe recipe = new Recipe(intId,newName,intValue);
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.persist(recipe);
+        tx.commit();
+        session.close();
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return jdbcTemplate.update("INSERT INTO recipes (dishesid, ingredient, value) VALUES(?,?,?)", intId, newName, intValue);
     }

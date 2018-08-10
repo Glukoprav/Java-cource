@@ -13,10 +13,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * и их количественного состава;
  * - удаление блюда.
  */
-public class MainRecipes {
+public class MainRecipesHibernate {
 
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("configcontext.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("springhibernate.xml");
         ConfigAndConsole console = context.getBean(ConfigAndConsole.class);
         console.makeConsole();
     }

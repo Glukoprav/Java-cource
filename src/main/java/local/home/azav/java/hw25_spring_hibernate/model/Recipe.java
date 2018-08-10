@@ -1,8 +1,7 @@
 package local.home.azav.java.hw25_spring_hibernate.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Класс - рецепт из ингредиентов
@@ -10,7 +9,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "RECIPES")
-public class Recipe {
+public class Recipe implements Serializable {
+
     @Column( name = "DISHESID" )
     private int dishesId;
     @Column( name = "INGREDIENT" )
