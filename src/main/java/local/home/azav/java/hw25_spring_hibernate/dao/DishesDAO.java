@@ -1,22 +1,20 @@
 package local.home.azav.java.hw25_spring_hibernate.dao;
 
 import local.home.azav.java.hw25_spring_hibernate.model.Dish;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
-import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Класс работы с наименованиями блюд
  */
 public class DishesDAO implements IDishesDAO {
-    private DataSource dataSource;
+    private SessionFactory sessionFactory;
 
-    public DishesDAO(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     /**
@@ -24,10 +22,10 @@ public class DishesDAO implements IDishesDAO {
      */
     @Override
     public List<Dish> getAll() {
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        final List<Dish> resultList;
-        resultList = jdbcTemplate.query("Select * from dishes", new DishesDAO.DishesRowMapper());
-        return resultList;
+        Session session = this.sessionFactory.openSession();
+        List<Dish> dishesList = session.createQuery("from DISHES").list();
+        session.close();
+        return dishesList;
     }
 
     /**
@@ -35,9 +33,11 @@ public class DishesDAO implements IDishesDAO {
      */
     @Override
     public List<Dish> getByName(String name) {
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        StringBuilder stringBuilder = new StringBuilder("Select * from dishes where name like '%");
-        return jdbcTemplate.query(stringBuilder.append(name).append("%'").toString(), new DishesRowMapper());
+        StringBuilder stringBuilder = new StringBuilder("from dishes where name like '%").append(name).append("%'");
+        Session session = this.sessionFactory.openSession();
+        List<Dish> dishesList = session.createQuery(stringBuilder.toString()).list();
+        session.close();
+        return dishesList;
     }
 
     /**
@@ -45,34 +45,33 @@ public class DishesDAO implements IDishesDAO {
      */
     @Override
     public Dish getById(int dishesId) {
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        return jdbcTemplate.queryForObject("Select * from dishes where dishesid=?", new DishesRowMapper(),
-                dishesId);
+        try (Session session = this.sessionFactory.openSession()) {
+            return session.get(Dish.class, dishesId);
+        }
     }
 
     /**
      * Добавление нового блюда
      */
     @Override
-    public int insertDish(String newName) {
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        int maxId = jdbcTemplate.queryForObject("Select max(dishesid) as dishesid from dishes", Integer.class);
-        return jdbcTemplate.update("INSERT INTO dishes (dishesid, name) VALUES(?,?)", maxId + 1, newName);
+    public void insertDish(String newName) {
+        Session session = this.sessionFactory.openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.save(new Dish(newName));
+        tx1.commit();
+        session.close();
     }
 
     /**
      * Удаление блюда со всеми ингредиентами
      */
     @Override
-    public int deleteDish(int dishesId) {
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        return jdbcTemplate.update("delete from dishes where dishesid = ?", dishesId);
-    }
-
-    private class DishesRowMapper implements RowMapper<Dish> {
-        public Dish mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Dish(resultSet.getInt("dishesid"),
-                    resultSet.getString("name"));
-        }
+    public void deleteDish(int dishesId) {
+        StringBuilder stringBuilder = new StringBuilder("from dishes where dishesId=").append(dishesId);
+        Session session = this.sessionFactory.openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.delete(stringBuilder.toString(),Dish.class);
+        tx1.commit();
+        session.close();
     }
 }

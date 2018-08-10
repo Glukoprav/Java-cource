@@ -19,10 +19,10 @@ public interface IRecipesDAO {
     /**
      * Добавление ингредиента к блюду по иденту
      */
-    int insertIngredient(int intId, String newName, int intValue);
+    void insertIngredient(int intId, String newName, int intValue);
 
     /**
      * Удаление всех ингредиентов у блюда по иденту
      */
-    int deleteRecipe(int intId);
+    void deleteRecipe(int intId);
 }

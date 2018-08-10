@@ -24,10 +24,10 @@ public interface IDishesDAO {
     /**
      * Добавление нового блюда
      */
-    int insertDish(String newName);
+    void insertDish(String newName);
 
     /**
      * Удаление блюда со всеми ингредиентами
      */
-    int deleteDish(int dishesId);
+    void deleteDish(int dishesId);
 }

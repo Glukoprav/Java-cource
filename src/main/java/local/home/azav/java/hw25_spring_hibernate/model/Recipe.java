@@ -11,6 +11,12 @@ import java.io.Serializable;
 @Table(name = "RECIPES")
 public class Recipe implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column( name = "ID" )
+    private int id;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "DISHESID")
     @Column( name = "DISHESID" )
     private int dishesId;
     @Column( name = "INGREDIENT" )
@@ -18,8 +24,8 @@ public class Recipe implements Serializable {
     @Column( name = "VALUE" )
     private int value;
 
-    public Recipe(String ingredient) {
-        this.ingredient = ingredient;
+
+    public Recipe() {
     }
 
     public Recipe(int dishesId, String ingredient, int value) {

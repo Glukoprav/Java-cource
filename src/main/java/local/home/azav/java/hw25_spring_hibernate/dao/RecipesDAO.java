@@ -5,11 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
-import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -28,9 +24,9 @@ public class RecipesDAO implements IRecipesDAO {
     @Override
     public List<Recipe> getAll() {
         Session session = this.sessionFactory.openSession();
-        List<Recipe> personList = session.createQuery("from RECIPES").list();
+        List<Recipe> recipeListList = session.createQuery("from RECIPES").list();
         session.close();
-        return personList;
+        return recipeListList;
     }
 
     /**
@@ -39,41 +35,34 @@ public class RecipesDAO implements IRecipesDAO {
     @Override
     public List<Recipe> getById(int dishesid) {
         Session session = this.sessionFactory.openSession();
-        List<Recipe> personList = session.createQuery("Select r from recipes r where dishesid= :dishesid", Recipe.class).setParameter("dishesid", dishesid);
-                //session.createSQLQuery("Select * from recipes where dishesid=" + dishesid).list();
+        String str = "Select r from recipes r where dishesid=" + dishesid;
+        List<Recipe> recipeListList = session.createQuery(str).list();
         session.close();
-        return personList;
+        return recipeListList;
     }
 
     /**
      * Добавление ингредиента к блюду по иденту
      */
     @Override
-    public int insertIngredient(int intId, String newName, int intValue) {
-        Recipe recipe = new Recipe(intId,newName,intValue);
+    public void insertIngredient(int intId, String newName, int intValue) {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        session.persist(recipe);
+        session.persist(new Recipe(intId, newName, intValue));
         tx.commit();
         session.close();
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        return jdbcTemplate.update("INSERT INTO recipes (dishesid, ingredient, value) VALUES(?,?,?)", intId, newName, intValue);
     }
 
     /**
      * Удаление всех ингредиентов у блюда по иденту
      */
     @Override
-    public int deleteRecipe(int intId) {
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        return jdbcTemplate.update("delete from recipes where dishesid = ?", intId);
-    }
-
-    private class RecipeRowMapper implements RowMapper<Recipe> {
-        public Recipe mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Recipe(resultSet.getInt("dishesid"),
-                    resultSet.getString("ingredient"),
-                    resultSet.getInt("value"));
-        }
+    public void deleteRecipe(int intId) {
+        StringBuilder stringBuilder = new StringBuilder("from recipes where dishesId=").append(intId);
+        Session session = this.sessionFactory.openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.delete(stringBuilder.toString(),Recipe.class);
+        tx1.commit();
+        session.close();
     }
 }

@@ -1,11 +1,10 @@
 package local.home.azav.java.hw25_spring_hibernate.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -16,10 +15,17 @@ import java.io.Serializable;
 @Table(name = "DISHES")
 public class Dish implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( name = "DISHESID" )
     private int dishesId;
     @Column( name = "NAME" )
     private String name;
+
+//    @OneToMany(mappedBy = "DISHES", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Recipe> recipe;
+
+    public Dish() {
+    }
 
     public Dish(String name) {
         this.name = name;
@@ -28,6 +34,7 @@ public class Dish implements Serializable {
     public Dish(int dishesId, String name) {
         this.dishesId = dishesId;
         this.name = name;
+//        recipe = new ArrayList<>();
     }
 
     public int getDishesId() {
