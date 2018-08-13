@@ -1,24 +1,24 @@
-package local.home.azav.java.hw25_spring_hibernate.dao;
+package local.home.azav.java.hw24_spring_jdbc.dao;
 
-import local.home.azav.java.hw25_spring_hibernate.model.Dish;
-import org.hibernate.SessionFactory;
-import org.junit.Before;
+import local.home.azav.java.hw24_spring_jdbc.model.Dish;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.sql.DataSource;
+
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/springhibernatetest.xml" })
+@ContextConfiguration(locations = {"classpath:/configcontexttest.xml"})
 public class DishesDAOTest {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private DataSource dataSource;
 
     @Autowired
     private DishesDAO dishesDAO;
@@ -26,7 +26,7 @@ public class DishesDAOTest {
     // Проверяем получение контекста
     @Test
     public void testDataSource() {
-        assertNotNull(sessionFactory);
+        assertNotNull(dataSource);
         assertNotNull(dishesDAO);
     }
 
@@ -35,21 +35,25 @@ public class DishesDAOTest {
     public void testGetAll() {
         List<Dish> listDish = dishesDAO.getAll();
         assertNotNull("Список не пуст", listDish);
+//        for (Dish dish : listDish) {
+//            System.out.println(dish);
+//        }
+    }
+
+    // Тест не пустого списка по части имени блюда
+    @Test
+    public void testGetByName() {
+        List<Dish> listDish = dishesDAO.getByName("орн");
+        assertNotNull("Список не пуст", listDish);
         for (Dish dish : listDish) {
             System.out.println(dish);
         }
     }
 
-    // Тест не пустого списка по части имени блюда
-    @Test
-    public void testGetByNameNotNull() {
-        assertNotNull("Список не пуст", dishesDAO.getByName("орн"));
-    }
-
     // Тест соответствия размера списка
     @Test
     public void testGetByNameSize() {
-        assertEquals(3, dishesDAO.getByName("орн").size());
+        assertEquals(2, dishesDAO.getByName("орн").size());
     }
 
     // Тест получения по иденту
@@ -59,10 +63,10 @@ public class DishesDAOTest {
     }
 
     @Test
-    public void insertDish() {
+    public void testInsertDish() {
     }
 
     @Test
-    public void deleteDish() {
+    public void testDeleteDish() {
     }
 }
