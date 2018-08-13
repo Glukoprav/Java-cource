@@ -78,10 +78,11 @@ public class ConfigAndConsole {
         System.out.println("---------------------------");
     }
 
-    private <T> void printList(List<T> list) {
+    <T> int printList(List<T> list) {
         for (T t : list) {
             System.out.println(t.toString());
         }
+        return list.size();
     }
 
     private void searchDishes() {
