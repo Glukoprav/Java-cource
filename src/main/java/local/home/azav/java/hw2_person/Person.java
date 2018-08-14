@@ -1,4 +1,4 @@
-package local.home.azav.java;
+package local.home.azav.java.hw2_person;
 
 public class Person {
     private final boolean man;

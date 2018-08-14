@@ -1,6 +1,6 @@
 package local.home.azav.java.hw6_reflection.gettercounter;
 
-import local.home.azav.java.Person;
+import local.home.azav.java.hw2_person.Person;
 import local.home.azav.java.hw6_reflection.annotationskip.PersonAnnotation;
 import local.home.azav.java.hw6_reflection.annotationskip.Skip;
 import local.home.azav.java.hw6_reflection.proxycache.ProxyCacheGetter;
