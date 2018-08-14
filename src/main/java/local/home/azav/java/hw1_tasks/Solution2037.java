@@ -23,13 +23,11 @@ package local.home.azav.java.hw1_tasks;
 import java.util.*;
 
 public class Solution2037 {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        StringBuilder strin = new StringBuilder(scanner.next());
-        int minWord = scanner.nextInt();
-        if (minWord == 0) {
-            System.out.println(strin.toString());
+    public String sol2037(String strIn, int intIn) {
+        StringBuilder strin = new StringBuilder(strIn);
+        if (intIn == 0) {
+            return strin.toString();
         } else {
             char ch;
             int posLeft = 0;
@@ -48,13 +46,13 @@ public class Solution2037 {
                 ch = strin.charAt(posRight);
                 if (ch != ',') {
                     posRight++;
-                } else if (ch == ',' && (posRight - posLeft) >= minWord) {
+                } else if (ch == ',' && (posRight - posLeft) >= intIn) {
                     posRight++;
                     posLeft = posRight;
                 } else if (ch == ',' && (posRight == posLeft)) {
                     strin.delete(posLeft, posRight + 1);
                     length = strin.length();
-                } else if (ch == ',' && (posRight - posLeft) < minWord) {
+                } else if (ch == ',' && (posRight - posLeft) < intIn) {
                     strin.delete(posLeft, posRight + 1);
                     length = strin.length();
                     posRight = posLeft;
@@ -63,12 +61,20 @@ public class Solution2037 {
             length = strin.length();
             if (length > 0 && strin.charAt(length - 1) == ',') {
                 strin.delete(length - 1, length);
-            } else if (length > 0 && length < minWord) {
+            } else if (length > 0 && length < intIn) {
                 strin.delete(0, length);
-            } else if (length > 0 && length > minWord && (posRight - posLeft) < minWord) {
+            } else if (length > 0 && length > intIn && (posRight - posLeft) < intIn) {
                 strin.delete(posLeft - 1, posRight);
             }
-            System.out.println(strin.toString());
+            return strin.toString();
         }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Solution2037 sol = new Solution2037();
+        String strin = scanner.next();
+        int minWord = scanner.nextInt();
+        System.out.println(sol.sol2037(strin,minWord));
     }
 }
