@@ -37,13 +37,11 @@ public class Main implements Callable<Person> {
         // Распечатаем список значений, полученных потоками
         for (Future<Person> fut : list) {
             try {
-                try {
-                    System.out.println("из Future: " + fut.get());
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-            } catch (InterruptedException e) {
+                System.out.println("из Future: " + fut.get());
+            } catch (ExecutionException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
         executor.shutdown();

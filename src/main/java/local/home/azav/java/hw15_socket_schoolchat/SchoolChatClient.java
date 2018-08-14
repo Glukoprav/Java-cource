@@ -44,7 +44,7 @@ public class SchoolChatClient {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
             // Сидим в цикле и отправляем сообщения серверу, пока не введем "exit"
             clientChat.outputMessage(clientChat, scanner);
@@ -75,11 +75,9 @@ public class SchoolChatClient {
         do {
             System.out.print("[" + loginClient + "] >");
             message = scanner.nextLine();
-            /*(!" ".equals(message) || !"\n".equals(message) || !"\0".equals(message) ||
-                    !"exit".equals(message) || !" \n".equals(message) || message.length() != 0)*/
             if (!"exit".equals(message) || !" ".equals(message) || !"\n".equals(message) || !"\0".equals(message) ||
                     !" \n".equals(message) || message.length() != 0) {
-                outputStream.writeUTF(/*"[" + loginClient + "]" + */message);
+                outputStream.writeUTF(message);
                 outputStream.flush();
             }
         } while (!"exit".equals(message));

@@ -89,9 +89,14 @@ public class ProxyCache implements InvocationHandler {
                 if (Files.exists(Paths.get(strFileName))) {
                     // Если нашли файл - десериализуем
                     Object ks = deserialMethod(strFileName);
-                    result = ((KeySerial) ks).getResult();
-                    String keyMethod = ((KeySerial) ks).getMethod();
-                    System.out.println("Результат из ФАЙЛОВОГО кэша: " + result + ", по ключу: " + keyMethod);
+                    if (ks != null) {
+                        result = ((KeySerial) ks).getResult();
+                        String keyMethod = ((KeySerial) ks).getMethod();
+                        System.out.println("Результат из ФАЙЛОВОГО кэша: " + result + ", по ключу: " + keyMethod);
+                    } else {
+                        System.out.println("Результат из ФАЙЛОВОГО кэша не получилось достать!");
+                        result = null;
+                    }
                 } else {
                     return null;
                 }
@@ -144,9 +149,7 @@ public class ProxyCache implements InvocationHandler {
              ObjectInputStream oin = new ObjectInputStream(fis)) {
             obje = (KeySerial) oin.readObject();
             return obje;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
         return obje = null;
@@ -164,8 +167,6 @@ public class ProxyCache implements InvocationHandler {
              ObjectOutputStream out = new ObjectOutputStream(fos)) {
             out.writeObject(result);
             out.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

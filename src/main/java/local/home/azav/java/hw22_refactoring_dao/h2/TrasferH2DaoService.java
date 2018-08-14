@@ -25,16 +25,16 @@ public class TrasferH2DaoService extends AbstractH2DaoService {
             connection.commit();
             //finally is here
             connection.close();
-        } catch (DaoException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (SQLException | DaoException e) {
             e.printStackTrace();
         } catch (RuntimeException ex) {
-            connection.rollback();
+            if (connection != null) {
+                connection.rollback();
+            }
         }
     }
 
-    protected void changeBalance(final Connection connection, String account, BigDecimal amount) throws SQLException {
+    private void changeBalance(final Connection connection, String account, BigDecimal amount) throws SQLException {
         try (PreparedStatement pstmt = connection.prepareStatement("SELECT balance from BANK.ACCOUNT where number=?",
                 ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);) {
             pstmt.setString(1, account);
