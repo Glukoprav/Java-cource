@@ -43,7 +43,7 @@ public class Solution2034 {
                 } else if (per == 1) {
                     int k = j;
                     while (k < indMass) {
-                        if (mass[k] == (curElem - 1) | mass[k] == curElem) {
+                        if (mass[k] == (curElem - 1) || mass[k] == curElem) {
                             length++;
                             k++;
                         } else {
@@ -55,7 +55,7 @@ public class Solution2034 {
                 } else if (per == -1) {
                     int k = j;
                     while (k < indMass) {
-                        if (mass[k] == (curElem + 1) | mass[k] == curElem) {
+                        if (mass[k] == (curElem + 1) || mass[k] == curElem) {
                             length++;
                             k++;
                         } else {

@@ -463,6 +463,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant02/app/AppClassloader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant02/app/MyAppClassloader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant02/impl/ImplClassloader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/resources/config.xml">
           <value>
             <set />
