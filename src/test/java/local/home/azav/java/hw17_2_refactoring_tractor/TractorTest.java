@@ -1,21 +1,18 @@
-package local.home.azav.java;
+package local.home.azav.java.hw17_2_refactoring_tractor;
 
-import junit.framework.TestCase;
-import local.home.azav.java.hw17_2_refactoring_tractor.Field;
-import local.home.azav.java.hw17_2_refactoring_tractor.Orientation;
-import local.home.azav.java.hw17_2_refactoring_tractor.Tractor;
-import local.home.azav.java.hw17_2_refactoring_tractor.TractorInDitchException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TractorTest extends TestCase {
+import static org.junit.Assert.*;
+
+public class TractorTest {
 
     private static final int FIELD_HEIGHT = 5;
     private static final int FIELD_WIDTH = 5;
 
-    Field field = new Field(FIELD_HEIGHT, FIELD_WIDTH);
+    private Field field = new Field(FIELD_HEIGHT, FIELD_WIDTH);
 
-    Tractor tractor;
+    private Tractor tractor;
 
     @Before
     public void setUp() {
@@ -24,14 +21,14 @@ public class TractorTest extends TestCase {
     }
 
     @Test
-    public void testShouldMoveForward(){
+    public void testShouldMoveForward() {
         tractor.move("F");
         assertEquals(0, tractor.getPositionX());
         assertEquals(1, tractor.getPositionY());
     }
 
     @Test
-    public void testShouldTurn(){
+    public void testShouldTurn() {
         tractor.move("T");
         assertEquals(Orientation.EAST, tractor.getOrientation());
         tractor.move("T");
@@ -43,7 +40,7 @@ public class TractorTest extends TestCase {
     }
 
     @Test
-    public void testShouldTurnAndMoveInTheRightDirection(){
+    public void testShouldTurnAndMoveInTheRightDirection() {
         tractor.move("F");
         tractor.move("T");
         tractor.move("F");
@@ -64,16 +61,16 @@ public class TractorTest extends TestCase {
     }
 
     @Test
-    public void testShouldThrowExceptionIfFallsOffPlateau(){
+    public void testShouldThrowExceptionIfFallsOffPlateau() {
         tractor.move("F");
         tractor.move("F");
         tractor.move("F");
         tractor.move("F");
         tractor.move("F");
-        try{
+        try {
             tractor.move("F");
             fail("Tractor was expected to fall off the plateau");
-        }catch(TractorInDitchException expected){
+        } catch (TractorInDitchException expected) {
         }
     }
 }
