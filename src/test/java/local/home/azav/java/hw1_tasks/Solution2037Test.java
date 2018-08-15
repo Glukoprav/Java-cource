@@ -1,13 +1,13 @@
-package local.home.azav.java;
+package local.home.azav.java.hw1_tasks;
 
 import local.home.azav.java.hw1_tasks.Solution2037;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public class SolutionTest {
+// Тест для задачи 2037
+public class Solution2037Test {
     private Solution2037 sol;
 
-// Тест для задачи 2037
     @Before
     public void initTest() {
         Solution2037 sol = new Solution2037();
