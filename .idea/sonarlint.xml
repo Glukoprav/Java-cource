@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
-    <option name="projectKey" value="" />
+    <option name="projectKey" value="local.home.azav.java:firstproject" />
     <option name="serverId" value="AzavJava" />
   </component>
 </project>

@@ -3,10 +3,7 @@ package local.home.azav.java.hw22_refactoring_dao.h2;
 import local.home.azav.java.hw22_refactoring_dao.domen.Account;
 import local.home.azav.java.hw22_refactoring_dao.exceptions.DaoException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +15,10 @@ public class AccountH2DaoService extends AbstractH2DaoService implements Account
     @Override
     public List<Account> getAccountByNumber(Integer personId) throws DaoException {
         try (Connection connection = getConnection(CONNECT_URL);
-             Statement statement = connection.createStatement()) {
+             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM BANK.ACCOUNT WHERE person_id = ?")) {
             List<Account> accounts;
-            try (ResultSet rs = statement.executeQuery("SELECT * FROM BANK.ACCOUNT WHERE person_id=" + personId)) {
+            prepStatement.setInt(1, personId);
+            try (ResultSet rs = prepStatement.executeQuery()) {
                 accounts = new ArrayList<>();
                 while (rs.next()) {
                     Account account = new Account();

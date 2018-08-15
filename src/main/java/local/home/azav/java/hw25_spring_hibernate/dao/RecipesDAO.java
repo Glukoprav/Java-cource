@@ -1,10 +1,10 @@
 package local.home.azav.java.hw25_spring_hibernate.dao;
 
 import local.home.azav.java.hw25_spring_hibernate.model.Recipe;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
@@ -35,10 +35,11 @@ public class RecipesDAO implements IRecipesDAO {
     @Override
     public List<Recipe> getById(int dishesid) {
         Session session = this.sessionFactory.openSession();
-        String str = "Select r from Recipe r where dishesid=" + dishesid;
-        List<Recipe> recipeListList = session.createQuery(str).list();
+        Query query = session.createQuery("Select r from Recipe r where dishesid=?");
+        query = query.setParameter(0,dishesid);
+        List<Recipe> recipeList = query.list();
         session.close();
-        return recipeListList;
+        return recipeList;
     }
 
     /**

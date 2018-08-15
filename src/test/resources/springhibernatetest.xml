@@ -11,8 +11,8 @@
         <property name="driverClassName" value="org.h2.Driver"/>
         <!--<property name="url" value="jdbc:h2:~/recipes.db" />-->
         <!--<property name="url" value="jdbc:h2:c:\Users\Azav\IdeaProjects\Java-cource\src\main\resources\recipeshibernate.db" />-->
-        <property name="url" value="jdbc:h2:C:\Users\Azav\IdeaProjects\Java-cource\src\test\resources\recipeshibernatetest.db" />
-        <!--<property name="url" value="jdbc:h2:C:\Documents and Settings\andreyz\IdeaProjects\firstproject\src\test\resources\recipeshibernatetest.db" />-->
+        <!--<property name="url" value="jdbc:h2:C:\Users\Azav\IdeaProjects\Java-cource\src\test\resources\recipeshibernatetest.db" />-->
+        <property name="url" value="jdbc:h2:C:\Documents and Settings\andreyz\IdeaProjects\firstproject\src\test\resources\recipeshibernatetest.db" />
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
