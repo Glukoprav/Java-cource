@@ -18,11 +18,6 @@
             <set />
           </value>
         </entry>
-        <entry key="$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar!/org/junit/Assert.class">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/5.0.1.Final/hibernate-core-5.0.1.Final.jar!/org/hibernate/Session.class">
           <value>
             <set />
@@ -488,31 +483,6 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw5_terminal/IOTerminal.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw5_terminal/PinValidator.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw5_terminal/Terminal.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw5_terminal/TerminalImpl.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw5_terminal/TerminalServer.java">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant02/app/AppClassloader.java">
           <value>
             <set />
@@ -588,6 +558,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw22_jdbc/TaskJDBCTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw24_spring_jdbc/ConfigAndConsoleTest.java">
           <value>
             <set />
@@ -623,32 +598,12 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw2_person/MainPersonTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw2_person/PersonTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw5_terminal/AccountIsLockedExceptionTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw5_terminal/IOTerminalTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw5_terminal/PinValidatorTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw5_terminal/TerminalImplTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw5_terminal/TerminalServerTest.java">
           <value>
             <set />
           </value>

@@ -87,8 +87,8 @@ public class PersonTest {
     @Test
     public void testPersonToString() {
         person1 = new Person(true, "Вася");
-        person2 = new Person(false, "Маша");
+        person2 = new Person(false, "Маша",17);
         assertEquals("Мужчина( имя= Вася, возраст=18, холост.)", person1.toString());
-        assertEquals("Женщина( имя= Маша, возраст=18, не замужем.)", person2.toString());
+        assertEquals("Женщина( имя= Маша, возраст=17, не замужем.)", person2.toString());
     }
 }

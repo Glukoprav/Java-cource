@@ -8,12 +8,11 @@ import java.sql.*;
 import static org.junit.Assert.*;
 
 public class TaskJDBCTest {
-    TaskJDBC taskJDBC;
+    private TaskJDBC taskJDBC;
 
     @Before
     public void setUp() {
         taskJDBC = new TaskJDBC();
-
     }
 
     @Test
@@ -30,5 +29,10 @@ public class TaskJDBCTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testConnectAndQuery() {
+        assertEquals(7, taskJDBC.connectAndQuery(taskJDBC));
     }
 }
