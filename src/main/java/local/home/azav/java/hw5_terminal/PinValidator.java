@@ -10,7 +10,6 @@ class PinValidator {
 
     PinValidator() {
         listAccPin = new TreeMap<>();
-
         // Составляем список аккаунтов для теста
         listAccPin.put(12345, BigDecimal.valueOf(1234));
         listAccPin.put(12346, BigDecimal.valueOf(1235));

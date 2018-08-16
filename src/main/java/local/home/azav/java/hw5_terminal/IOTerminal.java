@@ -9,6 +9,7 @@ import java.util.Scanner;
  */
 class IOTerminal {
     private Scanner scanner;
+    private final String ERRINPUT = "Ошибка ввода!";
 
     IOTerminal() {
         scanner = new Scanner(System.in);
@@ -39,7 +40,7 @@ class IOTerminal {
         try {
             return scanner.nextInt();
         } catch (InputMismatchException e) {
-            outErr("Ошибка ввода!");
+            outErr(ERRINPUT);
             scanner.nextLine();
             return 0;
         }
@@ -53,7 +54,7 @@ class IOTerminal {
         try {
             return scanner.nextInt();
         } catch (InputMismatchException e) {
-            outErr("Ошибка ввода!");
+            outErr(ERRINPUT);
             scanner.nextLine();
             return 0;
         }
@@ -72,7 +73,7 @@ class IOTerminal {
         try {
             return scanner.nextInt();
         } catch (InputMismatchException e) {
-            outErr("Ошибка ввода!");
+            outErr(ERRINPUT);
             scanner.nextLine();
             return 0;
         }
@@ -84,10 +85,9 @@ class IOTerminal {
     int inTerSum() {
         outTer("Введите сумму, кратную 100: ");
         try {
-            int intSum = scanner.nextInt();
-            return intSum;
+            return scanner.nextInt();
         } catch (InputMismatchException e) {
-            outErr("Ошибка ввода!");
+            outErr(ERRINPUT);
             clearLine();
             return 0;
         }

@@ -11,7 +11,7 @@ public class TerminalServer {
     // Хранение сумм по аккаунтам
     private Map<Integer, BigDecimal> listAccSumm;
 
-    private TerminalServer() {
+    TerminalServer() {
         listAccSumm = new TreeMap<>();
 
         // Составляем список аккаунтов с суммами для теста
@@ -35,8 +35,13 @@ public class TerminalServer {
     /**
      * Возвращает размер суммы для указанного аккаунта
      */
-    BigDecimal sumAccount(int account) {
-        return listAccSumm.get(account);
+    BigDecimal sumAccount(int account) throws NoSuchFieldException {
+        if (listAccSumm.containsKey(account)) {
+            return listAccSumm.get(account);
+        } else {
+            throw new NoSuchFieldException();
+        }
+
     }
 
     /**

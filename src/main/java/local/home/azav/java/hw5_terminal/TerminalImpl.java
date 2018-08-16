@@ -35,12 +35,11 @@ public class TerminalImpl implements Terminal {
      * Возвращает true, если денег хватает, сумма кратна 100 и снятие прошло нормально.
      */
     @Override
-    public boolean withdrawMoney() throws NoSuchFieldException {
+    public boolean withdrawMoney(int sum) throws NoSuchFieldException {
         if (!checkAuthentication()) {
             throw new NoSuchFieldException();
         }
-        int sum = ioter.inTerSum();
-        if (sum%100 != 0) {
+        if (sum % 100 != 0) {
             ioter.outBadSum(sum);
             return false;
         }
@@ -61,12 +60,11 @@ public class TerminalImpl implements Terminal {
      * Возвращает true, если сумма кратна 100 и зачисление прошло нормально.
      */
     @Override
-    public boolean putMoney() throws NoSuchFieldException {
+    public boolean putMoney(int sum) throws NoSuchFieldException {
         if (!checkAuthentication()) {
             throw new NoSuchFieldException();
         }
-        int sum = ioter.inTerSum();
-        if (sum%100 != 0) {
+        if (sum % 100 != 0) {
             ioter.outBadSum(sum);
             return false;
         }
@@ -84,19 +82,19 @@ public class TerminalImpl implements Terminal {
         }
     }
 
-    private int getCurrentAccount() {
+    protected int getCurrentAccount() {
         return currentAccountT;
     }
 
-    private void setCurrentAccount(int currentAccount) {
+    protected void setCurrentAccount(int currentAccount) {
         this.currentAccountT = currentAccount;
     }
 
-    private int getCurrentPin() {
+    protected int getCurrentPin() {
         return currentPinT;
     }
 
-    private void setCurrentPin(int currentPin) {
+    protected void setCurrentPin(int currentPin) {
         this.currentPinT = currentPin;
     }
 
@@ -145,59 +143,44 @@ public class TerminalImpl implements Terminal {
             } catch (Exception e) {
                 ioter.outErrIncom(e.getCause() + " " + e.getMessage());
             }
-        } while (boo == false && count < 3);
-        if ((boo == false && count == 3)) {            // при 3 неудачных попытках - блокируем ввод
+        } while (!boo && count < 3);
+        if ((!boo && count == 3)) {            // при 3 неудачных попытках - блокируем ввод
             // лочим аккаунт на 5 сек.
-            long start = System.currentTimeMillis();
-            long end, traceTime = 0;
-            do {
-                try {
-                    ioter.blocked();
-                } catch (AccountIsLockedException e) {
-                    end = System.currentTimeMillis();
-                    traceTime = end - start;
-                    ioter.outBlock(6 - traceTime / 1000);
-                    ioter.clearLine();
-                }
-            } while (traceTime < 5000);
+            lockCheckPin();
         }
         return boo;
+    }
+
+    // лочим аккаунт на 5 сек.
+    private void lockCheckPin() {
+        long start = System.currentTimeMillis();
+        long end;
+        long traceTime = 0;
+        do {
+            try {
+                ioter.blocked();
+            } catch (AccountIsLockedException e) {
+                end = System.currentTimeMillis();
+                traceTime = end - start;
+                ioter.outBlock(6 - traceTime / 1000);
+                ioter.clearLine();
+            }
+        } while (traceTime < 5000);
     }
 
     /**
      * Обработчик операций
      */
     void operationHandler() throws NoSuchFieldException {
-        int account = 99999;
-        //int pin = 9999;
-        int oper = 99;
+        int account;
+        int oper;
         do {
             account = ioter.inTerAcc();                         // запрос аккаунта
             if (checkAcc(account)) {                            // проверяем наличие аккаунта
                 if (checkPin(account)) {                        // проверяем pin
                     do {
                         oper = ioter.inTerOper();               // запрос операции
-                        switch (oper) {
-                            case 1:                             // проверить остаток
-                                ioter.outSumAkk(checkSumAccount().toString());
-                                break;
-                            case 2:                             // снять деньги
-                                if (withdrawMoney()) {
-                                    ioter.outOk();
-                                }
-                                break;
-                            case 3:                             // положить деньги
-                                if (putMoney()) {
-                                    ioter.outSumAkk(checkSumAccount().toString());
-                                }
-                                break;
-                            case 99:                            // выход из операций
-                                ioter.outOk();
-                                break;
-                            default:
-                                ioter.outRep();
-                                break;
-                        }
+                        operSwitch(oper);
                     } while (oper != 99);
                 }
             }
@@ -205,5 +188,29 @@ public class TerminalImpl implements Terminal {
             setCurrentAccount(99999);
         } while (account != 99999);
         ioter.outOk();
+    }
+
+    private void operSwitch(int oper) throws NoSuchFieldException {
+        switch (oper) {
+            case 1:                             // проверить остаток
+                ioter.outSumAkk(checkSumAccount().toString());
+                break;
+            case 2:                             // снять деньги
+                if (withdrawMoney(ioter.inTerSum())) {
+                    ioter.outOk();
+                }
+                break;
+            case 3:                             // положить деньги
+                if (putMoney(ioter.inTerSum())) {
+                    ioter.outSumAkk(checkSumAccount().toString());
+                }
+                break;
+            case 99:                            // выход из операций
+                ioter.outOk();
+                break;
+            default:
+                ioter.outRep();
+                break;
+        }
     }
 }
