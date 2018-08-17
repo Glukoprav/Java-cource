@@ -1,17 +1,17 @@
 package local.home.azav.java.hw17_2_refactoring_tractor;
 
-public class Tractor {
+class Tractor {
 
     private int posX = 0;
     private int posY = 0;
     private final Field field;
     Orientation orientation = Orientation.NORTH;
 
-    public Tractor(Field field) {
+    Tractor(Field field) {
         this.field = field;
     }
 
-    public void move(String command) {
+    void move(String command) {
         switch (command) {
             case "F":
                 moveForwards();
@@ -24,7 +24,7 @@ public class Tractor {
         }
     }
 
-    public void moveForwards() {
+    void moveForwards() {
         switch (orientation) {
             case NORTH:
                 posY++;
@@ -42,7 +42,7 @@ public class Tractor {
         checkCorrectNewPosition();
     }
 
-    public void turnClockwise() {
+    void turnClockwise() {
         switch (orientation) {
             case NORTH:
                 orientation = Orientation.EAST;
