@@ -15,17 +15,21 @@ package local.home.azav.java.hw1_tasks;
 import java.util.Scanner;
 
 public class Solution2019 {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        int book = scanner.nextInt();
+    int sol2019 (int book) {
         int polka = 1;
         int sum = 1;
         while (book > sum) {
             polka++;
             sum += polka;
         }
-        System.out.println(polka);
+        return polka;
+    }
+
+    public static void main(String[] args) {
+        Solution2019 sol = new Solution2019();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(sol.sol2019(scanner.nextInt()));
     }
 }
 

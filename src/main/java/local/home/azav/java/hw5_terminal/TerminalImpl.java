@@ -73,7 +73,7 @@ public class TerminalImpl implements Terminal {
         return true;
     }
 
-    private boolean checkAuthentication() {
+    boolean checkAuthentication() {
         if (getCurrentAccount() != 0 && getCurrentAccount() != 99999 &&
                 getCurrentPin() != 0 && getCurrentPin() != 9999) {
             return true;
@@ -82,26 +82,26 @@ public class TerminalImpl implements Terminal {
         }
     }
 
-    protected int getCurrentAccount() {
+    int getCurrentAccount() {
         return currentAccountT;
     }
 
-    protected void setCurrentAccount(int currentAccount) {
+    void setCurrentAccount(int currentAccount) {
         this.currentAccountT = currentAccount;
     }
 
-    protected int getCurrentPin() {
+    int getCurrentPin() {
         return currentPinT;
     }
 
-    protected void setCurrentPin(int currentPin) {
+    void setCurrentPin(int currentPin) {
         this.currentPinT = currentPin;
     }
 
     /**
      * Проверяет наличие аккаунта на сервере TerminalServer
      */
-    private boolean checkAcc(int acc) {
+    boolean checkAcc(int acc) {
         if (acc == 99999) {
             return false;
         }
@@ -125,7 +125,7 @@ public class TerminalImpl implements Terminal {
      * Проверяет правильность pin аккаунта у PinValidator
      * После 3 неправильных вводов PIN - блокирует ввод на 5 сек.
      */
-    private boolean checkPin(int account) {
+    boolean checkPin(int account) {
         int count = 0;
         boolean boo = false;
         do {
@@ -152,7 +152,7 @@ public class TerminalImpl implements Terminal {
     }
 
     // лочим аккаунт на 5 сек.
-    private void lockCheckPin() {
+    void lockCheckPin() {
         long start = System.currentTimeMillis();
         long end;
         long traceTime = 0;

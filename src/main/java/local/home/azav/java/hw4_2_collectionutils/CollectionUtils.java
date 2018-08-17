@@ -1,6 +1,8 @@
 package local.home.azav.java.hw4_2_collectionutils;
 
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
@@ -10,6 +12,13 @@ public class CollectionUtils<T> implements Comparable<T> {
     private List<? extends T> listin;
     private T tin;
 
+    public T getTin() {
+        return tin;
+    }
+
+    public void setTin(T tin) {
+        this.tin = tin;
+    }
 
     public static <T> void addAll(List<? extends T> source, List<? super T> destination) {
         destination.addAll(source);
@@ -53,7 +62,7 @@ public class CollectionUtils<T> implements Comparable<T> {
         return boo;
     }
 
-    // Переопределенный метод от интерфейса Comparable
+    // Переопределенный метод от интерфейса Comparable   @NotNull
     @Override
     public int compareTo(T t) {
         if (this.tin.hashCode() > t.hashCode()) {

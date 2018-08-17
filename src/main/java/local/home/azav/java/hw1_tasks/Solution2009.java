@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class Solution2009 {
 
-    public long sol2009(int numInt, int[] massInt) {
+    long sol2009(int numInt, int[] massInt) {
         long sum = 0;
         int step = 1;
         for (int i = 1; i <= numInt; i++) {
@@ -34,7 +34,6 @@ public class Solution2009 {
         Scanner scanner = new Scanner(System.in);
 
         int count = scanner.nextInt();
-        int sum = 0;
         int [] massInt = new int[count];
         for (int i = 0; i < count; i++) {
             massInt[i] = scanner.nextInt();

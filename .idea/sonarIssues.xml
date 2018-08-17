@@ -483,6 +483,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw4_2_collectionutils/CollectionUtils.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw5_terminal/TerminalImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant02/app/AppClassloader.java">
           <value>
             <set />
@@ -548,6 +558,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw1_tasks/Solution2019Test.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw1_tasks/Solution2037Test.java">
           <value>
             <set />
@@ -604,6 +619,21 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw2_person/PersonTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw4_2_collectionutils/CollectionUtilsTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw5_terminal/TerminalImplTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw5_terminal/TerminalServerTest.java">
           <value>
             <set />
           </value>
