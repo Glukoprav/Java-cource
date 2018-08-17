@@ -1,8 +1,5 @@
 package local.home.azav.java.hw4_2_collectionutils;
 
-
-import com.sun.istack.internal.NotNull;
-
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
