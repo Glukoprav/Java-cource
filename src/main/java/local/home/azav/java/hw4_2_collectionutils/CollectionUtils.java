@@ -9,46 +9,46 @@ public class CollectionUtils<T> implements Comparable<T> {
     private List<? extends T> listin;
     private T tin;
 
-    public T getTin() {
+    T getTin() {
         return tin;
     }
 
-    public void setTin(T tin) {
+    void setTin(T tin) {
         this.tin = tin;
     }
 
-    public static <T> void addAll(List<? extends T> source, List<? super T> destination) {
+    static <T> void addAll(List<? extends T> source, List<? super T> destination) {
         destination.addAll(source);
     }
 
-    public static <T> List<T> newArrayList() {
+    static <T> List<T> newArrayList() {
         return new ArrayList<>();
     }
 
-    public static <T> int indexOf(List<? extends T> source, T o) {
+    static <T> int indexOf(List<? extends T> source, T o) {
         return source.indexOf(o);
     }
 
     // Ограничил список заданным размером через Stream API
-    public static <T> List limit(List<? extends T> source, int size) {
+    static <T> List limit(List<? extends T> source, int size) {
         return source.stream().limit(size).collect(toList());
     }
 
-    public static <T> void add(List<T> source, T o) {
+    static <T> void add(List<T> source, T o) {
         source.add(o);
     }
 
-    public static <T> void removeAll(List<? extends T> removeFrom, List<? extends T> c2) {
+    static <T> void removeAll(List<? extends T> removeFrom, List<? extends T> c2) {
         removeFrom.removeAll(c2);
     }
 
     // true если первый лист содержит все элементы второго
-    public static <T> boolean containsAll(List<? extends T> c1, List<? extends T> c2) {
+    static <T> boolean containsAll(List<? extends T> c1, List<? extends T> c2) {
         return c1.containsAll(c2);
     }
 
     // true если первый лист содержит хотя-бы 1 второго
-    public static <T> boolean containsAny(List<? extends T> c1, List<? extends T> c2) {
+    static <T> boolean containsAny(List<? extends T> c1, List<? extends T> c2) {
         boolean boo = false;
         for (T ter : c2) {
             if (c1.contains(ter)) {
@@ -74,7 +74,7 @@ public class CollectionUtils<T> implements Comparable<T> {
     // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
     // Элементы сравнивать через Comparable.
     // implements Comparable<T>
-    public static <T extends Comparable<? super T>> List range(List<T> list, T min, T max) {
+    static <T extends Comparable<? super T>> List range(List<T> list, T min, T max) {
         List<T> listout;
         Collections.sort(list);
         int indMin = list.indexOf(min);
@@ -85,7 +85,7 @@ public class CollectionUtils<T> implements Comparable<T> {
 
     // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
     // Элементы сравнивать через переданный Comparator
-    public static <T> List range(List<T> list, T min, T max, Comparator<T> comparator) {
+    static <T> List range(List<T> list, T min, T max, Comparator<T> comparator) {
         List<T> listout;
         list.sort(comparator);
         int indMin = list.indexOf(min);
@@ -96,7 +96,7 @@ public class CollectionUtils<T> implements Comparable<T> {
 
     // Возвращает лист, содержащий элементы из входного листа в диапазоне от min до max.
     // Вариант со Stream API
-    public static <T> List rangeStream(List<T> list, T min, T max) {
+    static <T> List rangeStream(List<T> list, T min, T max) {
         return list.stream()
                 .filter(o -> o.hashCode() >= min.hashCode() && o.hashCode() <= max.hashCode())
                 .sorted()
