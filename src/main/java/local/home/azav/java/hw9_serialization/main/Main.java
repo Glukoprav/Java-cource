@@ -11,6 +11,11 @@ import java.lang.reflect.Proxy;
  * Класс проверки работы кэширующего и сериализованного прокси
  */
 public class Main {
+
+    private static void outer(long str) {
+        System.out.println("Результат: " + str);
+    }
+
     public static void main(String[] args) {
         ServiceImpl sgc = new ServiceImpl();
         InvocationHandler handler = new ProxyCache(sgc);
@@ -20,24 +25,24 @@ public class Main {
                         new Class[]{Service.class},
                         handler);
         // Кэш в файле c расширением .ssk
-        System.out.println("Результат: " + proxy.doHardWork01(100));
-        System.out.println("Результат: " + proxy.doHardWork01(200));
-        System.out.println("Результат: " + proxy.doHardWork01(100));
+        outer(proxy.doHardWork01(100));
+        outer(proxy.doHardWork01(200));
+        outer(proxy.doHardWork01(100));
         // В память
-        System.out.println("Результат: " + proxy.doHardWork02(300));
-        System.out.println("Результат: " + proxy.doHardWork02(400));
-        System.out.println("Результат: " + proxy.doHardWork02(300));
+        outer(proxy.doHardWork02(300));
+        outer(proxy.doHardWork02(400));
+        outer(proxy.doHardWork02(300));
         // В память
-        System.out.println("Результат: " + proxy.doHardWork03(500));
-        System.out.println("Результат: " + proxy.doHardWork03(600));
-        System.out.println("Результат: " + proxy.doHardWork03(500));
-        System.out.println("Результат: " + proxy.doHardWork03(0));
-        System.out.println("Результат: " + proxy.doHardWork03(-10));
-        System.out.println("Результат: " + proxy.doHardWork03(-10));
+        outer(proxy.doHardWork03(500));
+        outer(proxy.doHardWork03(600));
+        outer(proxy.doHardWork03(500));
+        outer(proxy.doHardWork03(0));
+        outer(proxy.doHardWork03(-10));
+        outer(proxy.doHardWork03(-10));
 
         // Кэш в файле c расширением .sdd
-        System.out.println("Результат: " + proxy.doHardWork04(-100));
-        System.out.println("Результат: " + proxy.doHardWork04(200));
-        System.out.println("Результат: " + proxy.doHardWork04(-100));
+        outer(proxy.doHardWork04(-100));
+        outer(proxy.doHardWork04(200));
+        outer(proxy.doHardWork04(-100));
     }
 }

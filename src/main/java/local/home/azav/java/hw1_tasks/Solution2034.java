@@ -23,10 +23,10 @@ package local.home.azav.java.hw1_tasks;
 import java.util.*;
 
 public class Solution2034 {
-    private int indMass;
-    private int[] mass;
+    int indMass;
+    int[] mass;
 
-    private int[] sol2034() {
+    int[] sol2034() {
         int[] massLength = new int[indMass];
         for (int i = 0; i < indMass; i++) {
             int length = 0;
@@ -58,7 +58,7 @@ public class Solution2034 {
         return new int[]{pos + 1, pos + li + 1};
     }
 
-    private int curElemWhile(int length, int j, int curElem, int curElemPer) {
+    int curElemWhile(int length, int j, int curElem, int curElemPer) {
         int k = j;
         while (k < indMass) {
             if (mass[k] == (curElem - 1) || mass[k] == curElem) {

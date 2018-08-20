@@ -513,6 +513,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw6_reflection/gettercounter/GetterCounter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw6_reflection/gettercounter/SimpleGetterCounter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant02/app/AppClassloader.java">
           <value>
             <set />
@@ -524,6 +534,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant02/impl/ImplClassloader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw9_serialization/main/Main.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw9_serialization/proxycache/KeySerial.java">
           <value>
             <set />
           </value>
@@ -574,6 +594,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw1_tasks/Solution2009Test.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw1_tasks/Solution2034Test.java">
           <value>
             <set />
           </value>
