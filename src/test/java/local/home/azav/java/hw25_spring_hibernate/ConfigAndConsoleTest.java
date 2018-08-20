@@ -36,6 +36,16 @@ public class ConfigAndConsoleTest {
         List<Recipe> recipeList = recipesDAO.getAll();
         assertEquals(13,configAndConsole.printList(recipeList));
     }
+
+    @Test
+    public void menuConsole() {
+        configAndConsole.menuConsole();
+    }
+
+    @Test
+    public void printAllDishes() {
+        configAndConsole.printAllDishes();
+    }
 }
 
 //    @Mock

@@ -59,7 +59,7 @@ public class ConfigAndConsole {
         }
     }
 
-    private void menuConsole() {
+    void menuConsole() {
         System.out.println("--------Меню---------\n" +
                 "1. Список блюд.\n" +
                 "2. Поиск по наименованию блюда.\n" +
@@ -71,7 +71,7 @@ public class ConfigAndConsole {
                 "\nВведите пункт меню: ");
     }
 
-    private void printAllDishes() {
+    void printAllDishes() {
         System.out.println("------- Список блюд -------");
         printList(dishesDAO.getAll());
         System.out.println("---------------------------");

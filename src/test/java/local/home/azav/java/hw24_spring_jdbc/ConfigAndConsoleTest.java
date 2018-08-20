@@ -28,13 +28,27 @@ public class ConfigAndConsoleTest {
     @Test
     public void testgetByListDish() {
         List<Dish> dishList = dishesDAO.getAll();
-        assertEquals(3,configAndConsole.printList(dishList));
+        assertEquals(3, configAndConsole.printList(dishList));
     }
 
     @Test
     public void testgetByListRecip() {
         List<Recipe> recipeList = recipesDAO.getAll();
-        assertEquals(10,configAndConsole.printList(recipeList));
+        assertEquals(10, configAndConsole.printList(recipeList));
     }
 
+    @Test
+    public void menuConsole() {
+        configAndConsole.menuConsole();
+    }
+
+    @Test
+    public void printAllDishes() {
+        configAndConsole.printAllDishes();
+    }
+
+//    @Test
+//    public void searchDishes() {
+//        configAndConsole.searchDishes();
+//    }
 }
