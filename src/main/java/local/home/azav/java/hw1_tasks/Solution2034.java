@@ -23,15 +23,10 @@ package local.home.azav.java.hw1_tasks;
 import java.util.*;
 
 public class Solution2034 {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    private int indMass;
+    private int[] mass;
 
-        int indMass = scanner.nextInt();
-        int[] mass = new int[indMass];
-        for (int i = 0; i < indMass; i++) {
-            mass[i] = scanner.nextInt();
-        }
-
+    private int[] sol2034() {
         int[] massLength = new int[indMass];
         for (int i = 0; i < indMass; i++) {
             int length = 0;
@@ -41,28 +36,10 @@ public class Solution2034 {
                 if (per == 0) {
                     length++;
                 } else if (per == 1) {
-                    int k = j;
-                    while (k < indMass) {
-                        if (mass[k] == (curElem - 1) || mass[k] == curElem) {
-                            length++;
-                            k++;
-                        } else {
-                            break;
-                        }
-                    }
-                    massLength[i] = length;
+                    massLength[i] = curElemWhile(length, j, curElem, curElem - 1);
                     break;
                 } else if (per == -1) {
-                    int k = j;
-                    while (k < indMass) {
-                        if (mass[k] == (curElem + 1) || mass[k] == curElem) {
-                            length++;
-                            k++;
-                        } else {
-                            break;
-                        }
-                    }
-                    massLength[i] = length;
+                    massLength[i] = curElemWhile(length, j, curElem, curElem + 1);
                     break;
                 } else {
                     break;
@@ -78,7 +55,34 @@ public class Solution2034 {
                 li = massLength[i];
             }
         }
-        System.out.println(pos + 1);
-        System.out.println(pos + li + 1);
+        return new int[]{pos + 1, pos + li + 1};
+    }
+
+    private int curElemWhile(int length, int j, int curElem, int curElemPer) {
+        int k = j;
+        while (k < indMass) {
+            if (mass[k] == (curElem - 1) || mass[k] == curElem) {
+                length++;
+                k++;
+            } else {
+                break;
+            }
+        }
+        return length;
+    }
+
+    public static void main(String[] args) {
+        Solution2034 sol = new Solution2034();
+        Scanner scanner = new Scanner(System.in);
+
+        sol.indMass = scanner.nextInt();
+        sol.mass = new int[sol.indMass];
+        for (int i = 0; i < sol.indMass; i++) {
+            sol.mass[i] = scanner.nextInt();
+        }
+        int[] massResult = sol.sol2034();
+
+        System.out.println(massResult[0]);
+        System.out.println(massResult[1]);
     }
 }

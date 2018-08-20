@@ -22,7 +22,7 @@ public class TaskJDBCTest {
 
     @Test
     public void testPrintUserOrderItem() {
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
+        try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Documents and Settings/andreyz/IdeaProjects/firstproject/src/test/java/local/home/azav/java/hw22_jdbc/test", "sa", "");
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("select * from user_order_item order by date_order");) {
             assertEquals(20, taskJDBC.printUserOrderItem(resultSet));
@@ -34,5 +34,11 @@ public class TaskJDBCTest {
     @Test
     public void testConnectAndQuery() {
         assertEquals(7, taskJDBC.connectAndQuery(taskJDBC));
+    }
+
+    @Test
+    public void main() {
+        String[] arg = new String[] {};
+        TaskJDBC.main(arg);
     }
 }

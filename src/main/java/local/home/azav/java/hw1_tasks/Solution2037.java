@@ -23,22 +23,17 @@ package local.home.azav.java.hw1_tasks;
 import java.util.*;
 
 public class Solution2037 {
+    int intIn = 0;
+    StringBuilder strin;
 
-    public String sol2037(String strIn, int intIn) {
-        StringBuilder strin = new StringBuilder(strIn);
+    String sol2037() {
         if (intIn == 0) {
             return strin.toString();
         } else {
             char ch;
             int posLeft = 0;
             int posRight = 0;
-            while (strin.charAt(posRight) == ',') {
-                posRight++;
-                if (posRight == strin.length()) {
-                    break;
-                }
-            }
-            strin.delete(posLeft, posRight);
+            selectComma(posLeft, posRight);
             posLeft = 0;
             posRight = 0;
             int length = strin.length();
@@ -58,23 +53,37 @@ public class Solution2037 {
                     posRight = posLeft;
                 }
             }
-            length = strin.length();
-            if (length > 0 && strin.charAt(length - 1) == ',') {
-                strin.delete(length - 1, length);
-            } else if (length > 0 && length < intIn) {
-                strin.delete(0, length);
-            } else if (length > 0 && length > intIn && (posRight - posLeft) < intIn) {
-                strin.delete(posLeft - 1, posRight);
-            }
-            return strin.toString();
+            return strInProc(posLeft, posRight);
         }
+    }
+
+    void selectComma(int posLeft, int posRight) {
+        while (strin.charAt(posRight) == ',') {
+            posRight++;
+            if (posRight == strin.length()) {
+                break;
+            }
+        }
+        strin.delete(posLeft, posRight);
+    }
+
+    String strInProc(int posLeft, int posRight){
+        int length = strin.length();
+        if (length > 0 && strin.charAt(length - 1) == ',') {
+            strin.delete(length - 1, length);
+        } else if (length > 0 && length < intIn) {
+            strin.delete(0, length);
+        } else if (length > 0 && length > intIn && (posRight - posLeft) < intIn) {
+            strin.delete(posLeft - 1, posRight);
+        }
+        return strin.toString();
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Solution2037 sol = new Solution2037();
-        String strin = scanner.next();
-        int minWord = scanner.nextInt();
-        System.out.println(sol.sol2037(strin,minWord));
+        sol.strin = new StringBuilder(scanner.next());
+        sol.intIn = scanner.nextInt();
+        System.out.println(sol.sol2037());
     }
 }
