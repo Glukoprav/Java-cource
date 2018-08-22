@@ -50,9 +50,37 @@ public class RecipesDAOTest {
 
     @Test
     public void testInsertIngredient() {
+        recipesDAO.insertIngredient(4, "Козел прыгучий", 40000);
+        recipesDAO.insertIngredient(4, "Вода горная", 20000);
+        recipesDAO.insertIngredient(4, "Костер на 8 часов", 50000);
+        recipesDAO.insertIngredient(4, "Соль", 50);
+        assertNotNull(recipesDAO.getById(4));
     }
 
     @Test
     public void testDeleteRecipe() {
+        recipesDAO.deleteRecipe(4);
+        assertEquals(0, recipesDAO.getById(4).size());
     }
 }
+
+
+//    @Mock
+//    DataSource dataSource;
+//
+//    @Mock
+//    JdbcTemplate jdbcTemplate;
+//
+//
+//    @Test
+//    public void testGetUserNames() {
+//
+//        List<String> userNames = new ArrayList<String>();
+//        userNames.add("bob");
+//
+//        when(dataSource.getJdbcTemplate()).thenReturn(jdbcTemplate);
+//        when(jdbcTemplate.query(anyString(), anyObject()).thenReturn(userNames);
+//
+//        String retVal = Class.getUserNames("test");
+//        assertEquals("bob", retVal);
+//    }

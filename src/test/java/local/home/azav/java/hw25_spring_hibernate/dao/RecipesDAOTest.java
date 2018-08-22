@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/springhibernatetest.xml" })
+@ContextConfiguration(locations = {"classpath:/springhibernatetest.xml"})
 public class RecipesDAOTest {
 
     @Autowired
@@ -35,34 +35,21 @@ public class RecipesDAOTest {
     public void getById() {
         assertEquals(3, recipesDAO.getById(2).size());
         assertEquals(3, recipesDAO.getById(1).size());
-        assertEquals(3, recipesDAO.getById(5).size());
+        assertEquals(4, recipesDAO.getById(3).size());
     }
 
     @Test
     public void insertIngredient() {
+        recipesDAO.insertIngredient(5, "Козел прыгучий", 40000);
+        recipesDAO.insertIngredient(5, "Вода горная", 20000);
+        recipesDAO.insertIngredient(5, "Костер на 8 часов", 50000);
+        recipesDAO.insertIngredient(5, "Соль", 50);
+        assertNotNull(recipesDAO.getById(5));
     }
 
     @Test
     public void deleteRecipe() {
+        recipesDAO.deleteRecipe(5);
+        assertEquals(0, recipesDAO.getById(5).size());
     }
 }
-
-//    @Mock
-//    Service service;
-//
-//    @Mock
-//    JdbcTemplate jdbcTemplate;
-//
-//
-//    @Test
-//    public void testGetUserNames() {
-//
-//        List<String> userNames = new ArrayList<String>();
-//        userNames.add("bob");
-//
-//        when(service.getJdbcTemplate()).thenReturn(jdbcTemplate);
-//        when(jdbcTemplate.query(anyString(), anyObject()).thenReturn(userNames);
-//
-//        String retVal = Class.getUserNames("test");
-//        assertEquals("bob", retVal);
-//    }

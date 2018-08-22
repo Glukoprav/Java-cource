@@ -35,9 +35,9 @@ public class DishesDAOTest {
     public void testGetAll() {
         List<Dish> listDish = dishesDAO.getAll();
         assertNotNull("Список не пуст", listDish);
-//        for (Dish dish : listDish) {
-//            System.out.println(dish);
-//        }
+        for (Dish dish : listDish) {
+            System.out.println(dish);
+        }
     }
 
     // Тест не пустого списка по части имени блюда
@@ -64,9 +64,21 @@ public class DishesDAOTest {
 
     @Test
     public void testInsertDish() {
+        dishesDAO.insertDish("Бормотуха");
+        List<Dish> listDish = dishesDAO.getByName("Бормотуха");
+        if (listDish.size() < 1) { fail("No select string!"); }
+        assertEquals("Бормотуха",listDish.get(0).getName());
     }
 
     @Test
     public void testDeleteDish() {
+        List<Dish> listDish = dishesDAO.getByName("Бормотуха");
+        if (listDish.size() < 1) {
+            fail("No select string!");
+        }
+        int dishesId = listDish.get(0).getDishesId();
+        dishesDAO.deleteDish(dishesId);
+        List<Dish> listDishAfterDelete = dishesDAO.getByName("Бормотуха");
+        assertTrue(listDish.size() > listDishAfterDelete.size());
     }
 }

@@ -28,7 +28,7 @@ public class ConfigAndConsoleTest {
     @Test
     public void testgetByListDish() {
         List<Dish> dishList = dishesDAO.getAll();
-        assertEquals(3, configAndConsole.printList(dishList));
+        assertTrue(configAndConsole.printList(dishList) > 0);
     }
 
     @Test

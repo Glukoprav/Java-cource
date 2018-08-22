@@ -36,7 +36,7 @@ public class RecipesDAO implements IRecipesDAO {
     public List<Recipe> getById(int dishesid) {
         Session session = this.sessionFactory.openSession();
         Query query = session.createQuery("Select r from Recipe r where dishesid=?");
-        query = query.setParameter(0,dishesid);
+        query = query.setParameter(0, dishesid);
         List<Recipe> recipeList = query.list();
         session.close();
         return recipeList;
@@ -46,10 +46,10 @@ public class RecipesDAO implements IRecipesDAO {
      * Добавление ингредиента к блюду по иденту
      */
     @Override
-    public void insertIngredient(int intId, String newName, int intValue) {
+    public void insertIngredient(int intDishId, String newName, int intValue) {
         Session session = this.sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        session.persist(new Recipe(intId, newName, intValue));
+        session.persist(new Recipe(intDishId, newName, intValue));
         tx.commit();
         session.close();
     }
@@ -59,10 +59,12 @@ public class RecipesDAO implements IRecipesDAO {
      */
     @Override
     public void deleteRecipe(int intId) {
-        StringBuilder stringBuilder = new StringBuilder("from Recipe where dishesId=").append(intId);
+        List<Recipe> recipeList = getById(intId);
         Session session = this.sessionFactory.openSession();
         Transaction tx1 = session.beginTransaction();
-        session.delete(stringBuilder.toString(),Recipe.class);
+        for (Recipe recipe: recipeList) {
+            session.delete(recipe);
+        }
         tx1.commit();
         session.close();
     }

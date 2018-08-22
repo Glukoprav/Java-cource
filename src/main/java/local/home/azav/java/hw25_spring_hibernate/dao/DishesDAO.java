@@ -67,10 +67,10 @@ public class DishesDAO implements IDishesDAO {
      */
     @Override
     public void deleteDish(int dishesId) {
-        StringBuilder stringBuilder = new StringBuilder("from Dish where dishesId=").append(dishesId);
+        Dish dish = getById(dishesId);
         Session session = this.sessionFactory.openSession();
         Transaction tx1 = session.beginTransaction();
-        session.delete(stringBuilder.toString(),Dish.class);
+        session.delete(dish);
         tx1.commit();
         session.close();
     }

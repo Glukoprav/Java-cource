@@ -22,6 +22,7 @@ public class DishesDAOTest {
 
     @Autowired
     private DishesDAO dishesDAO;
+    private int dishesId;
 
     // Проверяем получение контекста
     @Test
@@ -60,9 +61,21 @@ public class DishesDAOTest {
 
     @Test
     public void insertDish() {
+        dishesDAO.insertDish("Хрючило N 5");
+        List<Dish> listDish = dishesDAO.getByName("Хрючило N 5");
+        if (listDish.size() < 1) { fail("No select string!"); }
+        assertEquals("Хрючило N 5",listDish.get(0).getName());
     }
 
     @Test
     public void deleteDish() {
+        List<Dish> listDish = dishesDAO.getByName("Хрючило N 5");
+        if (listDish.size() < 1) {
+            fail("No select string!");
+        }
+        dishesId = listDish.get(0).getDishesId();
+        dishesDAO.deleteDish(dishesId);
+        List<Dish> listDishAfterDelete = dishesDAO.getByName("Хрючило N 5");
+        assertTrue(listDish.size() > listDishAfterDelete.size());
     }
 }

@@ -108,12 +108,12 @@ public class ConfigAndConsole {
 
     private void addIngredient() {
         System.out.print("Введите идентификатор блюда, которому добавляем ингредиент: ");
-        int intInput = Integer.parseInt(scanner.nextLine());
+        int intInputDish = Integer.parseInt(scanner.nextLine());
         System.out.print("Введите название ингредиента: ");
         String newName = scanner.nextLine();
         System.out.print("Введите количество ингредиента, в граммах: ");
         int intValue = Integer.parseInt(scanner.nextLine());
-        recipesDAO.insertIngredient(intInput, newName, intValue);
+        recipesDAO.insertIngredient(intInputDish, newName, intValue);
     }
 
     private void deleteDish() {
