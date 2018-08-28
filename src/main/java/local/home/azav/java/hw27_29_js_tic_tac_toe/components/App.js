@@ -28,17 +28,24 @@ const style = {
     }
 };
 
+//const cellsState: [
+//          null, null, null,
+//          null, null, null,
+//          null, null, null ];
+
 const initState = {
 
     gameState: 'play',
 
     gameWinner: null,
 
-    cellsState: [
-        null, null, null,
-        null, null, null,
-        null, null, null
-    ],
+    cellsState: Array(9).fill(null),
+
+//    cellsState: [
+//        null, null, null,
+//        null, null, null,
+//        null, null, null
+//    ],
 
     currentPlayer: 'X',
 
@@ -47,15 +54,24 @@ const initState = {
 
 class App extends Component {
     constructor(props) {
-            super(props);
+        super(props);
 
-            this.state = {...initState, cellsState: [...initState.cellsState]};
+        this.state = {initState, cellsState: [initState.cellsState]};
 
-            this.changeGameState = this.changeGameState.bind(this);
-        }
+        this.changeGameState = this.changeGameState.bind(this);
+    }
 
     changeGameState() {
-        this.setState({...initState, cellsState: [...initState.cellsState]});
+        // находим нужного пользователя
+//        const index = this.state.users.findIndex(user => user.id === this.props.match.params.id)
+//        // клонируем массив
+//        const users = this.state.users.slice();
+//        // меняем параметры в новой копии в стиле ES6
+//        users[index] = Object.assign({},users[index],{[key]: value});
+        cellsState = Object.assign({},initState.cellsState);
+//        // присваеваем новый массив с измененными данными
+//        this.setState({users});
+        this.setState({initState, cellsState/*: [initState.cellsState]*/});
     }
 
 
@@ -145,7 +161,7 @@ class App extends Component {
     }
 
     render() {
-        alert(this.state.gameState);
+        alert("this.state.gameState: " + this.state.gameState);
         if (this.state.gameState === 'play') {
             return (
                 <div>
