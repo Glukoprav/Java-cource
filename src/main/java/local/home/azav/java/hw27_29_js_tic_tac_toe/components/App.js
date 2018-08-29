@@ -1,4 +1,4 @@
-/** Created by batmah on 19.10.16 */
+/** Сделал Андрей 29.08.2018 */
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -8,7 +8,9 @@ import Win from './Win';
 const style = {
     gameGrid: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     gameRow: {
         display: 'flex',
@@ -25,104 +27,87 @@ const style = {
     currentPlayer: {
         display: 'flex',
         justifyContent: 'center',
+    },
+    button:{
+        display: 'flex',
+        justifyContent: 'center',
+        margin: 5,
     }
 };
 
-//const cellsState: [
-//          null, null, null,
-//          null, null, null,
-//          null, null, null ];
-
-const initState = {
-
+/*const */
+var initState = {
     gameState: 'play',
-
     gameWinner: null,
-
-    cellsState: Array(9).fill(null),
-
-//    cellsState: [
-//        null, null, null,
-//        null, null, null,
-//        null, null, null
-//    ],
-
     currentPlayer: 'X',
-
-    message: null
+    message: null,
+    cellsState: Array(9).fill(null)
 };
 
 class App extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {initState, cellsState: [initState.cellsState]};
-
+        this.state = {initState};
         this.changeGameState = this.changeGameState.bind(this);
     }
 
+    // Перезапуск игры после победы или ничьей
     changeGameState() {
-        // находим нужного пользователя
-//        const index = this.state.users.findIndex(user => user.id === this.props.match.params.id)
-//        // клонируем массив
-//        const users = this.state.users.slice();
-//        // меняем параметры в новой копии в стиле ES6
-//        users[index] = Object.assign({},users[index],{[key]: value});
-        cellsState = Object.assign({},initState.cellsState);
-//        // присваеваем новый массив с измененными данными
-//        this.setState({users});
-        this.setState({initState, cellsState/*: [initState.cellsState]*/});
+        initState.gameState = 'play';
+        initState.cellsState = Array(9).fill(null);
+        initState.gameWinner = null;
+        initState.currentPlayer = 'X';
+        initState.message = null;
+        this.setState({initState});
     }
 
-
+    // смена игрока
     changePlayerState() {
-        if (this.state.currentPlayer === 'X') {
-            this.setState({ currentPlayer: 'O' });
+        if (String(this.state.initState.currentPlayer) === 'X') {
+            initState.currentPlayer = 'O';
+            this.setState({initState});
         } else {
-            this.setState({ currentPlayer: 'X' });
+            initState.currentPlayer = 'X';
+            this.setState({initState});
         }
     }
 
+    // Меняем знак в ячейке и проверяем состояние
     changeCellState(index) {
         //Проверяем пустая ли ячейка
-        if (this.state.cellsState[index] != null) {
-            this.setState({ message: 'Select empty cell' });
+        if (this.state.initState.cellsState[index] != null) {
+            this.setState({ message: 'Ячейка занята, выберите другую!' });
             return;
         }
         this.setState({ message: null });
-
-        const newCellsState = this.state.cellsState.slice();
-        newCellsState[index] = this.state.currentPlayer;
-
+        const newCellsState = this.state.initState.cellsState.slice();
         //Меняем знак в ячейке
-        this.setState({ cellsState: newCellsState });
-
+        initState.cellsState[index] = this.state.initState.currentPlayer;
+        newCellsState[index] = this.state.initState.currentPlayer;
         //Проверяем на победу текущего игрока
-        if (this.checkPlayerWin(this.state.currentPlayer, newCellsState)) {
-            this.setState({
-                gameState: 'winner',
-                gameWinner: this.state.currentPlayer
-            });
+        if (this.checkPlayerWin(this.state.initState.currentPlayer, newCellsState)) {
+            initState.gameState = 'winner';
+            initState.gameWinner = this.state.initState.currentPlayer;
+            initState.message = 'Есть победитель!';
+            this.setState({ initState });
+        } else if(this.checkStandoff(newCellsState)) {           //Проверяем на ничью
+            initState.message = 'Ничья. Перезапуск через 5 секунд!  8-)';
+            this.setState({ initState });
+            setTimeout(this.changeGameState,5000);
         }
-
-        //Проверяем на ничью
-        if(this.checkStandoff(newCellsState)) {
-            this.setState({ message: 'Standoff. Pls refresh app :)' });
-            return;
-        }
-
         //Смена игрока после хода
         this.changePlayerState();
     }
 
+    //Проверяем на ничью
     checkStandoff(newCellsState) {
         if (newCellsState.every((item) => item != null)) {
             return true;
         }
-
         return false;
     }
 
+    //Проверяем на победу текущего игрока
     checkPlayerWin(player, newCellsState) {
         //Выйгрышные комбинации
         const winsCells = [
@@ -138,38 +123,34 @@ class App extends Component {
             [0, 4, 8],
             [2, 4, 6]
         ];
-
         //Проверка комбинаций
         let win = false;
-        winsCells.map((item) => {
-            if (item.every((elem) => newCellsState[elem] === player)) {
-                win = true;
+        for (let i = 0; i < winsCells.length; i++) {
+            const [a, b, c] = winsCells[i];
+            if (newCellsState[a] && newCellsState[a] === newCellsState[b] && newCellsState[a] === newCellsState[c]) {
+              win = true;
+              break;
             }
-            if (win) return true;
-        });
-
+          }
         return win;
     }
 
     renderCell(index) {
         return (
             <Cell
-                value={this.state.cellsState[index]}
+                value={this.state.initState.cellsState[index]}
                 onClick={() => this.changeCellState(index)}
             />
         );
     }
 
     render() {
-        alert("this.state.gameState: " + this.state.gameState);
-        if (this.state.gameState === 'play') {
+        if (this.state.initState.gameState === 'play') {
             return (
                 <div>
-                    <h1 style={style.h1}>Tic-tac-react</h1>
-                    <p style={style.currentPlayer}>Current player is: {this.state.currentPlayer}</p>
+                    <h1 style={style.h1}>Крестики-нолики</h1>
+                    <p style={style.currentPlayer}>Сейчас ходит: {this.state.initState.currentPlayer}</p>
                     <div style={style.gameGrid}>
-                        {/* {cellsState.map((item, index) =>
-                        <Cell state={item} key={index} />)} */}
                         <div style={style.gameRow}>
                             {this.renderCell(0)}
                             {this.renderCell(1)}
@@ -186,12 +167,12 @@ class App extends Component {
                             {this.renderCell(8)}
                         </div>
                     </div>
-                    <p style={style.message}>{this.state.message}</p>
+                    <p style={style.message}>{this.state.initState.message}</p>
                 </div>
             );
-        } else if (this.state.gameState === 'winner') {
-            return <Winner
-                gameWinner={this.state.gameWinner}
+        } else if (this.state.initState.gameState === 'winner') {
+            return <Win
+                gameWinner={this.state.initState.gameWinner}
                 changeGameState={this.changeGameState}
             />;
         } else {
@@ -201,78 +182,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-//class App extends Component {
-//  constructor(props) {
-//    super(props);
-//    this.state = {
-//      userId: 0,
-//      users: null
-//    };
-//    // фиксируем текущий контекст в this
-//    this.selectUser = this.selectUser.bind(this)
-//    this.changeInfo = this.changeInfo.bind(this)
-//  }
-//
-//  componentWillMount() {
-//    // получаем данные при загрузке
-//    axios.get('https://jsonplaceholder.typicode.com/users')
-//      // в случае успеха меняем состояние приложения
-//      .then((response) => this.setState({ users: response.data }))
-//      // в случае ошибки пишем информацию в консоль
-//      .catch((errror) => console.error(errror))
-//  }
-//
-//  selectUser(id){
-//    let userId = id;
-//    if (userId > this.state.users.length){
-//      // защита от выход за пределы массива
-//      userId = 0;
-//    }
-//    // присваеваем идентификатор текущего пользователя
-//    this.setState({userId});
-//  }
-//
-//  changeInfo(key, value) {
-//    // находим нужного пользователя
-//    const index = this.state.users.findIndex(user => user.id === this.state.userId)
-//    // клонируем массив
-//    const users = this.state.users.slice();
-//    // меняем параметры в новой копии в стиле ES6
-//    users[index] = Object.assign({},users[index],{[key]: value});
-//    // присваеваем новый массив с измененными данными
-//    this.setState({users});
-//  }
-//
-//  render() {
-//    console.log(this.state.users);
-//    if (!this.state.users) {
-//      // если нет данных о пользователях
-//      return (
-//        <div>
-//          Loading...
-//        </div>
-//      )
-//    }
-//
-//    if (!this.state.userId) {
-//      // если есть данные, но пользователь не выбран
-//      return (
-//        <Users users={this.state.users} selectUser={this.selectUser}/>
-//      )
-//    }
-//
-//    // если есть данные, и выбран конкретный пользователь
-//
-//    // достаем пользователя по id
-//    const user = this.state.users.find(user => user.id === this.state.userId);
-//
-//    return (
-//      <User user={user} selectUser={this.selectUser} changeInfo={this.changeInfo}/>
-//    )
-//
-//  }
-//}
-//
-//export default App;

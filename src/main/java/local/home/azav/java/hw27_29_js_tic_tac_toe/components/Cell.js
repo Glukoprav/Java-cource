@@ -8,7 +8,7 @@ const style = {
         height: 100,
         border: 1,
         backgroundColor: 'lightgrey',
-        borderRadius: '10%',
+        borderRadius: '20%',
         fontSize: 60,
         fontWeight: 'bold',
         alignItems: 'center',
