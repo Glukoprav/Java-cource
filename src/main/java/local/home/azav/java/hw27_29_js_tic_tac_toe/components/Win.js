@@ -6,6 +6,7 @@ const style = {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'lightgreen',
     }
 };
 

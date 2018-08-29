@@ -22,16 +22,27 @@ const style = {
     },
     message: {
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'lightgreen',
     },
     currentPlayer: {
         display: 'flex',
         justifyContent: 'center',
     },
-    button:{
+    buttons: {
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center',
         margin: 5,
+    },
+    button: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5,
+        border: 1,
+        borderRadius: '20%',
+        color: 'green',
     }
 };
 
@@ -94,10 +105,22 @@ class App extends Component {
             initState.message = 'Ничья. Перезапуск через 5 секунд!  8-)';
             this.setState({ initState });
             setTimeout(this.changeGameState,5000);
-        }
+        } else {
         //Смена игрока после хода
         this.changePlayerState();
+        }
     }
+
+    // Перезапуск игры после выбора стартового символа
+    changeCharPlay(charPlay) {
+        initState.gameState = 'play';
+        initState.cellsState = Array(9).fill(null);
+        initState.gameWinner = null;
+        initState.currentPlayer = (charPlay) ? charPlay : 'X';
+        initState.message = null;
+        this.setState({initState});
+    }
+
 
     //Проверяем на ничью
     checkStandoff(newCellsState) {
@@ -168,6 +191,10 @@ class App extends Component {
                         </div>
                     </div>
                     <p style={style.message}>{this.state.initState.message}</p>
+                    <div style={style.buttons}>
+                        <button style={style.button} onClick={() => this.changeCharPlay('X')}>{'Начать с X'}</button>
+                        <button style={style.button} onClick={() => this.changeCharPlay('O')}>{'Начать с O'}</button>
+                    </div>
                 </div>
             );
         } else if (this.state.initState.gameState === 'winner') {
