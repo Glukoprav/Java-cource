@@ -58,69 +58,50 @@ var initState = {
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {initState};
+        this.state = Object.assign({},initState,{cellsState: initState.cellsState.slice()});
         this.changeGameState = this.changeGameState.bind(this);
     }
 
     // Перезапуск игры после победы или ничьей
     changeGameState() {
-        initState.gameState = 'play';
-        initState.cellsState = Array(9).fill(null);
-        initState.gameWinner = null;
-        initState.currentPlayer = 'X';
-        initState.message = null;
-        this.setState({initState});
+        this.setState(Object.assign({},initState,{cellsState: initState.cellsState.slice()}));
     }
 
-    // смена игрока
-    changePlayerState() {
-        if (String(this.state.initState.currentPlayer) === 'X') {
-            initState.currentPlayer = 'O';
-            this.setState({initState});
-        } else {
-            initState.currentPlayer = 'X';
-            this.setState({initState});
-        }
-    }
-
-    // Меняем знак в ячейке и проверяем состояние
+    // Проверяем ячейку и состояние, меняем знак в ячейке
     changeCellState(index) {
         //Проверяем пустая ли ячейка
-        if (this.state.initState.cellsState[index] != null) {
-            this.setState({ message: 'Ячейка занята, выберите другую!' });
+        if (this.state.cellsState[index] != null) {
+            this.setState({ message : 'Ячейка занята, выберите другую!' });
             return;
         }
-        this.setState({ message: null });
-        const newCellsState = this.state.initState.cellsState.slice();
+        const newCellsState = this.state.cellsState.slice();
         //Меняем знак в ячейке
-        initState.cellsState[index] = this.state.initState.currentPlayer;
-        newCellsState[index] = this.state.initState.currentPlayer;
+        newCellsState[index] = this.state.currentPlayer;
         //Проверяем на победу текущего игрока
-        if (this.checkPlayerWin(this.state.initState.currentPlayer, newCellsState)) {
-            initState.gameState = 'winner';
-            initState.gameWinner = this.state.initState.currentPlayer;
-            initState.message = 'Есть победитель!';
-            this.setState({ initState });
+        if (this.checkPlayerWin(this.state.currentPlayer, newCellsState)) {
+            this.setState({ gameState : 'winner', gameWinner : this.state.currentPlayer });
         } else if(this.checkStandoff(newCellsState)) {           //Проверяем на ничью
-            initState.message = 'Ничья. Перезапуск через 5 секунд!  8-)';
-            this.setState({ initState });
+            let message = 'Ничья. Перезапуск через 5 секунд!  8-)';
+            this.setState({ message });
             setTimeout(this.changeGameState,5000);
         } else {
         //Смена игрока после хода
-        this.changePlayerState();
+            let currP = '';
+            if (String(this.state.currentPlayer) === 'X') {
+                    currP = 'O';
+                } else {
+                    currP = 'X';
+                }
+            this.setState({ message: null, cellsState : newCellsState, currentPlayer : currP });
         }
     }
 
     // Перезапуск игры после выбора стартового символа
     changeCharPlay(charPlay) {
-        initState.gameState = 'play';
-        initState.cellsState = Array(9).fill(null);
-        initState.gameWinner = null;
-        initState.currentPlayer = (charPlay) ? charPlay : 'X';
-        initState.message = null;
-        this.setState({initState});
+        const currentPlayer = (charPlay) ? charPlay : 'X';
+        const state = Object.assign({},initState,{cellsState: initState.cellsState.slice(), currentPlayer })
+        this.setState(state);
     }
-
 
     //Проверяем на ничью
     checkStandoff(newCellsState) {
@@ -161,18 +142,18 @@ class App extends Component {
     renderCell(index) {
         return (
             <Cell
-                value={this.state.initState.cellsState[index]}
+                value={this.state.cellsState[index]}
                 onClick={() => this.changeCellState(index)}
             />
         );
     }
 
     render() {
-        if (this.state.initState.gameState === 'play') {
+        if (this.state.gameState === 'play') {
             return (
                 <div>
                     <h1 style={style.h1}>Крестики-нолики</h1>
-                    <p style={style.currentPlayer}>Сейчас ходит: {this.state.initState.currentPlayer}</p>
+                    <p style={style.currentPlayer}>Сейчас ходит: {this.state.currentPlayer}</p>
                     <div style={style.gameGrid}>
                         <div style={style.gameRow}>
                             {this.renderCell(0)}
@@ -190,16 +171,16 @@ class App extends Component {
                             {this.renderCell(8)}
                         </div>
                     </div>
-                    <p style={style.message}>{this.state.initState.message}</p>
+                    <p style={style.message}>{this.state.message}</p>
                     <div style={style.buttons}>
                         <button style={style.button} onClick={() => this.changeCharPlay('X')}>{'Начать с X'}</button>
                         <button style={style.button} onClick={() => this.changeCharPlay('O')}>{'Начать с O'}</button>
                     </div>
                 </div>
             );
-        } else if (this.state.initState.gameState === 'winner') {
+        } else if (this.state.gameState === 'winner') {
             return <Win
-                gameWinner={this.state.initState.gameWinner}
+                gameWinner={this.state.gameWinner}
                 changeGameState={this.changeGameState}
             />;
         } else {
