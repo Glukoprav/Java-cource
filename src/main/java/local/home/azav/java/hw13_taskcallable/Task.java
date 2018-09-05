@@ -39,14 +39,14 @@ public class Task<T> {
                     try {
                         result = callable.call();
                         LOG.log(Level.INFO,"Вызов call сделал поток: {0}", Thread.currentThread().getName());
-                        LOG.log(Level.INFO,"Результат: {0}", result.toString());
+                        LOG.log(Level.INFO,"Результат: {0}", result);
                     } catch (Exception e) {
                         errorCall = new TaskExecException("Не рассчитался результат Callable!", e);
                     }
                 }
             }
         }
-        LOG.log(Level.INFO,"Поток: {0}  с результатом: {1}", new Object[]{Thread.currentThread().getName(), result.toString()});
+        LOG.log(Level.INFO,"Поток: {0}  с результатом: {1}", new Object[]{Thread.currentThread().getName(), result});
         return result;
     }
 }

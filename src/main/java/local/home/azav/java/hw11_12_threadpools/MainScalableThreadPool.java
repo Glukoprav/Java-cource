@@ -1,8 +1,12 @@
 package local.home.azav.java.hw11_12_threadpools;
 
 import local.home.azav.java.hw11_12_threadpools.scalablethreadpool.ScalableThreadPool;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static java.lang.String.format;
 
 /**
@@ -11,6 +15,8 @@ import static java.lang.String.format;
  * затем запускаем и измеряем время работы задачи в пуле потоков.
  */
 public class MainScalableThreadPool {
+    private static final Logger LOG = Logger.getLogger(MainFixedThreadPool.class.getName());
+
     private static final int COUNT = 50;   // число расчетов, раскидываемых по потокам
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -25,9 +31,8 @@ public class MainScalableThreadPool {
             valOne += task.count(i);
         }
         // Выводим однопоточный результат
-        System.out.println(format("Работа в 1 поток:  %d сек., результат: %f",
-                (System.nanoTime() - startOne) / (1000_000_000),
-                valOne));
+        LOG.log(Level.INFO, "Работа в 1 поток:  {0} сек., результат: {1}",
+                new Object[]{(System.nanoTime() - startOne) / (1000_000_000), valOne});
 
         // Создаем переменный пул потоков
         ScalableThreadPool scalablePool = new ScalableThreadPool(4, 16);
@@ -46,9 +51,8 @@ public class MainScalableThreadPool {
             valuePool += future.get();
         }
         // Выводим многопоточный результат
-        System.out.println(format("Работа многопоточная:  %d сек., результат: %f",
-                (System.nanoTime() - startPool) / (1000_000_000),
-                valuePool));
+        LOG.log(Level.INFO, "Работа многопоточная:  {0} сек., результат: {1}",
+                new Object[]{(System.nanoTime() - startPool) / (1000_000_000), valuePool});
         scalablePool.shutdown();
     }
 }

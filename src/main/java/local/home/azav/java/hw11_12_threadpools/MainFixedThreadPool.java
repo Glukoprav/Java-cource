@@ -4,6 +4,8 @@ import local.home.azav.java.hw11_12_threadpools.fixedthreadpool.FixedThreadPool;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static java.lang.String.format;
 
@@ -13,6 +15,8 @@ import static java.lang.String.format;
  * затем запускаем и измеряем время работы задачи в пуле потоков.
  */
 public class MainFixedThreadPool {
+    private static final Logger LOG = Logger.getLogger(MainFixedThreadPool.class.getName());
+
     private static final int COUNT = 50;   // число расчетов, раскидываемых по потокам
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -27,9 +31,8 @@ public class MainFixedThreadPool {
             valOne += task.count(i);
         }
         // Выводим однопоточный результат
-        System.out.println(format("Работа в 1 поток:  %d сек., результат: %f",
-                (System.nanoTime() - startOne) / (1000_000_000),
-                valOne));
+        LOG.log(Level.INFO, "Работа в 1 поток:  {0} сек., результат: {1}",
+                new Object[]{(System.nanoTime() - startOne) / (1000_000_000), valOne});
 
         // Создаем пул из 8 потоков
         FixedThreadPool fixPool = new FixedThreadPool(8);
@@ -49,9 +52,8 @@ public class MainFixedThreadPool {
             valuePool += future.get();
         }
         // Выводим многопоточный результат
-        System.out.println(format("Работа многопоточная:  %d сек., результат: %f",
-                (System.nanoTime() - startPool) / (1000_000_000),
-                valuePool));
+        LOG.log(Level.INFO,"Работа многопоточная:  {0} сек., результат: {1}",
+                new Object[]{(System.nanoTime() - startPool) / (1000_000_000), valuePool});
         fixPool.shutdown();
     }
 }

@@ -9,7 +9,7 @@ public class MainExecManager {
     public static void main(String[] args) {
         ExecutionManager manager = new ExecutionManagerImpl();
 
-        Context context = manager.execute(() -> System.out.println("Все задачи выполнены"),
+        Context context = manager.execute(() -> LOG.log(Level.INFO,"Все задачи выполнены"),
                 () -> {
                     throw new RuntimeException("Исключительная ситуация при выполнении задачи");
                 },
@@ -19,7 +19,7 @@ public class MainExecManager {
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
-                    System.out.println("2");
+                    LOG.log(Level.INFO,"2");
                 },
                 () -> {
                     try {
@@ -27,10 +27,10 @@ public class MainExecManager {
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
-                    System.out.println("3");
+                    LOG.log(Level.INFO,"3");
                 },
-                () -> System.out.println("4"),
-                () -> System.out.println("5")
+                () -> LOG.log(Level.INFO,"4"),
+                () -> LOG.log(Level.INFO,"5")
         );
 
         context.interrupt();
