@@ -6,14 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Класс проверки работы Task
  */
-public class Main implements Callable<Person> {
+public class MainCallable implements Callable<Person> {
+    private static final Logger LOG = Logger.getLogger(MainCallable.class.getName());
+
     public static void main(String[] args) {
         // Создаем объект проверки
-        Callable<Person> callable = new Main();
+        Callable<Person> callable = new MainCallable();
         //создаем список с Future, которые ассоциированы с Callable
         List<Future<Person>> list = new ArrayList<>();
         // Создаем наш Task
@@ -23,8 +27,7 @@ public class Main implements Callable<Person> {
             try {
                 return task.get();
             } catch (Exception e) {
-                System.out.println("Проблема с получением значения!");
-                e.printStackTrace();
+                LOG.log(Level.SEVERE, "Проблема с получением значения! ", e);
                 return null;
             }
         };
@@ -37,9 +40,9 @@ public class Main implements Callable<Person> {
         // Распечатаем список значений, полученных потоками
         for (Future<Person> fut : list) {
             try {
-                System.out.println("из Future: " + fut.get());
+                LOG.log(Level.INFO,"из Future: {0}", fut.get());
             } catch (ExecutionException e) {
-                e.printStackTrace();
+                LOG.log(Level.SEVERE, "Exception: ", e);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

@@ -2,16 +2,21 @@ package local.home.azav.java.hw7_classloaders.variant02.app;
 
 import local.home.azav.java.hw7_classloaders.variant02.api.ApiClassloader;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Classloader для класса AppCalc
  */
 public class AppClassloader extends ApiClassloader {
-    public final String classPathApp;   // путь к классу
+    private static final Logger LOG = Logger.getLogger(AppClassloader.class.getName());
 
-    public AppClassloader(String classPathApp) {
+    private final String classPathApp;   // путь к классу
+
+    AppClassloader(String classPathApp) {
         super(classPathApp);
         this.classPathApp = classPathApp;
-        System.out.println("AppClassloader после вызова родителя");
+        LOG.log(Level.INFO,"AppClassloader после вызова родителя");
     }
 
     @Override

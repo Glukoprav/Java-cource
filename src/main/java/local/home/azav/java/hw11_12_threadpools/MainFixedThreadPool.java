@@ -13,15 +13,17 @@ import static java.lang.String.format;
  * затем запускаем и измеряем время работы задачи в пуле потоков.
  */
 public class MainFixedThreadPool {
+    private static final int COUNT = 50;   // число расчетов, раскидываемых по потокам
+
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         // Создаем класс задачи
         MyTask task = new MyTask();
 
         // Старт замера времени по задаче без пула потоков
-        // Пускаем задачу 400 раз с разными параметрами на одном потоке
+        // Пускаем задачу COUNT раз с разными параметрами на одном потоке
         long startOne = System.nanoTime();
         double valOne = 0;
-        for (int i = 0; i < 400; i++) {
+        for (int i = 0; i < COUNT; i++) {
             valOne += task.count(i);
         }
         // Выводим однопоточный результат
@@ -35,9 +37,9 @@ public class MainFixedThreadPool {
         fixPool.start();
 
         // Старт замера времени по задаче с пулом потоков
-        // Пускаем задачу 400 раз с разными параметрами по разным потокам
+        // Пускаем задачу COUNT раз с разными параметрами по разным потокам
         long startPool = System.nanoTime();
-        for (int i = 0; i < 400; i++) {
+        for (int i = 0; i < COUNT; i++) {
             final int j = i;
             fixPool.execute(() -> task.count(j));
         }
@@ -53,6 +55,7 @@ public class MainFixedThreadPool {
         fixPool.shutdown();
     }
 }
+// Для COUNT = 400
 /// Вывод программы на старой 2-х ядерной машине:
 // Работа в 1 поток:  191 сек., результат: -247097399,870833
 // Работа многопоточная:  169 сек., результат: -247097399,870833

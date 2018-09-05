@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Класс кеширующего прокси.
@@ -19,6 +21,8 @@ import java.util.TreeMap;
  * - файловая система - используется сериализуемый прокси.
  */
 public class ProxyCache implements InvocationHandler {
+    private static final Logger LOG = Logger.getLogger(ProxyCache.class.getName());
+
     private final Object obj;
     private final Map<String, Object> cachedResults;
 
@@ -45,7 +49,7 @@ public class ProxyCache implements InvocationHandler {
         }
         String strArgs = strBuilderArgs.toString();
         // Ключем является: имя метода + все аргументы метода
-        System.out.println("Ключ: " + strMethod + strArgs);
+        LOG.log(Level.INFO,"Ключ: {0}", strMethod + strArgs);
         String strKey = strMethod + strArgs;
         // Проверяем наличие аннотации Cache
         if (method.isAnnotationPresent(Cache.class)) {
@@ -61,7 +65,7 @@ public class ProxyCache implements InvocationHandler {
         } else {
             // Если аннотации Cache нет, то вызываем исходный метод
             result = method.invoke(obj, arguments);
-            System.out.println("Метод без аннотации: " + strMethod);
+            LOG.log(Level.INFO,"Метод без аннотации: {0}", strMethod);
         }
         return result;
     }
@@ -81,7 +85,7 @@ public class ProxyCache implements InvocationHandler {
         switch (cache.value()) {
             case MEMORY:
                 result = cachedResults.get(strKey);
-                System.out.println("Результат из кэша ПАМЯТИ: " + result + ", по ключу: " + strKey);
+                LOG.log(Level.INFO,"Результат из кэша ПАМЯТИ: " + result + ", по ключу: " + strKey);
                 break;
             case FILE:
                 // Путь и имя файла: из аннотации путь и префикс + ключ + расширение из аннотации
@@ -92,9 +96,9 @@ public class ProxyCache implements InvocationHandler {
                     if (ks != null) {
                         result = ((KeySerial) ks).getResult();
                         String keyMethod = ((KeySerial) ks).getMethod();
-                        System.out.println("Результат из ФАЙЛОВОГО кэша: " + result + ", по ключу: " + keyMethod);
+                        LOG.log(Level.INFO,"Результат из ФАЙЛОВОГО кэша: {0}, по ключу: {1}", new Object[]{result, keyMethod});
                     } else {
-                        System.out.println("Результат из ФАЙЛОВОГО кэша не получилось достать!");
+                        LOG.log(Level.INFO,"Результат из ФАЙЛОВОГО кэша не получилось достать!");
                         result = null;
                     }
                 } else {
@@ -121,7 +125,7 @@ public class ProxyCache implements InvocationHandler {
         switch (cache.value()) {
             case MEMORY:
                 cachedResults.put(strKey, result);
-                System.out.println("Взяли в кэш ПАМЯТИ: " + result);
+                LOG.log(Level.INFO,"Взяли в кэш ПАМЯТИ: {0}", result);
                 break;
             case FILE:
                 // Путь и имя файла: из аннотации путь и префикс + ключ + расширение из аннотации
@@ -129,7 +133,7 @@ public class ProxyCache implements InvocationHandler {
                 // Создаем объект кэширования для SerializationProxy
                 KeySerial keySerial = new KeySerial(strKey, result);
                 serialMethod(strFileName, keySerial);
-                System.out.println("Взяли в ФАЙЛОВЫЙ кэш: " + result);
+                LOG.log(Level.INFO,"Взяли в ФАЙЛОВЫЙ кэш: {0}", result);
                 break;
             default:
                 throw new IOException("Неизвестное значение аннотации!");

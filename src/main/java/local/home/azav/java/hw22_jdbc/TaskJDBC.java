@@ -33,8 +33,8 @@ public class TaskJDBC {
 
     int connectAndQuery(TaskJDBC taskJDBC) {
         int res = 0;
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Documents and Settings/andreyz/IdeaProjects/firstproject/src/main/java/local/home/azav/java/hw22_jdbc/test", "sa", "");
-//        try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Users/Azav/IdeaProjects/Java-cource/src/main/java/local/home/azav/java/hw22_jdbc/test", "sa", "");
+//        try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Documents and Settings/andreyz/IdeaProjects/firstproject/src/main/java/local/home/azav/java/hw22_jdbc/test", "sa", "");
+        try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Users/Azav/IdeaProjects/Java-cource/src/main/java/local/home/azav/java/hw22_jdbc/test", "sa", "");
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("select * from user_order_item order by date_order");) {
             res = taskJDBC.printUserOrderItem(resultSet);

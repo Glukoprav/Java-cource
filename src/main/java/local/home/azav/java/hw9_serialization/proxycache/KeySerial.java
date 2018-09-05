@@ -1,12 +1,16 @@
 package local.home.azav.java.hw9_serialization.proxycache;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Класс для сохранения результатов в файловый кэш
  * с реализацией Serializable Proxy
  */
 class KeySerial implements Serializable {
+    private static final Logger LOG = Logger.getLogger(KeySerial.class.getName());
+
     private static final long serialVersionUID = 8642553321654929147L;
     private String method;
     private Object result;
@@ -31,7 +35,7 @@ class KeySerial implements Serializable {
      * @return Object = KeyProxy с полями из KeySerial
      */
     private Object writeReplace() {
-        System.out.println("Пишем в сериализованную прокси");
+        LOG.log(Level.INFO,"Пишем в сериализованную прокси");
         return new KeyProxy(this);
     }
 
@@ -53,7 +57,7 @@ class KeySerial implements Serializable {
          * readResolve метод для proxy pattern - KeySerial.KeyProxy.
          */
         private Object readResolve() {
-            System.out.println("Читаем из сериализованной прокси");
+            LOG.log(Level.INFO,"Читаем из сериализованной прокси");
             return new KeySerial(method, result);
         }
     }

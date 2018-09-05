@@ -2,17 +2,22 @@ package local.home.azav.java.hw7_classloaders.variant02.impl;
 
 import local.home.azav.java.hw7_classloaders.variant02.api.ApiClassloader;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  * Classloader для класса CalculatorImpl
  */
 public class ImplClassloader extends ApiClassloader {
-    public final String classPathImpl;   // путь к классу
+    private static final Logger LOG = Logger.getLogger(ImplClassloader.class.getName());
+
+    private final String classPathImpl;   // путь к классу
 
     public ImplClassloader(String classPathImpl) {
         super(classPathImpl);
         this.classPathImpl = classPathImpl;
-        System.out.println("ImplClassloader после вызова родителя");
+        LOG.log(Level.INFO,"ImplClassloader после вызова родителя");
     }
 
     @Override

@@ -19,14 +19,17 @@ Apiclassloader должен быть родителем как для ImplClassl
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ApiClassloader extends ClassLoader {
+    private static final Logger LOG = Logger.getLogger(ApiClassloader.class.getName());
 
     public final String classPath;   // путь к классу
 
     public ApiClassloader(String classPath) {
         this.classPath = classPath;
-        System.out.println("ApiClassloader конструктор");
+        LOG.log(Level.INFO,"ApiClassloader конструктор");
     }
 
     @Override
@@ -68,7 +71,7 @@ public class ApiClassloader extends ClassLoader {
      * @param extension - строка расширения файла
      * @return Возвращаем найденный файл, иначе null
      */
-    protected File findFile(String name, String extension) {
+    private File findFile(String name, String extension) {
         File f = new File((new File(classPath)).getPath() +
                 File.separatorChar + name.replace('/', File.separatorChar) + extension);
         if (f.exists())
@@ -81,7 +84,7 @@ public class ApiClassloader extends ClassLoader {
      * @param file - найденный файл класа
      * @return Возвращаем байтовый массив класса
      */
-    public static byte[] loadFileAsBytes(File file) throws IOException {
+    private static byte[] loadFileAsBytes(File file) throws IOException {
         byte[] result = new byte[(int) file.length()];
         FileInputStream f = new FileInputStream(file);
         try {
@@ -91,7 +94,8 @@ public class ApiClassloader extends ClassLoader {
                 f.close();
             } catch (Exception e) {
                 // Об исключениях, возникших при вызове close сообщим
-                System.out.println("Ошибка при закрытии файла " + file);
+                LOG.log(Level.SEVERE, "Exception: ", e);
+                //System.out.println("Ошибка при закрытии файла " + file);
             }
         }
         return result;

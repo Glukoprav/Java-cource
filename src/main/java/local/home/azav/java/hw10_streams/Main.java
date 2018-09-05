@@ -4,8 +4,12 @@ import local.home.azav.java.hw2_person.Person;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
+    private static final Logger LOG = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
         // создаем тестовую коллекцию
         List<Person> personList = new ArrayList<>();
@@ -19,7 +23,7 @@ public class Main {
                 .filter( p -> p.isMan() && p.getAge() > 25)                                                            // отберем мужиков старше 25
                 .transform( p -> new Person(false, p.getName(), p.getAge() + 5))                              // сделаем вид, что они - дамы
                 .toMap( p -> p.getName(), p -> p);                                                                     // и отправим в женский монастырь.
-        System.out.println(personList.toString());
-        System.out.println(personMap);
+        LOG.log(Level.INFO,personList.toString());
+        LOG.log(Level.INFO, String.valueOf(personMap));
     }
 }

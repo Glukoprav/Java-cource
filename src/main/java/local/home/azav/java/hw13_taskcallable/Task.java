@@ -1,6 +1,8 @@
 package local.home.azav.java.hw13_taskcallable;
 
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -17,6 +19,7 @@ import java.util.concurrent.Callable;
  * (подходящее название своему ексепшену придумайте сами).
  */
 public class Task<T> {
+    private static final Logger LOG = Logger.getLogger(Task.class.getName());
 
     private Callable<? extends T> callable;
     private volatile T result = null;
@@ -35,15 +38,15 @@ public class Task<T> {
                 if (result == null) {
                     try {
                         result = callable.call();
-                        System.out.println("Вызов call сделал поток: " + Thread.currentThread().getName());
-                        System.out.println("Результат: " + result.toString());
+                        LOG.log(Level.INFO,"Вызов call сделал поток: {0}", Thread.currentThread().getName());
+                        LOG.log(Level.INFO,"Результат: {0}", result.toString());
                     } catch (Exception e) {
                         errorCall = new TaskExecException("Не рассчитался результат Callable!", e);
                     }
                 }
             }
         }
-        System.out.println("Поток: " + Thread.currentThread().getName() + " с результатом: " + result.toString());
+        LOG.log(Level.INFO,"Поток: {0}  с результатом: {1}", new Object[]{Thread.currentThread().getName(), result.toString()});
         return result;
     }
 }
