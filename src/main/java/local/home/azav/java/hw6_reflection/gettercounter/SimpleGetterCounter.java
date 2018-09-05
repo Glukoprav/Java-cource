@@ -11,8 +11,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SimpleGetterCounter implements GetterCounter {
+    private static final Logger LOG = Logger.getLogger(SimpleGetterCounter.class.getName());
 
     /**
      * Возвращает количество геттеров в переданном классе.
@@ -71,10 +74,10 @@ public class SimpleGetterCounter implements GetterCounter {
                         GetterCounter.class.getClassLoader(),
                         new Class[]{GetterCounter.class},
                         handler);
-        System.out.println(proxy.calcGetterCount(PersonAnnotation.class));
-        System.out.println(proxy.calcGetterCount(PersonAnnotation.class));
-        System.out.println(proxy.calcGetterCount(Person.class));
-        System.out.println(sgc.arrayGetterCount(PersonAnnotation.class));
-        System.out.println(sgc.arrayGetterCount(Person.class));
+        LOG.log(Level.INFO,"proxy PersonAnnotation 1 > {0}", proxy.calcGetterCount(PersonAnnotation.class));
+        LOG.log(Level.INFO,"proxy PersonAnnotation 2 > {0}", proxy.calcGetterCount(PersonAnnotation.class));
+        LOG.log(Level.INFO, "proxy Person > {0}", proxy.calcGetterCount(Person.class));
+        LOG.log(Level.INFO, "sgc PersonAnnotation 2 > {0}", sgc.arrayGetterCount(PersonAnnotation.class));
+        LOG.log(Level.INFO, "sgc PersonAnnotation 2 > {0}", sgc.arrayGetterCount(Person.class));
     }
 }

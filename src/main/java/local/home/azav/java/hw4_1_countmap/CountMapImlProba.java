@@ -1,6 +1,11 @@
 package local.home.azav.java.hw4_1_countmap;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class CountMapImlProba {
+    private static final Logger LOG = Logger.getLogger(CountMapImlProba.class.getName());
+
     public static void main(String[] args) {
 
         CountMap<Integer> map = new CountMapIml<>();
@@ -13,12 +18,12 @@ public class CountMapImlProba {
         int count = map.getCount(5); // 2
         int count1 = map.getCount(6); // 1
         int count2 = map.getCount(10); // 3
-        System.out.println("5 > " + count);
-        System.out.println("6 > " + count1);
-        System.out.println("10 > " + count2);
-        System.out.println("remove 5 > " + map.remove(5));
+        LOG.log(Level.INFO,"5 > {0}",count);
+        LOG.log(Level.INFO, "6 > {0} ", count1);
+        LOG.log(Level.INFO,"10 > {0}", count2);
+        LOG.log(Level.INFO,"remove 5 > {0}", map.remove(5));
         count = map.getCount(5);
-        System.out.println("5 > " + count);
+        LOG.log(Level.INFO,"5 > {0}", count);
 
         CountMap<String> maps = new CountMapIml<>();
         maps.add("str1");
@@ -30,8 +35,8 @@ public class CountMapImlProba {
         count = maps.getCount("str2"); // 2
         count1 = maps.getCount("str3"); // 1
         count2 = maps.getCount("str1"); // 3
-        System.out.println("str2 > " + count);
-        System.out.println("str3 > " + count1);
-        System.out.println("str1 > " + count2);
+        LOG.log(Level.INFO,"str2 > {0}", count);
+        LOG.log(Level.INFO,"str3 > {0}", count1);
+        LOG.log(Level.INFO,"str1 > {0}", count2);
     }
 }

@@ -13,7 +13,7 @@ public class MainPerson {
         outer(p2.getName() + " on " + p2.getNameSpouse());
     }
 
-    static boolean marryPar(Person p1, Person p2) { return p1.marry(p2);}
+    static Boolean marryPar(Person p1, Person p2) { return p1.marry(p2);}
 
     public static void main(String[] args) {
         Person pm1 = new Person(true, "Vasya");
@@ -36,22 +36,22 @@ public class MainPerson {
         outer("4 step");
         Person pm2 = new Person(true, "Fedya");
         Person pw2 = new Person(false, "Glasha");
-        System.out.println(marryPar(pm2,pm1));
+        outer(marryPar(pm2,pm1).toString());
         outerPar(pm2,pw1);
         outerPar(pm1,pw2);
 
         outer("5 step");
-        System.out.println(marryPar(pm2,pw1));
+        outer(marryPar(pm2,pw1).toString());
         outerPar(pm2,pw1);
         outerPar(pm1,pw2);
 
         outer("6 step");
-        System.out.println(marryPar(pw2,pm1));
+        outer(marryPar(pw2,pm1).toString());
         outerPar(pm2,pw1);
         outerPar(pm1,pw2);
 
         outer("7 step");
-        System.out.println(marryPar(pw2,pm2));
+        outer(marryPar(pw2,pm2).toString());
         outerPar(pm2,pw1);
         outerPar(pm1,pw2);
     }

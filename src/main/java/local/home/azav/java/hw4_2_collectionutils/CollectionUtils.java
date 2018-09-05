@@ -1,12 +1,14 @@
 package local.home.azav.java.hw4_2_collectionutils;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static java.util.stream.Collectors.toList;
 
 // Параметризовать методы, используя правило PECS, и реализовать их
 public class CollectionUtils<T> implements Comparable<T> {
-    private List<? extends T> listin;
+    private static final Logger LOG = Logger.getLogger(CollectionUtils.class.getName());
     private T tin;
 
     T getTin() {
@@ -109,7 +111,7 @@ public class CollectionUtils<T> implements Comparable<T> {
     public static void main(String[] args) {
 
         // 1. Тест с имплементированным компаратором
-        System.out.println("С имплементом: " + range(Arrays.asList(8, 1, 3, 5, 2, 5, 1, 6, 5, 4, 3, 6, 4), 3, 6).toString());
+        LOG.log(Level.INFO,"С имплементом: {0}", range(Arrays.asList(8, 1, 3, 5, 2, 5, 1, 6, 5, 4, 3, 6, 4), 3, 6));
 
         // 2. Тест с вызовом внешнего компаратора
         // Определяем компаратор в виде метода для теста
@@ -119,15 +121,15 @@ public class CollectionUtils<T> implements Comparable<T> {
                 return (o1 - o2);
             }
         };
-        System.out.println("Внешний метод: " + range(Arrays.asList(8, 1, 3, 5, 2, 5, 1, 6, 5, 4, 3, 6, 4), 3, 6, compar).toString());
+        LOG.log(Level.INFO,"Внешний метод: {0}", range(Arrays.asList(8, 1, 3, 5, 2, 5, 1, 6, 5, 4, 3, 6, 4), 3, 6, compar));
 
         // 3. Тест с вызовом внешнего компаратора
         // Определяем компаратор в виде лямбды для теста
         Comparator<Integer> compar2 = (o1, o2) -> (o1 - o2);
-        System.out.println("Внешняя ЛямбдА: " + range(Arrays.asList(8, 1, 3, 5, 2, 5, 1, 6, 5, 4, 3, 6, 4), 3, 6, compar2).toString());
+        LOG.log(Level.INFO,"Внешняя ЛямбдА: {0}", range(Arrays.asList(8, 1, 3, 5, 2, 5, 1, 6, 5, 4, 3, 6, 4), 3, 6, compar2));
 
         // 4. Тест с компаратором в виде анонимного метода
-        System.out.println("Внутренний метод: " + range(Arrays.asList(8, 1, 3, 5, 2, 5, 6, 5, 4, 3, 6, 4), 3, 6,
+        LOG.log(Level.INFO,"Внутренний метод: {0}", range(Arrays.asList(8, 1, 3, 5, 2, 5, 6, 5, 4, 3, 6, 4), 3, 6,
                 new Comparator() {
                     @Override
                     public int compare(Object o1, Object o2) {
@@ -136,13 +138,13 @@ public class CollectionUtils<T> implements Comparable<T> {
                         }
                         return (o1.hashCode() < o2.hashCode()) ? -1 : 0;
                     }
-                }).toString());
+                }));
 
         // 5. Тест с компаратором в виде анонимной лямбды
-        System.out.println("Внутренняя ЛямбдА: " + range(Arrays.asList(8, 1, 3, 5, 2, 5, 1, 6, 5, 4, 3, 6, 4), 3, 6,
-                (o1, o2) -> (o1 - o2)).toString());
+        LOG.log(Level.INFO,"Внутренняя ЛямбдА: {0}", range(Arrays.asList(8, 1, 3, 5, 2, 5, 1, 6, 5, 4, 3, 6, 4), 3, 6,
+                (o1, o2) -> (o1 - o2)));
 
         // 6. Тест с использованием Stream API
-        System.out.println("Stream API: " + rangeStream(Arrays.asList(8, 1, 3, 5, 2, 5, 1, 6, 5, 4, 3, 6, 4), 3, 6).toString());
+        LOG.log(Level.INFO,"Stream API: {0}", rangeStream(Arrays.asList(8, 1, 3, 5, 2, 5, 1, 6, 5, 4, 3, 6, 4), 3, 6));
     }
 }

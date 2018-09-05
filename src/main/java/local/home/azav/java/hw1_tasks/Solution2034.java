@@ -61,7 +61,7 @@ public class Solution2034 {
     int curElemWhile(int length, int j, int curElem, int curElemPer) {
         int k = j;
         while (k < indMass) {
-            if (mass[k] == (curElem - 1) || mass[k] == curElem) {
+            if (mass[k] == (curElemPer) || mass[k] == curElem) {
                 length++;
                 k++;
             } else {

@@ -3,13 +3,16 @@ package local.home.azav.java.hw5_terminal;
 import java.math.BigDecimal;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Ввод/вывод сообщений для терминала
  */
 class IOTerminal {
+    private static final Logger LOG = Logger.getLogger(IOTerminal.class.getName());
     private Scanner scanner;
-    private final String ERRINPUT = "Ошибка ввода!";
+    private static final String ERRINPUT = "Ошибка ввода!";
 
     IOTerminal() {
         scanner = new Scanner(System.in);
@@ -20,14 +23,14 @@ class IOTerminal {
      * Вывод обычного сообшения на терминал
      */
     private void outTer(String str) {
-        System.out.println(str);
+        LOG.log(Level.INFO,str);
     }
 
     /**
      * Вывод сообшения об ошибке на терминал
      */
     private void outErr(String str) {
-        System.err.println(str);
+        LOG.log(Level.WARNING,str);
     }
 
     /**

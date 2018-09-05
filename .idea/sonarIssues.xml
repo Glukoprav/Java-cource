@@ -28,11 +28,6 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/package.json">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/pom.xml">
           <value>
             <set />
@@ -483,42 +478,22 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/README.md">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/components/App.js">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/components/Cell.js">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/components/Win.js">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/package-lock.json">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/package.json">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw2_person/MainPerson.java">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw2_person/Person.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw4_1_countmap/CountMapImlProba.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw4_2_collectionutils/CollectionUtils.java">
           <value>
             <set />
           </value>
@@ -554,6 +529,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw6_reflection/gettercounter/SimpleGetterCounter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw6_reflection/proxycache/ProxyCacheGetter.java">
           <value>
             <set />
           </value>
@@ -689,6 +669,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw2_person/PersonTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw4_1_countmap/CountMapImlProbaTest.java">
           <value>
             <set />
           </value>
