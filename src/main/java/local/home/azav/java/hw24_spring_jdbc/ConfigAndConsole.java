@@ -5,12 +5,14 @@ import local.home.azav.java.hw24_spring_jdbc.dao.RecipesDAO;
 import local.home.azav.java.hw24_spring_jdbc.model.Dish;
 import local.home.azav.java.hw24_spring_jdbc.model.Recipe;
 
-import javax.sql.DataSource;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //@Configu1ration
 public class ConfigAndConsole {
+    private static final Logger LOG = Logger.getLogger(ConfigAndConsole.class.getName());
     private RecipesDAO recipesDAO;
     private DishesDAO dishesDAO;
     private Scanner scanner = new Scanner(System.in);
@@ -29,7 +31,7 @@ public class ConfigAndConsole {
             try {
                 intInput = Integer.valueOf(scanner.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println("Введите цифру от 1 до 7");
+                LOG.log(Level.INFO,"Введите цифру от 1 до 7");
                 continue;
             }
             switch (intInput) {
@@ -52,16 +54,16 @@ public class ConfigAndConsole {
                     deleteDish();
                     break;
                 case 7:
-                    System.out.println("Выход!");
+                    LOG.log(Level.INFO,"Выход!");
                     return;
                 default:
-                    System.out.println("Введите цифру от 1 до 7");
+                    LOG.log(Level.INFO,"Введите цифру от 1 до 7");
             }
         }
     }
 
     void menuConsole() {
-        System.out.println("--------Меню---------\n" +
+        LOG.log(Level.INFO,"--------Меню---------\n" +
                 "1. Список блюд.\n" +
                 "2. Поиск по наименованию блюда.\n" +
                 "3. Показать ингредиенты по номеру блюда.\n" +
@@ -73,76 +75,74 @@ public class ConfigAndConsole {
     }
 
     void printAllDishes() {
-        System.out.println("------- Список блюд -------");
+        LOG.log(Level.INFO,"------- Список блюд -------");
         printList(dishesDAO.getAll());
-        System.out.println("---------------------------");
+        LOG.log(Level.INFO,"---------------------------");
     }
 
     <T> int printList(List<T> list) {
         for (T t : list) {
-            System.out.println(t.toString());
+            LOG.log(Level.INFO,"> {0}",t);
         }
         return list.size();
     }
 
-    void searchDishes() {
-        System.out.print("Введите название блюда для поиска: ");
+    private void searchDishes() {
+        LOG.log(Level.INFO,"Введите название блюда для поиска: ");
         String searchName = scanner.nextLine();
         List<Dish> dishesList = dishesDAO.getByName(searchName);
-        System.out.println("Найдено " + dishesList.size() + " блюд:");
+        LOG.log(Level.INFO,"Найдено {0} блюд:", dishesList.size());
         printList(dishesList);
     }
 
     private void printRecipeId() {
-        System.out.print("Введите идентификатор блюда для печати ингредиентов: ");
+        LOG.log(Level.INFO,"Введите идентификатор блюда для печати ингредиентов: ");
         int intInput = Integer.parseInt(scanner.nextLine());
-        System.out.println("Блюдо: " + dishesDAO.getById(intInput).toString());
+        LOG.log(Level.INFO,"Блюдо: {0}", dishesDAO.getById(intInput));
         List<Recipe> recipeList = recipesDAO.getById(intInput);
         printList(recipeList);
     }
 
     private void addDish() {
-        System.out.print("Введите название нового блюда: ");
+        LOG.log(Level.INFO,"Введите название нового блюда: ");
         String newName = scanner.nextLine();
         int result = dishesDAO.insertDish(newName);
         if (result == 1) {
-            System.out.println("Добавлено " + result + " блюдо: " + newName);
+            LOG.log(Level.INFO,"Добавлено {0} блюдо: {1}", new Object[] {result, newName});
         } else {
-            System.out.println("Блюдо " + newName + "не добавилось!");
+            LOG.log(Level.INFO,"Блюдо {0} не добавилось!", newName);
         }
     }
 
     private void addIngredient() {
-        System.out.print("Введите идентификатор блюда, которому добавляем ингредиент: ");
+        LOG.log(Level.INFO,"Введите идентификатор блюда, которому добавляем ингредиент: ");
         int intInput = Integer.parseInt(scanner.nextLine());
-        System.out.print("Введите название ингредиента: ");
+        LOG.log(Level.INFO,"Введите название ингредиента: ");
         String newName = scanner.nextLine();
-        System.out.print("Введите количество ингредиента, в граммах: ");
+        LOG.log(Level.INFO,"Введите количество ингредиента, в граммах: ");
         int intValue = Integer.parseInt(scanner.nextLine());
         int result = recipesDAO.insertIngredient(intInput, newName, intValue);
         if (result == 1) {
-            System.out.println("Добавлен " + result + " ингредиент: " + newName + " к блюду " + intInput);
+            LOG.log(Level.INFO,"Добавлен {0} ингредиент: {1} к блюду {2}", new Object[] {result,newName,intInput});
         } else {
-            System.out.println("Ингредиент " + newName + "не добавился!");
+            LOG.log(Level.INFO,"Ингредиент {0} не добавился!", newName);
         }
     }
 
     private void deleteDish() {
-        System.out.print("Введите идентификатор блюда для удаления: ");
+        LOG.log(Level.INFO,"Введите идентификатор блюда для удаления: ");
         int intInput = Integer.parseInt(scanner.nextLine());
         int result = recipesDAO.deleteRecipe(intInput);
         if (result > 0) {
-            System.out.println("Удалено " + result + " ингредиентов у блюда " + intInput);
+            LOG.log(Level.INFO,"Удалено {0} ингредиентов у блюда {1}", new Object[] {result,intInput});
         } else {
-            System.out.println("Ингредиентов не удалено!");
+            LOG.log(Level.INFO,"Ингредиентов не удалено!");
         }
         result = dishesDAO.deleteDish(intInput);
         if (result == 1) {
-            System.out.println("Удалено " + result + " блюдо " + intInput);
+            LOG.log(Level.INFO,"Удалено {0} блюдо {1}", new Object[] {result,intInput});
         } else {
-            System.out.println("Блюдо не удалено!");
+            LOG.log(Level.INFO,"Блюдо не удалено!");
         }
     }
-
-
 }

@@ -1,14 +1,14 @@
-package local.home.azav.java.hw9_serialization.main;
+package local.home.azav.java.hw16_jit_gc;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MainTest {
+public class MainJitTest {
 
     @Test
     public void main() {
         String[] args = new String[]{};
-        Main.main(args);
+        MainJit.main(args);
     }
 }

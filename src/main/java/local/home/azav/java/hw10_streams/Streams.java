@@ -41,7 +41,7 @@ public class Streams<T> {
      * @param streamsPredicate условие отбора в виде лямбды.
      * @return объект Streams.
      */
-    public Streams<T> filter(Predicate<? super T> streamsPredicate) {
+    Streams<T> filter(Predicate<? super T> streamsPredicate) {
         List<T> listout = new ArrayList<>();
         for (T t : list) {
             if (streamsPredicate.test(t)) {
@@ -74,7 +74,7 @@ public class Streams<T> {
      * @param keyValue условие задания значения в виде лямбды.
      * @return результат в виде Map.
      */
-    public <K, V> Map<K, V> toMap(Function<? super T, ? extends K> keyMap, Function<? super T, ? extends V> keyValue) {
+    <K, V> Map<K, V> toMap(Function<? super T, ? extends K> keyMap, Function<? super T, ? extends V> keyValue) {
         Map<K, V> map = new TreeMap<>();
         for (T t : list) {
             map.put(keyMap.apply(t), keyValue.apply(t));

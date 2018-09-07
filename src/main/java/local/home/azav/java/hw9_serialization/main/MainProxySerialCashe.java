@@ -10,7 +10,7 @@ import java.lang.reflect.Proxy;
 /**
  * Класс проверки работы кэширующего и сериализованного прокси
  */
-public class Main {
+public class MainProxySerialCashe {
 
     private static void outer(long str) {
         System.out.println("Результат: " + str);

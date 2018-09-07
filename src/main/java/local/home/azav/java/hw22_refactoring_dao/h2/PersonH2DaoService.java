@@ -8,13 +8,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by SBT-Pozdnyakov-AN on 02.11.2017.
  * Refactored Zavgorodniy on 26.07.2018
  */
 public class PersonH2DaoService extends AbstractH2DaoService implements PersonDaoService {
-    public static final String CONNECT_URL = "jdbc:local.home.azav.java.hw22_refactoring_dao.h2:tcp://localhost/C:\\TEMP\\test.db";
+    private static final Logger LOG = Logger.getLogger(PersonH2DaoService.class.getName());
+    private static final String CONNECT_URL = "jdbc:local.home.azav.java.hw22_refactoring_dao.h2:tcp://localhost/C:\\TEMP\\test.db";
 
 
     public Person getPersonById(Integer id) throws DaoException {
@@ -45,7 +48,7 @@ public class PersonH2DaoService extends AbstractH2DaoService implements PersonDa
             return person;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Exception: ", e);
             throw new DaoException("Get person error", e);
         }
     }
@@ -73,10 +76,10 @@ public class PersonH2DaoService extends AbstractH2DaoService implements PersonDa
             connection.commit();
             return person;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Exception: ", e);
             throw new PersonDaoException("Save person error", e);
         } catch (DaoException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "ExceptionDAO: ", e);
         }
         return person;
     }

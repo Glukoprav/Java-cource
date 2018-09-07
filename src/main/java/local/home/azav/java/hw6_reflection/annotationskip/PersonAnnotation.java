@@ -43,7 +43,7 @@ public class PersonAnnotation {
      * @return - returns true if this person has another gender than passed person
      * and they are not husband and wife, false otherwise
      */
-    public boolean marry(PersonAnnotation person) {
+    private boolean marry(PersonAnnotation person) {
         if (this.man != person.man && this.spouse != person) {
             if (this.spouse != null) {
                 this.divorce();
@@ -61,7 +61,7 @@ public class PersonAnnotation {
      *
      * @return true - if person status has been changed
      */
-    public boolean divorce() {
+    private boolean divorce() {
         if (spouse != null) {
             spouse.spouse = null;
             this.spouse = null;

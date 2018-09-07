@@ -16,8 +16,8 @@ import java.util.function.Supplier;
  */
 public class FixedThreadPool implements ThreadPool {
     private final int colThread;     // Число потоков
-    ExecutorService threadPool;      // Пул потоков
-    public List<Future> listFutures; // Список для результатов работы потоков
+    private ExecutorService threadPool;      // Пул потоков
+    public final List<Future> listFutures; // Список для результатов работы потоков
 
     public FixedThreadPool(int colThread) {
         this.colThread = colThread;

@@ -6,12 +6,16 @@ import local.home.azav.java.hw22_refactoring_dao.exceptions.DaoException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by SBT-Pozdnyakov-AN on 02.11.2017.
  * Refactored Zavgorodniy on 26.07.2018
  */
 public class AccountH2DaoService extends AbstractH2DaoService implements AccountDaoService {
+    private static final Logger LOG = Logger.getLogger(AccountH2DaoService.class.getName());
+
     @Override
     public List<Account> getAccountByNumber(Integer personId) throws DaoException {
         try (Connection connection = getConnection(CONNECT_URL);
@@ -30,7 +34,7 @@ public class AccountH2DaoService extends AbstractH2DaoService implements Account
             }
             return accounts;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Exception: ", e);
             throw new DaoException("Get account error", e);
         }
     }

@@ -25,7 +25,7 @@ public class Task<T> {
     private volatile T result = null;
     private volatile TaskExecException errorCall = null;
 
-    public Task(Callable<? extends T> callable) {
+    Task(Callable<? extends T> callable) {
         if (callable == null)
             throw new NullPointerException();
         this.callable = callable;

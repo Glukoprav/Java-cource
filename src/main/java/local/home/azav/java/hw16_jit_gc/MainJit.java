@@ -2,16 +2,28 @@ package local.home.azav.java.hw16_jit_gc;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainJit {
+    private static final Logger LOG = Logger.getLogger(MainJit.class.getName());
+
     public static void main(String[] args) {
+        // наполняем
         Map<Integer, String> mapJit = new HashMap<>();
         for (int i = 0; i < 100000  ; i++) {
             mapJit.put(i,"value"+i);
         }
-        //System.out.println(map.values().toString());
+        // задача для примера
+        int sum = 0;
+        for (String val : mapJit.values()) {
+            sum +=Integer.valueOf(val.substring(5));
+        }
+        LOG.log(Level.INFO,"Результат > {0}",sum);
     }
 }
+
+//  Результаты запусков:
 
 //"C:\Program Files\Java\jdk1.8.0_152\bin\java" -XX:+PrintCompilation "-javaagent:D:\Program\IntelliJ IDEA Community Edition 2018.1\lib\idea_rt.jar=4727:D:\Program\IntelliJ IDEA Community Edition 2018.1\bin" -Dfile.encoding=UTF-8 -classpath "C:\Program Files\Java\jdk1.8.0_152\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\access-bridge.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\rt.jar;C:\Documents and Settings\andreyz\IdeaProjects\firstproject\target\classes;C:\Documents and Settings\andreyz\.m2\repository\org\springframework\spring-context-support\4.2.2.RELEASE\spring-context-support-4.2.2.RELEASE.jar;C:\Documents and Settings\andreyz\.m2\repository\org\springframework\spring-beans\4.2.2.RELEASE\spring-beans-4.2.2.RELEASE.jar;C:\Documents and Settings\andreyz\.m2\repository\org\springframework\spring-context\4.2.2.RELEASE\spring-context-4.2.2.RELEASE.jar;C:\Documents and Settings\andreyz\.m2\repository\org\springframework\spring-aop\4.2.2.RELEASE\spring-aop-4.2.2.RELEASE.jar;C:\Documents and Settings\andreyz\.m2\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar;C:\Documents and Settings\andreyz\.m2\repository\org\springframework\spring-expression\4.2.2.RELEASE\spring-expression-4.2.2.RELEASE.jar;C:\Documents and Settings\andreyz\.m2\repository\org\springframework\spring-core\4.2.2.RELEASE\spring-core-4.2.2.RELEASE.jar;C:\Documents and Settings\andreyz\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Documents and Settings\andreyz\.m2\repository\com\sun\mail\javax.mail\1.5.4\javax.mail-1.5.4.jar;C:\Documents and Settings\andreyz\.m2\repository\javax\activation\activation\1.1\activation-1.1.jar" local.home.azav.java.hw16_jit_gc.MainJit
 //        698    1             java.lang.String::equals (81 bytes)

@@ -7,9 +7,9 @@ public class ContextImpl implements Context {
     private volatile int completedThreads = 0;
     private volatile int failedThreads = 0;
     private volatile int interruptedThreads = 0;
-    private List<Thread> threadsList = new ArrayList<>();
+    private final List<Thread> threadsList = new ArrayList<>();
 
-    public ContextImpl(Runnable callback, Runnable... tasks) {
+    ContextImpl(Runnable callback, Runnable... tasks) {
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             synchronized (threadsList) {
                 failedThreads++;
@@ -34,9 +34,7 @@ public class ContextImpl implements Context {
         while(true)
             if (this.isFinished())
                 break;
-        new Thread(() -> {
-            callback.run();
-        }).start();
+        new Thread(callback::run).start();
     }
 
     @Override
@@ -57,8 +55,7 @@ public class ContextImpl implements Context {
     @Override
     public void interrupt() {
         threadsList
-                .stream()
-                .forEach(t -> t.interrupt());
+                .forEach(Thread::interrupt);
     }
 
     @Override

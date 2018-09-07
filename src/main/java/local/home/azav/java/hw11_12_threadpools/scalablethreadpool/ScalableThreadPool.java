@@ -17,8 +17,8 @@ import java.util.function.Supplier;
 public class ScalableThreadPool implements ThreadPool {
     private final int minNumThread;  // Минимальноее число потоков
     private final int maxNumThread;  // Максимальноее число потоков
-    ExecutorService threadPool;      // Пул потоков
-    public List<Future> listFutures; // Список для результатов работы потоков
+    private ExecutorService threadPool;      // Пул потоков
+    public final List<Future> listFutures; // Список для результатов работы потоков
 
     public ScalableThreadPool(int minNumThread, int maxNumThread) {
         super();

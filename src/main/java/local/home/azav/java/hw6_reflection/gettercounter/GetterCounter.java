@@ -19,5 +19,5 @@ public interface GetterCounter {
      * @param clazz класс в котором необходимо прочитать геттеры.
      * @return возвращает список строк - имена найденных геттеров.
      */
-    public List<String> arrayGetterCount(Class<?> clazz);
+    List<String> arrayGetterCount(Class<?> clazz);
 }

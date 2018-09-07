@@ -13,17 +13,14 @@ public class App {
     private ConsoleEventLogger eventLogger;
 
     @Autowired
-    public App(Client client, ConsoleEventLogger eventLogger) {
+    App(Client client, ConsoleEventLogger eventLogger) {
         this.client = client;
         this.eventLogger = eventLogger;
     }
 
     public static void main(String[] args) {
-        App app;
-//        app.client = new Client("1", "Fedia Van");
-//        app.eventLogger = new ConsoleEventLogger();
-//        app.logEvent("First probe event " + app.client.getId());
-
+        App app = new App(new Client("1", "Fedia Van"), new ConsoleEventLogger());
+        app.logEvent("First probe event " + app.client.getId());
     }
 
     private void logEvent(String msg) {

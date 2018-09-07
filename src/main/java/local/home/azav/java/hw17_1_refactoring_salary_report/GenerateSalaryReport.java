@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 class GenerateSalaryReport {
+    private static final Logger LOG = Logger.getLogger(GenerateSalaryReport.class.getName());
     private final Connection connection;
 
     GenerateSalaryReport(Connection databaseConnection) {
@@ -29,7 +32,7 @@ class GenerateSalaryReport {
             // execute query and get the results
             results = ps.executeQuery();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Exception: ", e);
         }
         return results;
     }
@@ -55,7 +58,7 @@ class GenerateSalaryReport {
             resultingHtml.append("<tr><td>Total</td><td>").append(totals).append("</td></tr>");
             resultingHtml.append("</table></body></html>");
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Exception: ", e);
         }
         return resultingHtml;
     }

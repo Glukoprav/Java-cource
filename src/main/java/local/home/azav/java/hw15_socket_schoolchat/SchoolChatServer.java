@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Задание 15
@@ -15,31 +17,29 @@ import java.util.concurrent.*;
  * - клиент при получении сообщения просто выводит информацию: [логин] message
  * - при входе нового пользователя все участники чата получают нотификацию - сообщение от пользователя SYSTEM
  * - формат сообщения от текущего пользователя к другому пользователю, пересылаемый через сервер:
- * $login message, где login - логин другого пользователя, т.е. $ - признак сообщения для пересылки
+ * $login message, где login - логин другого пользователя, т.е. $ - признак сообщения для пересылки пользователю
+ *  При вводе на клиенте слова: exit  - этот клиент закрывается и остальные клиенты получают системное сообщение
+ * о закрытии конкретного клиента.
+ *  При вводе на любом клиенте слова: allexit - закрываются клиенты и сервер.
  */
 
 public class SchoolChatServer {
-    private volatile static int numberServer = 0;
-    private final static int PORT = 21212;
-    private final Object object = new Object();
+    private static final Logger LOG = Logger.getLogger(SchoolChatServer.class.getName());
+    private static final int PORT = 21212;
+    private static volatile int serverStop = 0;
     // Карта логинов клиентов c из сокетами и входным/выходным потоком
     private final ConcurrentMap<String, ClientsInfo> mapClients = new ConcurrentHashMap<>();
-
-    private SchoolChatServer() {
-        synchronized (object) {
-            numberServer++;
-        }
-    }
 
     private void workServer() throws IOException {
         // Пул потоков для клиентов
         ExecutorService executorService = Executors.newFixedThreadPool(12);
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            while (true) {
+            LOG.log(Level.INFO,"Сервер стартовал!");
+            while (serverStop != 1) {
                 String login;
                 // Ждем подсоединения нового клиента
                 Socket socket = serverSocket.accept();
-                System.out.println(String.format("Коннект с клиентом, client ip %s port %s", socket.getInetAddress(), socket.getPort()));
+                LOG.log(Level.INFO,"Коннект с клиентом, client ip {0} port {1}", new Object[]{socket.getInetAddress(), socket.getPort()});
                 DataInputStream inStream = new DataInputStream(socket.getInputStream());
                 DataOutputStream outStream = new DataOutputStream(socket.getOutputStream());
                 login = inStream.readUTF();
@@ -48,21 +48,14 @@ public class SchoolChatServer {
                 mapClients.put(login,clientsInfo);
                 // Запускаем в отдельном потоке
                 executorService.execute(clientsInfo);
-                if (false) {
-                    System.out.println("Сервер остановлен! 1");
-                    break;
-                }
             }
+            LOG.log(Level.INFO,"Сервер остановлен!");
         }
         executorService.shutdown();
     }
 
     // Запуск сервера
     public static void main(String[] args) throws IOException {
-        if (SchoolChatServer.numberServer > 0) {
-            System.out.println("Чат-Сервер уже запущен! Лишний процесс прерываем.");
-            System.exit(0);
-        }
         SchoolChatServer chatServer = new SchoolChatServer();
         chatServer.workServer();
     }
@@ -73,7 +66,11 @@ public class SchoolChatServer {
         private final DataOutputStream outputStream;
         private final String login;
 
-        public ClientsInfo(Socket socket, DataInputStream inputStream, DataOutputStream outputStream, String login) {
+        private synchronized void serverStoping() {
+            SchoolChatServer.serverStop = 1;
+        }
+
+        ClientsInfo(Socket socket, DataInputStream inputStream, DataOutputStream outputStream, String login) {
             this.socket = socket;
             this.inputStream = inputStream;
             this.outputStream = outputStream;
@@ -100,16 +97,21 @@ public class SchoolChatServer {
                             clientInfo.sendMessage(clientsMessage(login, messSend));
                         }
                     }
-                } while (!"exit".equals(messageFull));
-                // Сообщение всем от сервера - об отключении пользователя.
-                for (String key : mapClients.keySet()) {
-                    mapClients.get(key).sendMessage(serverMessage("Отключается клиент " + login));
+                } while (!"exit".equals(messageFull) && !"allexit".equals(messageFull));
+                if ("exit".equals(messageFull)) {
+                    // Сообщение всем от сервера - об отключении пользователя.
+                    for (String key : mapClients.keySet()) {
+                        mapClients.get(key).sendMessage(serverMessage("Отключается клиент " + login));
+                    }
+                }
+                if ("allexit".equals(messageFull)) {
+                    this.serverStoping();
                 }
                 inputStream.close();
                 outputStream.close();
                 socket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.log(Level.SEVERE, "Exception: ", e);
             }
         }
 

@@ -8,12 +8,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by SBT-Pozdnyakov-AN on 02.11.2017.
  * Refactored Zavgorodniy on 26.07.2018
  */
 public class TrasferH2DaoService extends AbstractH2DaoService {
+    private static final Logger LOG = Logger.getLogger(TrasferH2DaoService.class.getName());
 
     public void createTrasfer(String accFrom, String accTo, BigDecimal amount) throws SQLException {
         Connection connection = null;
@@ -26,7 +29,7 @@ public class TrasferH2DaoService extends AbstractH2DaoService {
             //finally is here
             connection.close();
         } catch (SQLException | DaoException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "ExceptionSQL: ", e);
         } catch (RuntimeException ex) {
             if (connection != null) {
                 connection.rollback();
@@ -45,7 +48,7 @@ public class TrasferH2DaoService extends AbstractH2DaoService {
                 rset.updateRow();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Exception: ", e);
         }
     }
 }

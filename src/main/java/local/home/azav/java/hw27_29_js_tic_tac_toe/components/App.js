@@ -1,6 +1,5 @@
 /** Сделал Андрей 29.08.2018 */
 import React, { Component } from 'react';
-import axios from 'axios';
 
 import Cell from './Cell';
 import Win from './Win';

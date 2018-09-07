@@ -11,7 +11,7 @@ public class MainExecManager {
 
         Context context = manager.execute(() -> LOG.log(Level.INFO,"Все задачи выполнены"),
                 () -> {
-                    throw new RuntimeException("Исключительная ситуация при выполнении задачи");
+                    throw new ArithmeticException("Исключительная ситуация при выполнении задачи");
                 },
                 () -> {
                     try {
@@ -23,7 +23,7 @@ public class MainExecManager {
                 },
                 () -> {
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
