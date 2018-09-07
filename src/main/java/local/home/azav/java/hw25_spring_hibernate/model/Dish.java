@@ -3,8 +3,6 @@ package local.home.azav.java.hw25_spring_hibernate.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
