@@ -6,7 +6,6 @@ import java.io.*;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.TreeMap;
@@ -152,7 +151,6 @@ public class ProxyCache implements InvocationHandler {
         try (FileInputStream fis = new FileInputStream(strFileName);
              ObjectInputStream oin = new ObjectInputStream(fis)) {
             obje = (KeySerial) oin.readObject();
-            return obje;
         } catch (ClassNotFoundException | IOException e) {
             LOG.log(Level.SEVERE, "Exception: ", e);
             obje = null;

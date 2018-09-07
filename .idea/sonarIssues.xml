@@ -28,6 +28,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/package.json">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/pom.xml">
           <value>
             <set />
@@ -58,17 +63,12 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw11_12_threadpools/MainFixedThreadPool.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw11_12_threadpools/MainScalableThreadPool.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw11_12_threadpools/fixedthreadpool/FixedThreadPool.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw11_12_threadpools/scalablethreadpool/ScalableThreadPool.java">
           <value>
             <set />
           </value>
@@ -78,12 +78,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw13_taskcallable/MainCallable.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw13_taskcallable/Task.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw14_executionmanager/ContextImpl.java">
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw14_executionmanager/ExecutionManagerImpl.java">
           <value>
             <set />
           </value>
@@ -94,16 +99,6 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw15_socket_schoolchat/SchoolChatClient.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw15_socket_schoolchat/SchoolChatServer.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw16_jit_gc/MainJit.java">
           <value>
             <set />
           </value>
@@ -304,11 +299,6 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw22_refactoring_dao/Main.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw22_refactoring_dao/MainDao.java">
           <value>
             <set />
           </value>
@@ -523,7 +513,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/README.md">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/components/App.js">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/components/Cell.js">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/components/Win.js">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/package-lock.json">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw27_29_js_tic_tac_toe/package.json">
           <value>
             <set />
           </value>
@@ -534,16 +549,6 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw2_person/Person.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw4_1_countmap/CountMapImlProba.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw4_2_collectionutils/CollectionUtils.java">
           <value>
             <set />
           </value>
@@ -573,11 +578,6 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw6_reflection/annotationskip/PersonAnnotation.java">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw6_reflection/gettercounter/GetterCounter.java">
           <value>
             <set />
@@ -588,7 +588,37 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw6_reflection/proxycache/ProxyCacheGetter.java">
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant01/api/ApiClassloader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant01/app/AppCalc.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant01/app/AppClassloader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant01/app/MyAppClassloader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant01/impl/ImplClassloader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant02/api/ApiClassloader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw7_classloaders/variant02/app/AppCalc.java">
           <value>
             <set />
           </value>
@@ -613,17 +643,17 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw9_serialization/main/MainProxySerialCashe.java">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw9_serialization/proxycache/KeySerial.java">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw9_serialization/proxycache/ProxyCache.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/local/home/azav/java/hw9_serialization/service/ServiceImpl.java">
           <value>
             <set />
           </value>
@@ -663,7 +693,27 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw16_jit_gc/MainJitTest.java">
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw10_streams/MainTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw11_12_threadpools/MainFixedThreadPoolTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw11_12_threadpools/MainScalableThreadPoolTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw13_taskcallable/MainCallableTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw14_executionmanager/MainExecManagerTest.java">
           <value>
             <set />
           </value>
@@ -738,11 +788,6 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw4_1_countmap/CountMapImlProbaTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw5_terminal/AccountIsLockedExceptionTest.java">
           <value>
             <set />
@@ -768,7 +813,22 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw6_reflection/gettercounter/SimpleGetterCounterTest.java">
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw7_classloaders/variant01/app/AppCalcTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw7_classloaders/variant02/app/AppCalcTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw9_serialization/main/MainTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/local/home/azav/java/hw9_serialization/service/ServiceImplTest.java">
           <value>
             <set />
           </value>

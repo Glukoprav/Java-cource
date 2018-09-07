@@ -12,11 +12,8 @@ import java.util.logging.Logger;
 public class ImplClassloader extends ApiClassloader {
     private static final Logger LOG = Logger.getLogger(ImplClassloader.class.getName());
 
-    private final String classPathImpl;   // путь к классу
-
     public ImplClassloader(String classPathImpl) {
         super(classPathImpl);
-        this.classPathImpl = classPathImpl;
         LOG.log(Level.INFO,"ImplClassloader после вызова родителя");
     }
 

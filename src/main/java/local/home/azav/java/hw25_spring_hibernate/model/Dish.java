@@ -34,7 +34,6 @@ public class Dish implements Serializable {
     public Dish(int dishesId, String name) {
         this.dishesId = dishesId;
         this.name = name;
-//        recipe = new ArrayList<>();
     }
 
     public int getDishesId() {
