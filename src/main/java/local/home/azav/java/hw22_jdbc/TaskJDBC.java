@@ -65,12 +65,14 @@ public class TaskJDBC {
     }
 
     public static void main(String[] args) {
+        String userDB = "sa";
+        String passv = "aaa";
         TaskJDBC taskJDBC = new TaskJDBC();
         if (taskJDBC.forNameH2() == null) {
             return;
         }
-//  --      try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Documents and Settings/andreyz/IdeaProjects/firstproject/src/main/java/local/home/azav/java/hw22_jdbc/test", "sa", "aaa")) {
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Users/Azav/IdeaProjects/Java-cource/src/main/java/local/home/azav/java/hw22_jdbc/test", "sa", "aaa")) {
+//  --      try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Documents and Settings/andreyz/IdeaProjects/firstproject/src/main/java/local/home/azav/java/hw22_jdbc/test", userDB, passv)) {
+        try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Users/Azav/IdeaProjects/Java-cource/src/main/java/local/home/azav/java/hw22_jdbc/test", userDB, passv)) {
             taskJDBC.connectAndQuery(connection);
             taskJDBC.connectPreparedAndQuery(connection);
         } catch (SQLException e) {
