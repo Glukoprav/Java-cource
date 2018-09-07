@@ -95,7 +95,6 @@ public class ApiClassloader extends ClassLoader {
             } catch (Exception e) {
                 // Об исключениях, возникших при вызове close сообщим
                 LOG.log(Level.SEVERE, "Exception: ", e);
-                //System.out.println("Ошибка при закрытии файла " + file);
             }
         }
         return result;

@@ -85,12 +85,12 @@ public class ProxyCache implements InvocationHandler {
         switch (cache.value()) {
             case MEMORY:
                 result = cachedResults.get(strKey);
-                LOG.log(Level.INFO,"Результат из кэша ПАМЯТИ: " + result + ", по ключу: " + strKey);
+                LOG.log(Level.INFO,"Результат из кэша ПАМЯТИ: {0}, по ключу: {1}", new Object[] {result,strKey});
                 break;
             case FILE:
                 // Путь и имя файла: из аннотации путь и префикс + ключ + расширение из аннотации
                 String strFileName = cache.pathFile() + cache.fileNamePrefix() + strKey + cache.fileExtension();
-                if (Files.exists(Paths.get(strFileName))) {
+                if (Paths.get(strFileName).toFile().exists()) {
                     // Если нашли файл - десериализуем
                     Object ks = deserialMethod(strFileName);
                     if (ks != null) {
@@ -154,9 +154,10 @@ public class ProxyCache implements InvocationHandler {
             obje = (KeySerial) oin.readObject();
             return obje;
         } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Exception: ", e);
+            obje = null;
         }
-        return obje = null;
+        return obje;
     }
 
     /**
@@ -172,7 +173,7 @@ public class ProxyCache implements InvocationHandler {
             out.writeObject(result);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Exception: ", e);
         }
     }
 

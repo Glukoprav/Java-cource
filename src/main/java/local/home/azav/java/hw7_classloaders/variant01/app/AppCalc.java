@@ -17,26 +17,26 @@ public class AppCalc extends CalculatorImpl {
         ICalculator appCalc = (ICalculator) new AppClassloader()
                 .loadClass()
                 .newInstance();
-        LOG.log(Level.INFO, String.valueOf(appCalc.getClass().getClassLoader()));
-        LOG.log(Level.INFO, String.valueOf(appCalc.addInt(4,7)));
+        LOG.log(Level.INFO, "{0}", appCalc.getClass().getClassLoader());
+        LOG.log(Level.INFO, "{0}", appCalc.addInt(4,7));
 
         // грузим класс CalculatorImpl с помощью ImplClassloader
         ICalculator implCalc = (ICalculator) new ImplClassloader()
                 .loadClass()
                 .newInstance();
-        LOG.log(Level.INFO, String.valueOf(implCalc.getClass().getClassLoader()));
-        LOG.log(Level.INFO, String.valueOf(implCalc.addInt(3, 4)));
+        LOG.log(Level.INFO, "{0}", implCalc.getClass().getClassLoader());
+        LOG.log(Level.INFO, "{0}", implCalc.addInt(3, 4));
 
         // грузим класс MyApp с помощью MyAppClassloader
         MyApp myApp = (MyApp)new MyAppClassloader()
                 .loadClass()
                 .newInstance();
-        LOG.log(Level.INFO, String.valueOf(myApp.getClass().getClassLoader()));
-        LOG.log(Level.INFO, String.valueOf(myApp.addInt(1,2)));
+        LOG.log(Level.INFO, "{0}", myApp.getClass().getClassLoader());
+        LOG.log(Level.INFO, "{0}", myApp.addInt(1,2));
 
         // устанавливаем у объекта класса MyApp значение типа CalculatorImpl
         // из имеющегося объекта класса CalculatorImpl
         myApp.setCalcImpl((CalculatorImpl) implCalc);
-        LOG.log(Level.INFO, String.valueOf(myApp.getCalcImpl().addInt(6,7)));
+        LOG.log(Level.INFO, "{0}", myApp.getCalcImpl().addInt(6,7));
     }
 }
