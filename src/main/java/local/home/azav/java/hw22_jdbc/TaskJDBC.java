@@ -72,12 +72,16 @@ public class TaskJDBC {
     public static void main(String[] args) {
         String userDB = "sa";
         String passv = "aa";
+        String url = "jdbc:h2:" + System.getProperty("user.dir") + "/test";
         TaskJDBC taskJDBC = new TaskJDBC();
         if (taskJDBC.forNameH2() == null) {
             return;
         }
-//  --      try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Documents and Settings/andreyz/IdeaProjects/firstproject/src/main/java/local/home/azav/java/hw22_jdbc/test", userDB, getPassv(passv))) {
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Users/Azav/IdeaProjects/Java-cource/src/main/java/local/home/azav/java/hw22_jdbc/test", userDB, getPassv(passv))) {
+        System.out.println("user.dir > " + System.getProperty("user.dir"));
+        System.out.println(System.getProperties());
+//        try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Documents and Settings/andreyz/IdeaProjects/firstproject/src/main/java/local/home/azav/java/hw22_jdbc/test", userDB, getPassv(passv))) {
+//        try (Connection connection = DriverManager.getConnection("jdbc:h2:C:/Users/Azav/IdeaProjects/Java-cource/src/main/java/local/home/azav/java/hw22_jdbc/test", userDB, getPassv(passv))) {
+        try (Connection connection = DriverManager.getConnection(url, userDB, getPassv(passv))) {
             taskJDBC.connectAndQuery(connection);
             taskJDBC.connectPreparedAndQuery(connection);
         } catch (SQLException e) {

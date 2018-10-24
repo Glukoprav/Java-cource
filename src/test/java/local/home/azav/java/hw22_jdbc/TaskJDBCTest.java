@@ -9,8 +9,9 @@ import static org.junit.Assert.*;
 
 public class TaskJDBCTest {
     private TaskJDBC taskJDBC;
-    private final String STRCONN = "jdbc:h2:C:/Documents and Settings/andreyz/IdeaProjects/firstproject/src/test/java/local/home/azav/java/hw22_jdbc/test";
-    //private final String STRCONN = "jdbc:h2:c:/Users/Azav/IdeaProjects/Java-cource/src/test/java/local/home/azav/java/hw22_jdbc/test";
+//    private final String STRCONN = "jdbc:h2:C:/Documents and Settings/andreyz/IdeaProjects/firstproject/src/test/java/local/home/azav/java/hw22_jdbc/test";
+    private final String STRCONN = "jdbc:h2:c:/Users/Azav/IdeaProjects/Java-cource/src/test/java/local/home/azav/java/hw22_jdbc/test";
+//    private final String STRCONN = "jdbc:h2:test";
 
     @Before
     public void setUp() {
